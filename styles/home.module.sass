@@ -1,2 +1,13 @@
-.main
-  opacity: 1
+@import './designSystem'
+
+.weabur
+  background-color: $hex-background
+  padding: calc(env(safe-area-inset-top) + rem(50)) calc(env(safe-area-inset-right) + rem(50)) calc(env(safe-area-inset-bottom) + rem(50)) calc(env(safe-area-inset-left) + rem(50))
+  height: 100dvh
+  display: flex
+
+  .container
+    display: flex
+    flex-direction: column
+    flex: 1
+    background-color: $hex-black
