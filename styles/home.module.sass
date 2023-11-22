@@ -1,13 +1,294 @@
+@import "pretendard/dist/web/static/pretendard"
 @import './designSystem'
 
 .weabur
   background-color: $hex-background
   padding: calc(env(safe-area-inset-top) + rem(50)) calc(env(safe-area-inset-right) + rem(50)) calc(env(safe-area-inset-bottom) + rem(50)) calc(env(safe-area-inset-left) + rem(50))
-  height: 100dvh
+  min-height: 100dvh
   display: flex
 
   .container
     display: flex
     flex-direction: column
     flex: 1
+    gap: rem(5)
     background-color: $hex-black
+
+    .search
+      display: flex
+      flex-direction: column
+      border: rem(5) solid $hex-yellow
+
+      hr
+        margin: 0
+        border: 0
+        border-top: rem(2) solid $hex-yellow
+        border-bottom: rem(3) solid $hex-yellow
+
+      .form-group
+        display: flex
+        gap: rem(25)
+        padding: rem(20)
+
+        hr
+          margin: 0
+          border: 0
+          border-left: rem(2) solid $hex-aqua
+          border-right: rem(3) solid $hex-aqua
+
+        form
+          +col
+
+          fieldset
+            display: flex
+            width: 100%
+
+            input, select, button
+              background-color: transparent
+
+            input, select
+              width: 100%
+              border: 0
+              color: $hex-white
+              font-size: rem(64)
+              line-height: 1
+
+            button
+              span
+                +screen-reader-only
+
+              i
+                display: inline-block
+                width: rem(64)
+                height: rem(64)
+
+            div
+              +col
+
+            select
+              width: 100%
+              appearance: none
+
+    header
+      padding: rem(25)
+
+      h1
+        display: flex
+        align-items: flex-end
+        font-weight: normal
+
+        i
+          display: inline-block
+          width: rem(84)
+          height: rem(84)
+
+        span
+          font-size: rem(96)
+          font-weight: normal
+          line-height: 1
+          color: $hex-aqua
+
+        em
+          padding-left: rem(25)
+          font-size: rem(64)
+          font-style: normal
+          font-feature-settings: 'ss06'
+          line-height: 1
+          color: $hex-white
+          opacity: .5
+          letter-spacing: -0.1em
+
+    .nextup
+      display: flex
+
+      dt
+        +screen-reader-only
+
+      .routeno
+        font-size: rem(128)
+        line-height: 1
+
+      .info
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+
+        .type
+          display: flex
+          gap: rem(15)
+          font-size: rem(48)
+          line-height: 1
+
+          .vehicle dd
+            display: flex
+            align-items: center
+
+          i
+            display: block
+            width: rem(35)
+            height: rem(35)
+
+        .time
+          font-size: rem(64)
+          line-height: 1
+
+    .mixed
+      display: flex
+      width: 100%
+
+      hr
+        margin: rem(25) 0
+        border: 0
+        border-left: rem(2) solid $hex-lime
+        border-right: rem(3) solid $hex-lime
+
+      .schedule, .weather
+        +col
+        padding: rem(25)
+
+      .schedule
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+
+        .nextup
+          justify-content: space-between
+
+          & + .nextup
+            opacity: .7
+
+          .info
+            align-items: flex-end
+
+      .weather
+        display: flex
+        flex-direction: column
+        align-items: flex-end
+        gap: rem(25)
+
+        dt
+          display: flex
+          align-items: center
+          gap: rem(5)
+
+          span
+            font-size: rem(40)
+            line-height: 1.375
+
+          i
+            display: block
+            width: rem(42)
+            height: rem(42)
+
+        dd
+          display: flex
+          align-items: center
+          font-size: rem(64)
+          line-height: 1
+          color: $hex-yellow
+          text-align: right
+
+          strong
+            width: rem(96)
+            font-feature-settings: 'ss06'
+            letter-spacing: -0.1em
+            font-weight: normal
+
+          span
+            width: rem(75)
+            font-family: Pretendard, sans-serif
+            font-size: rem(32)
+            line-height: 2
+
+        .now
+          display: flex
+          gap: rem(16)
+          font-size: rem(48)
+          line-height: 1
+
+          span
+            color: $hex-white
+
+          strong
+            font-weight: normal
+            color: $hex-yellow
+
+        .temp dl
+          display: flex
+          align-items: center
+
+        .dust
+          dl
+            display: flex
+            flex-direction: column
+
+            div
+              display: flex
+              justify-content: flex-end
+              align-items: center
+
+              dt
+                align-items: center
+
+    .next
+      display: flex
+      flex-wrap: nowrap
+      position: relative
+
+      &::before, &::after
+        content: ''
+        display: block
+        position: absolute
+        z-index: 1
+        top: 0
+        bottom: 0
+        width: rem(100)
+
+      &::before
+        left: 0
+        background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.00) 77.77%)
+
+      &::after
+        right: 0
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0%, #000 77.77%)
+
+      .next-list
+        position: relative
+        overflow: auto
+        width: calc(100vw - rem(100))
+        height: rem(178)
+
+      ul
+        position: absolute
+        top: 50%
+        left: 0
+        transform: translateY(-50%)
+        display: grid
+        grid-auto-flow: column
+        grid-auto-columns: minmax(min-content, max-content)
+        gap: rem(75)
+        padding: 0 rem(100)
+
+        li
+          .nextup
+            gap: rem(25)
+
+            .info
+              +col
+
+            .time dd
+              white-space: nowrap
+
+    footer
+      display: flex
+      justify-content: space-between
+      padding: rem(21) rem(25)
+
+      .copyrights
+        display: flex
+        gap: rem(15)
+
+        p
+          +col-auto
+          font-size: rem(24)
+          line-height: 1

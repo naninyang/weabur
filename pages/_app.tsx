@@ -30,15 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
           button,
           textarea,
           select {
-            font-family:
-              ${DungGeunMo.style.fontFamily},
-              -apple-system,
-              BlinkMacSystemFont,
-              system-ui,
-              'Apple SD Gothic Neo',
-              'Nanum Gothic',
-              'Malgun Gothic',
-              sans-serif;
+            font-family: ${DungGeunMo.style.fontFamily}, monospace;
           }
         `}
       </style>
