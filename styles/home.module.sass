@@ -153,9 +153,13 @@
 
         .nextup
           justify-content: space-between
+          transition: opacity 1s cubic-bezier(.4,0,.2,1)
 
           & + .nextup
             opacity: .7
+
+            & + .nextup
+              display: none
 
           .info
             align-items: flex-end

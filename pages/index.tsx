@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -107,6 +108,8 @@ export default function Home() {
       setSelectedStationNo(selectedStation.nodeno);
     }
     if (station) {
+      setSelectedStationName(station.nodenm);
+      setSelectedStationNo(station.nodeno);
       setSelectedStation(station);
       loadArrivalInfo();
     }
@@ -116,7 +119,7 @@ export default function Home() {
     console.log('loadArrivalInfo?');
     console.log('Selected station state:', selectedStation);
     console.log('Selected city:', selectedCity);
-    if (!selectedStation || !selectedCity) {
+    if (!selectedStation || typeof selectedStation === 'string' || !selectedCity) {
       console.log('정류소와 도시를 선택해 주세요.');
       setError('정류소와 도시를 선택해 주세요.');
       return;
@@ -131,6 +134,12 @@ export default function Home() {
       setError('도착 정보를 불러오는 중 오류가 발생했습니다.');
     }
   };
+
+  useEffect(() => {
+    if (selectedStation && selectedCity) {
+      loadArrivalInfo();
+    }
+  }, [selectedStation, selectedCity]);
 
   const ArrivalTimer = ({ initialArrtime }) => {
     const [arrtime, setArrtime] = useState(initialArrtime);
@@ -232,7 +241,7 @@ export default function Home() {
                           <option value="">정류소 선택</option>
                           {stationList.map((station) => (
                             <option key={station.nodeid} value={station.nodeid}>
-                              {station.nodenm} {station.nodeno && `( ${station.nodeno} )`}
+                              {station.nodenm} {station.nodeno && `(${station.nodeno})`}
                             </option>
                           ))}
                         </Select>
