@@ -42,6 +42,7 @@
           fieldset
             display: flex
             width: 100%
+            gap: rem(25)
 
             input, select, button
               background-color: transparent
@@ -120,6 +121,28 @@
 
     .nextup
       display: flex
+
+      &.missing
+        color: $hex-fuchsia
+        opacity: .22
+        cursor: default
+        touch-action: none
+        user-select: none
+
+        .routeno
+          dd
+            color: $hex-fuchsia !important
+
+        .info
+          .type
+            dd
+              color: $hex-fuchsia !important
+
+              span
+                color: $hex-fuchsia !important
+
+              .vehicletp
+                color: $hex-fuchsia
 
       dt
         +screen-reader-only
@@ -229,10 +252,6 @@
           gap: rem(25)
           justify-content: space-between
           transition: opacity 1s cubic-bezier(.4,0,.2,1)
-
-          &.missing
-            color: $hex-fuchsia !important
-            opacity: .5
 
           .info
             align-items: flex-end

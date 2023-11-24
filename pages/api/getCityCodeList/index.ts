@@ -23,7 +23,11 @@ export default async function getCityCodeList(req: NextApiRequest, res: NextApiR
     }));
 
     res.status(200).json(cityCodes);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: 'An unexpected error occurred' });
+    }
   }
 }

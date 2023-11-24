@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
 import { rem } from '@/styles/designSystem';
@@ -33,36 +34,35 @@ const TempIcon = styled.i({
 });
 
 export default function Home() {
-  const [cityName, setCityName] = useState('');
-  const [cityList, setCityList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState('');
-  const [stationName, setStationName] = useState('');
-  const [stationList, setStationList] = useState([]);
-  const [selectedStation, setSelectedStation] = useState('');
-  const [selectedStationName, setSelectedStationName] = useState('');
-  const [selectedStationNo, setSelectedStationNo] = useState('');
-  const [arrivalInfo, setArrivalInfo] = useState([]);
-  const [errorCitySearch, setErrorCitySearch] = useState('');
-  const [errorStationSearch, setErrorStationSearch] = useState('');
-  const [errorStationSelect, setErrorStationSelect] = useState('');
-  const [errorArrivalInfo, setErrorArrivalInfo] = useState('');
+  const [cityName, setCityName] = useState<string>('');
+  const [cityList, setCityList] = useState<City[]>([]);
+  const [selectedCity, setSelectedCity] = useState<number | null>(null);
+  const [stationName, setStationName] = useState<string>('');
+  const [stationList, setStationList] = useState<Station[]>([]);
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [selectedStationName, setSelectedStationName] = useState<string | undefined>('');
+  const [selectedStationNo, setSelectedStationNo] = useState<number | null>(null);
+  const [arrivalInfo, setArrivalInfo] = useState<ArrivalInfo[]>([]);
+  const [errorCitySearch, setErrorCitySearch] = useState<string>('');
+  const [errorStationSearch, setErrorStationSearch] = useState<string>('');
+  const [errorStationSelect, setErrorStationSelect] = useState<string>('');
+  const [errorArrivalInfo, setErrorArrivalInfo] = useState<string>('');
 
-  const handleCitySearch = async (e) => {
-    e.preventDefault();
+  const handleCitySearch = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setErrorCitySearch('');
     setArrivalInfo([]);
-    setSelectedCity('');
+    setSelectedCity(null);
     setStationName('');
     setSelectedStationName('');
-    console.log('cityName: ', cityName.length);
     if (cityName.length < 2) {
       setErrorCitySearch('도시명은 최소 2자 이상 입력해야 합니다.');
       console.log(errorCitySearch);
       return;
     }
     try {
-      const cities = await fetchCityCodeList();
-      const filteredCities = cities.filter((city) => city.cityname.includes(cityName));
+      const cities: City[] = await fetchCityCodeList();
+      const filteredCities: City[] = cities.filter((city: City) => city.cityname.includes(cityName));
       if (filteredCities.length > 0) {
         setCityList(filteredCities);
       } else {
@@ -73,16 +73,19 @@ export default function Home() {
     }
   };
 
-  const handleCitySelect = async (e) => {
-    const code = e.target.value;
-    setSelectedCity(code);
-    setStationList([]);
-    setSelectedStation('');
+  const handleCitySelect = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const cityCode = parseInt(event.target.value, 10);
+    if (!isNaN(cityCode)) {
+      setSelectedCity(cityCode);
+      setStationList([]);
+      setSelectedStation(null);
+    }
   };
 
-  const handleStationSearch = async (e) => {
-    e.preventDefault();
+  const handleStationSearch = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setErrorStationSelect('');
+    console.log('selectedCity: ', selectedCity);
     if (!selectedCity) {
       setErrorStationSelect('먼저 도시를 선택해주세요.');
       return;
@@ -93,13 +96,11 @@ export default function Home() {
     }
     try {
       const stations = await fetchStationNoList(selectedCity, stationName);
-      console.log('stationName: ', stationName);
-      console.log('stations?', stations);
-      console.log('stations.length: ', stations.length);
       if (stations.length === 0) {
         setErrorStationSelect('찾으려는 정류소가 없습니다.');
         setStationList([]);
       } else {
+        const stations: Station[] = await fetchStationNoList(selectedCity, stationName);
         setStationList(stations);
       }
     } catch (err) {
@@ -108,26 +109,26 @@ export default function Home() {
     }
   };
 
-  const handleStationSelect = async (event) => {
+  const handleStationSelect = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const nodeid = event.target.value;
     const station = stationList.find((station) => station.nodeid === nodeid);
     setErrorStationSelect('');
     setSelectedStationName(station?.nodenm);
-    setSelectedStationNo(station?.nodeno);
-    setSelectedStation(station);
+    setSelectedStationNo(station?.nodeno ?? null);
+    setSelectedStation(station ?? null);
     if (station) {
-      loadArrivalInfo(station);
+      await loadArrivalInfo(station);
     }
   };
 
-  const loadArrivalInfo = async (station) => {
+  const loadArrivalInfo = async (station: Station) => {
     console.log('Selected station state:', station);
     if (!station || !station.nodeid) {
       setErrorArrivalInfo('잘못된 접근입니다. 정류소명을 다시 검색하세요.');
       return;
     }
     try {
-      const data = await fetchArrivalInfoList(selectedCity, station.nodeid);
+      const data = await fetchArrivalInfoList(selectedCity!, station.nodeid);
       setArrivalInfo(data);
     } catch (error) {
       console.error('Error loading arrival info:', error);
@@ -135,7 +136,7 @@ export default function Home() {
     }
   };
 
-  const ArrivalTimer = ({ initialArrtime }) => {
+  const ArrivalTimer = ({ initialArrtime }: { initialArrtime: number }) => {
     const [arrtime, setArrtime] = useState(initialArrtime);
 
     useEffect(() => {
@@ -146,7 +147,7 @@ export default function Home() {
       return () => clearInterval(timer);
     }, []);
 
-    const formatArrivalTime = (seconds) => {
+    const formatArrivalTime = (seconds: number) => {
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
       const remainingSeconds = seconds % 60;
@@ -165,7 +166,7 @@ export default function Home() {
     return formatArrivalTime(arrtime);
   };
 
-  const busColors = {
+  const busColors: { [key: string]: string } = {
     일반버스: '#90C73D',
     외곽버스: '#90C73D',
     농어촌버스: '#90C73D',
@@ -208,7 +209,7 @@ export default function Home() {
                   <fieldset>
                     <legend>도시 선택폼</legend>
                     <div>
-                      <Select onChange={handleCitySelect} value={selectedCity}>
+                      <Select onChange={handleCitySelect} value={selectedCity ?? ''}>
                         <option value="">도시 선택</option>
                         {cityList.map((city) => (
                           <option key={city.citycode} value={city.citycode}>
@@ -247,7 +248,7 @@ export default function Home() {
                     <form>
                       <fieldset>
                         <legend>정류소 선택폼</legend>
-                        <Select onChange={handleStationSelect} value={selectedStation}>
+                        <Select onChange={handleStationSelect} value={selectedStation?.nodeid ?? ''}>
                           <option value="">정류소 선택</option>
                           {stationList.map((station) => (
                             <option key={station.nodeid} value={station.nodeid}>
@@ -291,7 +292,7 @@ export default function Home() {
             </div>
           </div>
         )}
-        {cityList.length > 0 && selectedCity === '' && (
+        {cityList.length > 0 && selectedCity === null && (
           <div className={styles.notice}>
             <p>도시를 선택해주세요</p>
             {(errorCitySearch || errorStationSelect) && (
@@ -344,7 +345,9 @@ export default function Home() {
                             <div className={styles.route}>
                               <dl>
                                 <dt>노션(버스)유형</dt>
-                                <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routetp}</dd>
+                                <dd style={{ color: busColors[info.routetp as keyof typeof busColors] }}>
+                                  {info.routetp}
+                                </dd>
                               </dl>
                             </div>
                             <div className={styles.vehicle}>

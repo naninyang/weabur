@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { v4 as uuidv4 } from 'uuid';
 
 export default async function getArrivalInfoList(req: NextApiRequest, res: NextApiResponse) {
   const { nodeId, cityCode } = req.query;
@@ -29,7 +28,11 @@ export default async function getArrivalInfoList(req: NextApiRequest, res: NextA
 
     const arrivalInfo = data.response.body.items.item;
     res.status(200).json(arrivalInfo);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: 'An unexpected error occurred' });
+    }
   }
 }

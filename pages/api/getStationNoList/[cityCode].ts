@@ -25,7 +25,11 @@ export default async function getStationNoList(req: NextApiRequest, res: NextApi
     const stationInfo = data.response.body.items.item;
 
     res.status(200).json(stationInfo);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: 'An unexpected error occurred' });
+    }
   }
 }
