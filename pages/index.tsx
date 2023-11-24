@@ -46,13 +46,18 @@ export default function Home() {
   const [errorStationSearch, setErrorStationSearch] = useState('');
   const [errorStationSelect, setErrorStationSelect] = useState('');
   const [errorArrivalInfo, setErrorArrivalInfo] = useState('');
-  const [error, setError] = useState('');
 
   const handleCitySearch = async (e) => {
     e.preventDefault();
     setErrorCitySearch('');
+    setArrivalInfo([]);
+    setSelectedCity('');
+    setStationName('');
+    setSelectedStationName('');
+    console.log('cityName: ', cityName.length);
     if (cityName.length < 2) {
       setErrorCitySearch('도시명은 최소 2자 이상 입력해야 합니다.');
+      console.log(errorCitySearch);
       return;
     }
     try {
@@ -77,22 +82,28 @@ export default function Home() {
 
   const handleStationSearch = async (e) => {
     e.preventDefault();
-    setErrorStationSearch('');
+    setErrorStationSelect('');
     if (!selectedCity) {
-      setErrorStationSearch('먼저 도시를 선택해주세요.');
+      setErrorStationSelect('먼저 도시를 선택해주세요.');
+      return;
+    }
+    if (stationName.length < 2) {
+      setErrorStationSelect('정류소명은 최소 2자 이상 입력해야 합니다.');
       return;
     }
     try {
       const stations = await fetchStationNoList(selectedCity, stationName);
       console.log('stationName: ', stationName);
+      console.log('stations?', stations);
+      console.log('stations.length: ', stations.length);
       if (stations.length === 0) {
-        setErrorStationSearch('찾으려는 정류소가 없습니다.');
+        setErrorStationSelect('찾으려는 정류소가 없습니다.');
         setStationList([]);
       } else {
         setStationList(stations);
       }
     } catch (err) {
-      setErrorStationSearch('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
+      setErrorStationSelect('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
       setStationList([]);
     }
   };
@@ -101,10 +112,6 @@ export default function Home() {
     const nodeid = event.target.value;
     const station = stationList.find((station) => station.nodeid === nodeid);
     setErrorStationSelect('');
-    if (stationName.length < 2) {
-      setErrorStationSelect('정류소명은 최소 2자 이상 입력해야 합니다.');
-      return;
-    }
     setSelectedStationName(station?.nodenm);
     setSelectedStationNo(station?.nodeno);
     setSelectedStation(station);
@@ -124,7 +131,7 @@ export default function Home() {
       setArrivalInfo(data);
     } catch (error) {
       console.error('Error loading arrival info:', error);
-      setErrorArrivalInfo('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
+      setErrorArrivalInfo('국토교통부 TAGO 서버 오류입니다. 새로고침 하세요.');
     }
   };
 
@@ -156,6 +163,20 @@ export default function Home() {
     };
 
     return formatArrivalTime(arrtime);
+  };
+
+  const busColors = {
+    일반버스: '#90C73D',
+    외곽버스: '#90C73D',
+    농어촌버스: '#90C73D',
+    마을버스: '#90C73D',
+    광역버스: '#FB5852',
+    직행버스: '#FB5852',
+    좌석버스: '#7F49CA',
+    간선버스: '#386DE8',
+    지선버스: '#3CC344',
+    공항버스: '#65A6D2',
+    관광버스: '#F4B542',
   };
 
   return (
@@ -242,6 +263,7 @@ export default function Home() {
             </>
           )}
         </div>
+
         {selectedStationName && (
           <header>
             <h1>
@@ -251,38 +273,19 @@ export default function Home() {
             </h1>
           </header>
         )}
-        {errorCitySearch && (
-          <div className={styles.notice}>
-            <div className={styles.warning}>
-              <p>※ {errorCitySearch}</p>
-            </div>
-          </div>
-        )}
-        {errorStationSearch && (
-          <div className={styles.notice}>
-            <div className={styles.warning}>
-              <p>※ {errorStationSearch}</p>
-            </div>
-          </div>
-        )}
-        {errorStationSelect && (
-          <div className={styles.notice}>
-            <div className={styles.warning}>
-              <p>※ {errorStationSelect}</p>
-            </div>
-          </div>
-        )}
-        {errorArrivalInfo && (
+        {/* {errorArrivalInfo && (
           <div className={styles.notice}>
             <div className={styles.warning}>
               <p>※ {errorArrivalInfo}</p>
             </div>
           </div>
-        )}
+        )} */}
         {cityList.length <= 0 && (
           <div className={styles.notice}>
             <p>도시를 먼저 검색해주세요</p>
             <div className={styles.warning}>
+              {errorCitySearch && <p>※ {errorCitySearch}</p>}
+              {errorStationSelect && <p>※ {errorStationSelect}</p>}
               <p>※ 서울, 대전 지역은 현재 서비스 준비 중입니다.</p>
               <p>※ 대전은 계룡시 한정해서 서비스 중입니다.</p>
             </div>
@@ -291,30 +294,49 @@ export default function Home() {
         {cityList.length > 0 && selectedCity === '' && (
           <div className={styles.notice}>
             <p>도시를 선택해주세요</p>
+            {(errorCitySearch || errorStationSelect) && (
+              <div className={styles.warning}>
+                {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                {errorStationSelect && <p>※ {errorStationSelect}</p>}
+              </div>
+            )}
           </div>
         )}
         {selectedCity && stationList.length <= 0 && (
           <div className={styles.notice}>
             <p>정류소를 검색해주세요</p>
+            {(errorCitySearch || errorStationSelect) && (
+              <div className={styles.warning}>
+                {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                {errorStationSelect && <p>※ {errorStationSelect}</p>}
+              </div>
+            )}
           </div>
         )}
         {selectedStationName == '' && selectedCity && stationList.length > 0 && arrivalInfo.length <= 0 && (
           <div className={styles.notice}>
             <p>정류소를 선택해주세요</p>
+            {(errorCitySearch || errorStationSelect) && (
+              <div className={styles.warning}>
+                {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                {errorStationSelect && <p>※ {errorStationSelect}</p>}
+              </div>
+            )}
           </div>
         )}
-        {selectedStationName && !errorArrivalInfo && (
+        {/* {selectedStationName && !errorArrivalInfo && ( */}
+        {selectedStationName && (
           <>
             <div className={styles.mixed}>
               <div className={styles.schedule}>
                 {arrivalInfo.length > 0 ? (
                   <div className={styles.item}>
                     {arrivalInfo.slice(0, 2).map((info, index) => (
-                      <div key={index} className={styles.nextup}>
+                      <div key={index} className={`${styles.nextup} ${info.arrtime === 0 ? styles.missing : ''}`}>
                         <div className={styles.routeno}>
                           <dl>
                             <dt>노선(버스)번호</dt>
-                            <dd>{info.routeno}</dd>
+                            <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routeno}</dd>
                           </dl>
                         </div>
                         <div className={styles.info}>
@@ -322,7 +344,7 @@ export default function Home() {
                             <div className={styles.route}>
                               <dl>
                                 <dt>노션(버스)유형</dt>
-                                <dd>{info.routetp}</dd>
+                                <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routetp}</dd>
                               </dl>
                             </div>
                             <div className={styles.vehicle}>
@@ -330,7 +352,9 @@ export default function Home() {
                                 <dt>차량유형(저상버스 유무)</dt>
                                 <dd>
                                   {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
-                                  <span>{info.vehicletp}</span>
+                                  <span className={`${info.vehicletp === '일반차량' ? styles.vehicletp : ''}`}>
+                                    {info.vehicletp}
+                                  </span>
                                 </dd>
                               </dl>
                             </div>
@@ -422,7 +446,7 @@ export default function Home() {
                           <div className={styles.routeno}>
                             <dl>
                               <dt>노선(버스)번호</dt>
-                              <dd>{info.routeno}</dd>
+                              <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routeno}</dd>
                             </dl>
                           </div>
                           <div className={styles.info}>
@@ -430,7 +454,7 @@ export default function Home() {
                               <div className={styles.route}>
                                 <dl>
                                   <dt>노션(버스)유형</dt>
-                                  <dd>{info.routetp}</dd>
+                                  <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routetp}</dd>
                                 </dl>
                               </div>
                               <div className={styles.vehicle}>
@@ -438,7 +462,9 @@ export default function Home() {
                                   <dt>차량유형(저상버스 유무)</dt>
                                   <dd>
                                     {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
-                                    <span>{info.vehicletp}</span>
+                                    <span className={`${info.vehicletp === '일반차량' ? styles.vehicletp : ''}`}>
+                                      {info.vehicletp}
+                                    </span>
                                   </dd>
                                 </dl>
                               </div>
