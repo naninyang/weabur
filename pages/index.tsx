@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { v4 as uuidv4 } from 'uuid';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -43,13 +42,17 @@ export default function Home() {
   const [selectedStationName, setSelectedStationName] = useState('');
   const [selectedStationNo, setSelectedStationNo] = useState('');
   const [arrivalInfo, setArrivalInfo] = useState([]);
+  const [errorCitySearch, setErrorCitySearch] = useState('');
+  const [errorStationSearch, setErrorStationSearch] = useState('');
+  const [errorStationSelect, setErrorStationSelect] = useState('');
+  const [errorArrivalInfo, setErrorArrivalInfo] = useState('');
   const [error, setError] = useState('');
 
   const handleCitySearch = async (e) => {
     e.preventDefault();
-    setError('');
+    setErrorCitySearch('');
     if (cityName.length < 2) {
-      setError('도시명은 최소 2자 이상 입력해야 합니다.');
+      setErrorCitySearch('도시명은 최소 2자 이상 입력해야 합니다.');
       return;
     }
     try {
@@ -58,10 +61,10 @@ export default function Home() {
       if (filteredCities.length > 0) {
         setCityList(filteredCities);
       } else {
-        setError('검색된 도시가 없습니다.');
+        setErrorCitySearch('찾으려는 도시가 없습니다.');
       }
     } catch (err) {
-      setError('도시 정보를 불러오는 중 오류가 발생했습니다.');
+      setErrorCitySearch('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
     }
   };
 
@@ -74,23 +77,22 @@ export default function Home() {
 
   const handleStationSearch = async (e) => {
     e.preventDefault();
-    setError('');
+    setErrorStationSearch('');
     if (!selectedCity) {
-      setError('먼저 도시를 선택해주세요.');
+      setErrorStationSearch('먼저 도시를 선택해주세요.');
       return;
     }
     try {
       const stations = await fetchStationNoList(selectedCity, stationName);
-      console.log('selectedCity: ', selectedCity);
       console.log('stationName: ', stationName);
       if (stations.length === 0) {
-        setError('검색된 정류소가 없습니다.');
+        setErrorStationSearch('찾으려는 정류소가 없습니다.');
         setStationList([]);
       } else {
         setStationList(stations);
       }
     } catch (err) {
-      setError('정류소 정보를 불러오는 중 오류가 발생했습니다.');
+      setErrorStationSearch('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
       setStationList([]);
     }
   };
@@ -98,48 +100,33 @@ export default function Home() {
   const handleStationSelect = async (event) => {
     const nodeid = event.target.value;
     const station = stationList.find((station) => station.nodeid === nodeid);
-    console.log('selectedStation: ', selectedStation);
+    setErrorStationSelect('');
     if (stationName.length < 2) {
-      setError('정류소명은 최소 2자 이상 입력해야 합니다.');
+      setErrorStationSelect('정류소명은 최소 2자 이상 입력해야 합니다.');
       return;
     }
-    if (selectedStation) {
-      setSelectedStationName(selectedStation.nodenm);
-      setSelectedStationNo(selectedStation.nodeno);
-    }
+    setSelectedStationName(station?.nodenm);
+    setSelectedStationNo(station?.nodeno);
+    setSelectedStation(station);
     if (station) {
-      setSelectedStationName(station.nodenm);
-      setSelectedStationNo(station.nodeno);
-      setSelectedStation(station);
-      loadArrivalInfo();
+      loadArrivalInfo(station);
     }
   };
 
-  const loadArrivalInfo = async () => {
-    console.log('loadArrivalInfo?');
-    console.log('Selected station state:', selectedStation);
-    console.log('Selected city:', selectedCity);
-    if (!selectedStation || typeof selectedStation === 'string' || !selectedCity) {
-      console.log('정류소와 도시를 선택해 주세요.');
-      setError('정류소와 도시를 선택해 주세요.');
+  const loadArrivalInfo = async (station) => {
+    console.log('Selected station state:', station);
+    if (!station || !station.nodeid) {
+      setErrorArrivalInfo('잘못된 접근입니다. 정류소명을 다시 검색하세요.');
       return;
     }
-
     try {
-      const data = await fetchArrivalInfoList(selectedCity, selectedStation.nodeid);
-      console.log('Arrival data:', data);
+      const data = await fetchArrivalInfoList(selectedCity, station.nodeid);
       setArrivalInfo(data);
     } catch (error) {
       console.error('Error loading arrival info:', error);
-      setError('도착 정보를 불러오는 중 오류가 발생했습니다.');
+      setErrorArrivalInfo('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
     }
   };
-
-  useEffect(() => {
-    if (selectedStation && selectedCity) {
-      loadArrivalInfo();
-    }
-  }, [selectedStation, selectedCity]);
 
   const ArrivalTimer = ({ initialArrtime }) => {
     const [arrtime, setArrtime] = useState(initialArrtime);
@@ -264,6 +251,34 @@ export default function Home() {
             </h1>
           </header>
         )}
+        {errorCitySearch && (
+          <div className={styles.notice}>
+            <div className={styles.warning}>
+              <p>※ {errorCitySearch}</p>
+            </div>
+          </div>
+        )}
+        {errorStationSearch && (
+          <div className={styles.notice}>
+            <div className={styles.warning}>
+              <p>※ {errorStationSearch}</p>
+            </div>
+          </div>
+        )}
+        {errorStationSelect && (
+          <div className={styles.notice}>
+            <div className={styles.warning}>
+              <p>※ {errorStationSelect}</p>
+            </div>
+          </div>
+        )}
+        {errorArrivalInfo && (
+          <div className={styles.notice}>
+            <div className={styles.warning}>
+              <p>※ {errorArrivalInfo}</p>
+            </div>
+          </div>
+        )}
         {cityList.length <= 0 && (
           <div className={styles.notice}>
             <p>도시를 먼저 검색해주세요</p>
@@ -283,54 +298,65 @@ export default function Home() {
             <p>정류소를 검색해주세요</p>
           </div>
         )}
-        {selectedCity && stationList.length > 0 && arrivalInfo.length <= 0 && (
+        {selectedStationName == '' && selectedCity && stationList.length > 0 && arrivalInfo.length <= 0 && (
           <div className={styles.notice}>
             <p>정류소를 선택해주세요</p>
           </div>
         )}
-        {arrivalInfo.length > 0 && (
+        {selectedStationName && !errorArrivalInfo && (
           <>
             <div className={styles.mixed}>
               <div className={styles.schedule}>
-                <div className={styles.item}>
-                  {arrivalInfo.slice(0, 2).map((info, index) => (
-                    <div key={index} className={styles.nextup}>
-                      <div className={styles.routeno}>
-                        <dl>
-                          <dt>노선(버스)번호</dt>
-                          <dd>{info.routeno}</dd>
-                        </dl>
-                      </div>
-                      <div className={styles.info}>
-                        <div className={styles.type}>
-                          <div className={styles.route}>
-                            <dl>
-                              <dt>노션(버스)유형</dt>
-                              <dd>{info.routetp}</dd>
-                            </dl>
+                {arrivalInfo.length > 0 ? (
+                  <div className={styles.item}>
+                    {arrivalInfo.slice(0, 2).map((info, index) => (
+                      <div key={index} className={styles.nextup}>
+                        <div className={styles.routeno}>
+                          <dl>
+                            <dt>노선(버스)번호</dt>
+                            <dd>{info.routeno}</dd>
+                          </dl>
+                        </div>
+                        <div className={styles.info}>
+                          <div className={styles.type}>
+                            <div className={styles.route}>
+                              <dl>
+                                <dt>노션(버스)유형</dt>
+                                <dd>{info.routetp}</dd>
+                              </dl>
+                            </div>
+                            <div className={styles.vehicle}>
+                              <dl>
+                                <dt>차량유형(저상버스 유무)</dt>
+                                <dd>
+                                  {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
+                                  <span>{info.vehicletp}</span>
+                                </dd>
+                              </dl>
+                            </div>
                           </div>
-                          <div className={styles.vehicle}>
+                          <div className={styles.time}>
                             <dl>
-                              <dt>차량유형(저상버스 유무)</dt>
+                              <dt>도착 예정 시간</dt>
                               <dd>
-                                {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
-                                <span>{info.vehicletp}</span>
+                                <ArrivalTimer initialArrtime={info.arrtime} />
                               </dd>
                             </dl>
                           </div>
                         </div>
-                        <div className={styles.time}>
-                          <dl>
-                            <dt>도착 예정 시간</dt>
-                            <dd>
-                              <ArrivalTimer initialArrtime={info.arrtime} />
-                            </dd>
-                          </dl>
-                        </div>
                       </div>
+                    ))}
+                    <div className={styles.nextup}>
+                      <p>다음 스케줄이 없습니다</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className={styles['no-item']}>
+                    <div className={styles.nextup}>
+                      <p>다음 스케줄이 없습니다</p>
+                    </div>
+                  </div>
+                )}
               </div>
               <hr />
               <div className={styles.weather}>
@@ -386,8 +412,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {arrivalInfo.length > 2 && (
-              <div className={styles.next}>
+            <div className={styles.next}>
+              {arrivalInfo.length > 2 && !errorArrivalInfo && (
                 <PerfectScrollbar className={styles['next-list']}>
                   <ul>
                     {arrivalInfo.slice(2).map((info, index) => (
@@ -429,10 +455,15 @@ export default function Home() {
                         </div>
                       </li>
                     ))}
+                    <li>
+                      <div className={styles.nextup}>
+                        <p>다음 스케줄이 없습니다</p>
+                      </div>
+                    </li>
                   </ul>
                 </PerfectScrollbar>
-              </div>
-            )}
+              )}
+            </div>
           </>
         )}
         <footer>

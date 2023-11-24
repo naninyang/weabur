@@ -155,6 +155,16 @@
           strong
             font-weight: normal
 
+      > p
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        color: $hex-fuchsia
+
+    .mixed, .next
+      flex: 1
+
     .mixed
       display: flex
       width: 100%
@@ -207,6 +217,12 @@
 
           .info
             align-items: flex-end
+
+          > p
+            height: rem(128)
+            text-align: center
+            font-size: rem(64)
+            line-height: 1.09375
 
       .weather
         display: flex
@@ -322,6 +338,9 @@
         padding: 0 rem(100)
 
         li
+          display: flex
+          align-items: center
+
           .nextup
             gap: rem(25)
             opacity: .7
@@ -339,6 +358,11 @@
             .time dd
               font-size: rem(48)
               white-space: nowrap
+
+            > p
+              white-space: nowrap
+              font-size: rem(40)
+              line-height: 1.2
 
     footer
       display: flex

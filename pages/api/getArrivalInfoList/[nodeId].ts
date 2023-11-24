@@ -23,15 +23,11 @@ export default async function getArrivalInfoList(req: NextApiRequest, res: NextA
       throw new Error('API call returned an error: ' + data.response.header.resultMsg);
     }
 
-    if (data.response.body.items === '') {
+    if (data.response.body.items.length === 0) {
       return res.status(404).json({ message: 'No arrival information found.' });
     }
 
-    const arrivalInfo = data.response.body.items.item.map((info) => ({
-      ...info,
-      idx: uuidv4(),
-    }));
-
+    const arrivalInfo = data.response.body.items.item;
     res.status(200).json(arrivalInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });

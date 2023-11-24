@@ -28,6 +28,7 @@ export async function fetchArrivalInfoList(cityCode: string, nodeId: string) {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/getArrivalInfoList/${nodeId}?cityCode=${cityCode}`;
     const response = await fetch(url);
+    console.log('response: ', response);
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
     }
