@@ -264,7 +264,31 @@ export default function Home() {
             </h1>
           </header>
         )}
-        {arrivalInfo && (
+        {cityList.length <= 0 && (
+          <div className={styles.notice}>
+            <p>도시를 먼저 검색해주세요</p>
+            <div className={styles.warning}>
+              <p>※ 서울, 대전 지역은 현재 서비스 준비 중입니다.</p>
+              <p>※ 대전은 계룡시 한정해서 서비스 중입니다.</p>
+            </div>
+          </div>
+        )}
+        {cityList.length > 0 && selectedCity === '' && (
+          <div className={styles.notice}>
+            <p>도시를 선택해주세요</p>
+          </div>
+        )}
+        {selectedCity && stationList.length <= 0 && (
+          <div className={styles.notice}>
+            <p>정류소를 검색해주세요</p>
+          </div>
+        )}
+        {selectedCity && stationList.length > 0 && arrivalInfo.length <= 0 && (
+          <div className={styles.notice}>
+            <p>정류소를 선택해주세요</p>
+          </div>
+        )}
+        {arrivalInfo.length > 0 && (
           <>
             <div className={styles.mixed}>
               <div className={styles.schedule}>
