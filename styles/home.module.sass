@@ -132,6 +132,9 @@
           font-size: rem(64)
           line-height: 1
 
+          strong
+            font-weight: normal
+
     .mixed
       display: flex
       width: 100%
@@ -143,23 +146,44 @@
         border-right: rem(3) solid $hex-lime
 
       .schedule, .weather
-        +col
         padding: rem(25)
 
       .schedule
-        display: flex
-        flex-direction: column
-        justify-content: space-between
+        +col-auto
+        position: relative
+        height: rem(404)
+        overflow: hidden
+        min-width: 50%
+
+        &::before, &::after
+          content: ''
+          display: block
+          position: absolute
+          z-index: 1
+          left: 0
+          width: 100%
+          height: rem(50)
+
+        &::before
+          top: 0
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, #000 77.77%)
+
+        &::after
+          bottom: 0
+          background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 77.77%)
+
+        .item
+          display: flex
+          flex-direction: column
+          gap: rem(50)
+          transition: transform .5s cubic-bezier(.4,0,.2,1)
+          transform: translateY(0)
+          padding-top: rem(25)
 
         .nextup
+          gap: rem(25)
           justify-content: space-between
           transition: opacity 1s cubic-bezier(.4,0,.2,1)
-
-          & + .nextup
-            opacity: .7
-
-            & + .nextup
-              display: none
 
           .info
             align-items: flex-end
@@ -169,6 +193,7 @@
         flex-direction: column
         align-items: flex-end
         gap: rem(25)
+        +col
 
         dt
           display: flex
@@ -206,6 +231,7 @@
 
         .now
           display: flex
+          flex-direction: column
           gap: rem(16)
           font-size: rem(48)
           line-height: 1
@@ -214,6 +240,8 @@
             color: $hex-white
 
           strong
+            display: flex
+            gap: rem(16)
             font-weight: normal
             color: $hex-yellow
 
@@ -260,7 +288,7 @@
         position: relative
         overflow: auto
         width: calc(100vw - rem(100))
-        height: rem(178)
+        height: rem(115)
 
       ul
         position: absolute
@@ -279,12 +307,17 @@
             opacity: .7
 
             .routeno dd
+              font-size: rem(96)
               white-space: nowrap
 
             .info
               +col
 
+              .type
+                font-size: rem(36)
+
             .time dd
+              font-size: rem(48)
               white-space: nowrap
 
     footer

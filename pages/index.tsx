@@ -158,11 +158,13 @@ export default function Home() {
       const remainingSeconds = seconds % 60;
 
       if (hours > 0) {
-        return `${hours}시간 ${minutes}분 ${remainingSeconds}초`;
+        return `${hours}시간 ${minutes}분 ${remainingSeconds}초 남음`;
       } else if (minutes > 0) {
-        return `${minutes}분 ${remainingSeconds}초`;
+        return `${minutes}분 ${remainingSeconds}초 남음`;
+      } else if (remainingSeconds > 0) {
+        return `${remainingSeconds}초 남음`;
       } else {
-        return `${remainingSeconds}초`;
+        return <strong>지나감</strong>;
       }
     };
 
@@ -266,56 +268,61 @@ export default function Home() {
           <>
             <div className={styles.mixed}>
               <div className={styles.schedule}>
-                {arrivalInfo.slice(0, 2).map((info, index) => (
-                  <div key={index} className={styles.nextup}>
-                    <div className={styles.routeno}>
-                      <dl>
-                        <dt>노선(버스)번호</dt>
-                        <dd>{info.routeno}</dd>
-                      </dl>
-                    </div>
-                    <div className={styles.info}>
-                      <div className={styles.type}>
-                        <div className={styles.route}>
-                          <dl>
-                            <dt>노션(버스)유형</dt>
-                            <dd>{info.routetp}</dd>
-                          </dl>
+                <div className={styles.item}>
+                  {arrivalInfo.slice(0, 2).map((info, index) => (
+                    <div key={index} className={styles.nextup}>
+                      <div className={styles.routeno}>
+                        <dl>
+                          <dt>노선(버스)번호</dt>
+                          <dd>{info.routeno}</dd>
+                        </dl>
+                      </div>
+                      <div className={styles.info}>
+                        <div className={styles.type}>
+                          <div className={styles.route}>
+                            <dl>
+                              <dt>노션(버스)유형</dt>
+                              <dd>{info.routetp}</dd>
+                            </dl>
+                          </div>
+                          <div className={styles.vehicle}>
+                            <dl>
+                              <dt>차량유형(저상버스 유무)</dt>
+                              <dd>
+                                {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
+                                <span>{info.vehicletp}</span>
+                              </dd>
+                            </dl>
+                          </div>
                         </div>
-                        <div className={styles.vehicle}>
+                        <div className={styles.time}>
                           <dl>
-                            <dt>차량유형(저상버스 유무)</dt>
+                            <dt>도착 예정 시간</dt>
                             <dd>
-                              {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
-                              <span>{info.vehicletp}</span>
+                              <ArrivalTimer initialArrtime={info.arrtime} />
                             </dd>
                           </dl>
                         </div>
                       </div>
-                      <div className={styles.time}>
-                        <dl>
-                          <dt>도착 예정 시간</dt>
-                          <dd>
-                            <ArrivalTimer initialArrtime={info.arrtime} /> 남음
-                          </dd>
-                        </dl>
-                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
               <hr />
               <div className={styles.weather}>
                 <div className={styles.now}>
-                  <span>2023년 11월 20일 오후</span> <strong>4시 49분</strong>
-                  <Image
-                    src="https://cdn.weatherapi.com/weather/64x64/day/116.png"
-                    width="48"
-                    height="48"
-                    unoptimized
-                    priority
-                    alt="Partly cloudy"
-                  />
+                  <span>2023년 11월 20일</span>
+                  <strong>
+                    오후 4시 49분
+                    <Image
+                      src="https://cdn.weatherapi.com/weather/64x64/day/116.png"
+                      width="48"
+                      height="48"
+                      unoptimized
+                      priority
+                      alt="Partly cloudy"
+                    />
+                  </strong>
                 </div>
                 <div className={styles.temp}>
                   <dl>
@@ -390,7 +397,7 @@ export default function Home() {
                               <dl>
                                 <dt>도착 예정 시간</dt>
                                 <dd>
-                                  <ArrivalTimer initialArrtime={info.arrtime} /> 남음
+                                  <ArrivalTimer initialArrtime={info.arrtime} />
                                 </dd>
                               </dl>
                             </div>

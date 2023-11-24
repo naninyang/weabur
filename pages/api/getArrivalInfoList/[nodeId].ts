@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function getArrivalInfoList(req: NextApiRequest, res: NextApiResponse) {
   const { nodeId, cityCode } = req.query;
@@ -26,7 +27,11 @@ export default async function getArrivalInfoList(req: NextApiRequest, res: NextA
       return res.status(404).json({ message: 'No arrival information found.' });
     }
 
-    const arrivalInfo = data.response.body.items.item;
+    const arrivalInfo = data.response.body.items.item.map((info) => ({
+      ...info,
+      idx: uuidv4(),
+    }));
+
     res.status(200).json(arrivalInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
