@@ -151,15 +151,28 @@ export default function Home() {
     }
   };
 
+  const Missing = ({ ArrTime }: { ArrTime: number }) => {
+    const [missingTime, setMissingTime] = useState(ArrTime);
+
+    useEffect(() => {
+      if (missingTime <= 0) return;
+      const timerId = setInterval(() => {
+        setMissingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+      }, 1000);
+      return () => clearInterval(timerId);
+    }, [missingTime]);
+    return missingTime === 0 && <div className={styles.missing} />;
+  };
+
   const ArrivalTimer = ({ initialArrtime }: { initialArrtime: number }) => {
     const [arrtime, setArrtime] = useState(initialArrtime);
 
     useEffect(() => {
-      const timer = setInterval(() => {
+      const countTimer = setInterval(() => {
         setArrtime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
 
-      return () => clearInterval(timer);
+      return () => clearInterval(countTimer);
     }, []);
 
     const formatArrivalTime = (seconds: number) => {
@@ -348,7 +361,8 @@ export default function Home() {
                 {arrivalInfo.length > 0 ? (
                   <div className={styles.item}>
                     {arrivalInfo.slice(0, 2).map((info, index) => (
-                      <div key={index} className={`${styles.nextup} ${info.arrtime === 0 ? styles.missing : ''}`}>
+                      <div key={index} className={styles.nextup}>
+                        <Missing ArrTime={info.arrtime} />
                         <div className={styles.routeno}>
                           <dl>
                             <dt>노선(버스)번호</dt>
@@ -410,6 +424,7 @@ export default function Home() {
                     {arrivalInfo.slice(2).map((info, index) => (
                       <li key={index}>
                         <div className={styles.nextup}>
+                          <Missing ArrTime={info.arrtime} />
                           <div className={styles.routeno}>
                             <dl>
                               <dt>노선(버스)번호</dt>
