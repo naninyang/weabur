@@ -6,7 +6,7 @@ import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
 import Anchor from '@/components/Anchor';
-import { hex, rem } from '@/styles/designSystem';
+import { hex, rem, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
 import Weather from '@/components/Weather';
 
@@ -23,7 +23,7 @@ const SearchIcon = styled.i({
 });
 
 const Select = styled.select({
-  background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${rem(64)} ${rem(64)}`,
+  background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${vw(64, 1920)} ${vw(64, 1920)}`,
 });
 
 const Dev1studio = styled.i({
@@ -136,6 +136,7 @@ export default function Home() {
     setSelectedStationName(station?.nodenm);
     setSelectedStationNo(station?.nodeno ?? null);
     setSelectedStation(station ?? null);
+    setArrivalInfo([]);
     if (station) {
       await loadArrivalInfo(station);
     }
@@ -370,51 +371,100 @@ export default function Home() {
               <div className={styles.schedule}>
                 {arrivalInfo.length > 0 ? (
                   <div className={styles.item}>
-                    {arrivalInfo.slice(0, 2).map((info, index) => (
-                      <div key={index} className={styles.nextup}>
-                        <Missing ArrTime={info.arrtime} />
-                        <div className={styles.routeno}>
-                          <dl>
-                            <dt>노선(버스)번호</dt>
-                            <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routeno}</dd>
-                          </dl>
-                        </div>
-                        <div className={styles.info}>
-                          <div className={styles.type}>
-                            <div className={styles.route}>
+                    {arrivalInfo.length > 1 ? (
+                      <>
+                        {arrivalInfo.slice(0, 2).map((info, index) => (
+                          <div key={index} className={styles.nextup}>
+                            <Missing ArrTime={info.arrtime} />
+                            <div className={styles.routeno}>
                               <dl>
-                                <dt>노션(버스)유형</dt>
-                                <dd style={{ color: busColors[info.routetp as keyof typeof busColors] }}>
-                                  {info.routetp}
-                                </dd>
+                                <dt>노선(버스)번호</dt>
+                                <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routeno}</dd>
                               </dl>
                             </div>
-                            <div className={styles.vehicle}>
-                              <dl>
-                                <dt>차량유형(저상버스 유무)</dt>
-                                <dd>
-                                  {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
-                                  <span className={`${info.vehicletp === '일반차량' ? styles.vehicletp : ''}`}>
-                                    {info.vehicletp}
-                                  </span>
-                                </dd>
-                              </dl>
+                            <div className={styles.info}>
+                              <div className={styles.type}>
+                                <div className={styles.route}>
+                                  <dl>
+                                    <dt>노션(버스)유형</dt>
+                                    <dd style={{ color: busColors[info.routetp as keyof typeof busColors] }}>
+                                      {info.routetp}
+                                    </dd>
+                                  </dl>
+                                </div>
+                                <div className={styles.vehicle}>
+                                  <dl>
+                                    <dt>차량유형(저상버스 유무)</dt>
+                                    <dd>
+                                      {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
+                                      <span className={`${info.vehicletp === '일반차량' ? styles.vehicletp : ''}`}>
+                                        {info.vehicletp}
+                                      </span>
+                                    </dd>
+                                  </dl>
+                                </div>
+                              </div>
+                              <div className={styles.time}>
+                                <dl>
+                                  <dt>도착 예정 시간</dt>
+                                  <dd>
+                                    <ArrivalTimer initialArrtime={info.arrtime} />
+                                  </dd>
+                                </dl>
+                              </div>
                             </div>
                           </div>
-                          <div className={styles.time}>
-                            <dl>
-                              <dt>도착 예정 시간</dt>
-                              <dd>
-                                <ArrivalTimer initialArrtime={info.arrtime} />
-                              </dd>
-                            </dl>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {arrivalInfo.slice(0, 2).map((info, index) => (
+                          <div key={index} className={styles.nextup}>
+                            <Missing ArrTime={info.arrtime} />
+                            <div className={styles.routeno}>
+                              <dl>
+                                <dt>노선(버스)번호</dt>
+                                <dd style={{ color: `${busColors[info.routetp]}` }}>{info.routeno}</dd>
+                              </dl>
+                            </div>
+                            <div className={styles.info}>
+                              <div className={styles.type}>
+                                <div className={styles.route}>
+                                  <dl>
+                                    <dt>노션(버스)유형</dt>
+                                    <dd style={{ color: busColors[info.routetp as keyof typeof busColors] }}>
+                                      {info.routetp}
+                                    </dd>
+                                  </dl>
+                                </div>
+                                <div className={styles.vehicle}>
+                                  <dl>
+                                    <dt>차량유형(저상버스 유무)</dt>
+                                    <dd>
+                                      {info.vehicletp === '저상버스' ? <DisabledIcon /> : <i />}
+                                      <span className={`${info.vehicletp === '일반차량' ? styles.vehicletp : ''}`}>
+                                        {info.vehicletp}
+                                      </span>
+                                    </dd>
+                                  </dl>
+                                </div>
+                              </div>
+                              <div className={styles.time}>
+                                <dl>
+                                  <dt>도착 예정 시간</dt>
+                                  <dd>
+                                    <ArrivalTimer initialArrtime={info.arrtime} />
+                                  </dd>
+                                </dl>
+                              </div>
+                            </div>
                           </div>
+                        ))}
+                        <div className={styles.nextup}>
+                          <p>다음 스케줄이 없습니다</p>
                         </div>
-                      </div>
-                    ))}
-                    <div className={styles.nextup}>
-                      <p>다음 스케줄이 없습니다</p>
-                    </div>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <div className={styles['no-item']}>
@@ -428,7 +478,7 @@ export default function Home() {
               <Weather currentCity={currentCity} />
             </div>
             <div className={styles.next}>
-              {arrivalInfo.length > 2 && !errorArrivalInfo && (
+              {arrivalInfo.length > 2 && (
                 <PerfectScrollbar className={styles['next-list']}>
                   <ul>
                     {arrivalInfo.slice(2).map((info, index) => (

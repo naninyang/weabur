@@ -3,38 +3,38 @@
 
 .weabur
   background-color: $hex-background
-  padding: calc(env(safe-area-inset-top) + rem(50)) calc(env(safe-area-inset-right) + rem(50)) calc(env(safe-area-inset-bottom) + rem(50)) calc(env(safe-area-inset-left) + rem(50))
+  padding: calc(env(safe-area-inset-top) + vw(50, 1920)) calc(env(safe-area-inset-right) + vw(50, 1920)) calc(env(safe-area-inset-bottom) + vw(50, 1920)) calc(env(safe-area-inset-left) + vw(50, 1920))
   min-height: 100dvh
   display: flex
 
   .container
     display: flex
     flex-direction: column
-    flex: 1
-    gap: rem(5)
+    gap: vw(5, 1920)
     background-color: $hex-black
+    width: 100%
 
     .search
       display: flex
       flex-direction: column
-      border: rem(5) solid $hex-yellow
+      border: vw(5, 1920) solid $hex-yellow
 
       hr
         margin: 0
         border: 0
-        border-top: rem(2) solid $hex-yellow
-        border-bottom: rem(3) solid $hex-yellow
+        border-top: vw(2, 1920) solid $hex-yellow
+        border-bottom: vw(3, 1920) solid $hex-yellow
 
       .form-group
         display: flex
-        gap: rem(25)
-        padding: rem(20)
+        gap: vw(25, 1920)
+        padding: vw(20, 1920)
 
         hr
           margin: 0
           border: 0
-          border-left: rem(2) solid $hex-aqua
-          border-right: rem(3) solid $hex-aqua
+          border-left: vw(2, 1920) solid $hex-aqua
+          border-right: vw(3, 1920) solid $hex-aqua
 
         form
           +col
@@ -42,7 +42,7 @@
           fieldset
             display: flex
             width: 100%
-            gap: rem(25)
+            gap: vw(25, 1920)
 
             input, select, button
               background-color: transparent
@@ -51,7 +51,7 @@
               width: 100%
               border: 0
               color: $hex-white
-              font-size: rem(64)
+              font-size: vw(64, 1920)
               line-height: 1
 
             button
@@ -60,14 +60,14 @@
 
               i
                 display: inline-block
-                width: rem(64)
-                height: rem(64)
+                width: vw(64, 1920)
+                height: vw(64, 1920)
 
             div
               +col
 
             select
-              padding-right: rem(128)
+              padding-right: vw(128, 1920)
               width: 100%
               appearance: none
               text-overflow: ellipsis
@@ -75,7 +75,7 @@
               white-space: nowrap
 
     header
-      padding: rem(25)
+      padding: vw(25, 1920)
 
       h1
         display: flex
@@ -84,18 +84,18 @@
 
         i
           display: inline-block
-          width: rem(84)
-          height: rem(84)
+          width: vw(84, 1920)
+          height: vw(84, 1920)
 
         span
-          font-size: rem(96)
+          font-size: vw(96, 1920)
           font-weight: normal
           line-height: 1
           color: $hex-aqua
 
         em
-          padding-left: rem(25)
-          font-size: rem(64)
+          padding-left: vw(25, 1920)
+          font-size: vw(64, 1920)
           font-style: normal
           font-feature-settings: 'ss06'
           line-height: 1
@@ -109,17 +109,17 @@
       justify-content: center
       align-items: center
       text-align: center
-      gap: rem(27)
+      gap: vw(27, 1920)
       flex: 1
 
       > p
-        font-size: rem(128)
+        font-size: vw(128, 1920)
         line-height: 1
         color: $hex-aqua
 
       .warning
         p
-          font-size: rem(64)
+          font-size: vw(64, 1920)
           line-height: 1.171875
           color: $hex-fuchsia
 
@@ -143,7 +143,7 @@
         +screen-reader-only
 
       .routeno
-        font-size: rem(128)
+        font-size: vw(128, 1920)
         line-height: 1
 
       .info
@@ -153,8 +153,8 @@
 
         .type
           display: flex
-          gap: rem(15)
-          font-size: rem(48)
+          gap: vw(15, 1920)
+          font-size: vw(48, 1920)
           line-height: 1
 
           .vehicle dd
@@ -170,11 +170,11 @@
 
           i
             display: block
-            width: rem(35)
-            height: rem(35)
+            width: vw(35, 1920)
+            height: vw(35, 1920)
 
         .time
-          font-size: rem(64)
+          font-size: vw(64, 1920)
           line-height: 1
 
           strong
@@ -187,72 +187,48 @@
         align-items: center
         color: $hex-fuchsia
 
-    .mixed, .next
-      flex: 1
-
     .mixed
       display: flex
       width: 100%
 
       hr
-        margin: rem(25) 0
+        margin: vw(25, 1920) 0
         border: 0
-        border-left: rem(2) solid $hex-lime
-        border-right: rem(3) solid $hex-lime
+        border-left: vw(2, 1920) solid $hex-lime
+        border-right: vw(3, 1920) solid $hex-lime
 
       .schedule, .weather
-        padding: rem(25)
+        padding: vw(25, 1920)
+        height: vw(395, 1920)
 
       .schedule
         display: flex
         +col-auto
-        position: relative
-        height: rem(395)
-        overflow: hidden
         min-width: 50%
-
-        &::before, &::after
-          content: ''
-          display: block
-          position: absolute
-          z-index: 1
-          left: 0
-          width: 100%
-          height: rem(50)
-
-        &::before
-          top: 0
-          background: linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, #000 77.77%)
-
-        &::after
-          bottom: 0
-          background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 77.77%)
 
         .item, .no-item
           .nextup > p
             text-align: center
-            font-size: rem(64)
+            font-size: vw(64, 1920)
             line-height: 1.09375
 
         .item
           display: flex
           flex-direction: column
-          gap: rem(50)
+          gap: vw(50, 1920)
           transition: transform .5s cubic-bezier(.4,0,.2,1)
-          transform: translateY(0)
-          padding-top: rem(25)
+          padding-top: vw(25, 1920)
           width: 100%
 
         .nextup
-          gap: rem(25)
+          gap: vw(25, 1920)
           justify-content: space-between
-          transition: opacity 1s cubic-bezier(.4,0,.2,1)
 
           .info
             align-items: flex-end
 
           > p
-            height: rem(128)
+            height: vw(128, 1920)
 
         .no-item
           display: flex
@@ -266,7 +242,7 @@
         display: flex
         flex-direction: column
         align-items: flex-end
-        gap: rem(25)
+        gap: vw(25, 1920)
         +col
 
         p
@@ -276,59 +252,93 @@
           align-items: center
           flex: 1
           width: 100%
-          font-size: rem(64)
+          font-size: vw(64, 1920)
           line-height: 1.09375
           color: $hex-fuchsia
 
         dt
           display: flex
           align-items: center
-          gap: rem(5)
+          gap: vw(5, 1920)
 
           span
-            font-size: rem(40)
+            font-size: vw(40, 1920)
             line-height: 1.375
 
           i
             display: block
-            width: rem(42)
-            height: rem(42)
+            width: vw(42, 1920)
+            height: vw(42, 1920)
 
         dd
           display: flex
           align-items: center
-          font-size: rem(64)
+          font-size: vw(64, 1920)
           line-height: 1
           color: $hex-yellow
           text-align: right
 
           strong
-            width: rem(135)
+            width: vw(135, 1920)
             font-feature-settings: 'ss06'
             letter-spacing: -0.1em
             font-weight: normal
 
           span
-            width: rem(75)
+            width: vw(75, 1920)
             font-family: Pretendard, sans-serif
-            font-size: rem(32)
+            font-size: vw(32, 1920)
             line-height: 2
 
         .now
           display: flex
           flex-direction: column
-          gap: rem(7)
-          font-size: rem(48)
+          gap: vw(7, 1920)
+          font-size: vw(48, 1920)
           line-height: 1
 
           span
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            gap: rem(7)
             color: $hex-white
+
+            i
+              position: relative
+
+              button
+                display: block
+                width: vw(48, 1920)
+                height: vw(48, 1920)
+
+                &:hover + em
+                  display: inline-flex
+
+              em
+                display: none
+                position: absolute
+                left: 50%
+                top: vw(60, 1920)
+                transform: translateX(-50%)
+                background-color: $hex-white
+                padding: rem(15)
+                font-family: Pretendard, sans-serif
+                font-size: rem(16)
+                font-style: normal
+                line-height: 1.25
+                color: $hex-black
+                white-space: nowrap
 
           strong
             display: flex
             justify-content: flex-end
             font-weight: normal
             color: $hex-yellow
+
+            img
+              width: vw(48, 1920)
+              height: vw(48, 1920)
 
         .temp dl
           display: flex
@@ -348,9 +358,11 @@
                 align-items: center
 
     .next
+      flex: 1
       display: flex
       flex-wrap: nowrap
       position: relative
+      background: url(/background.webp) no-repeat 50% calc(50% + vw(115, 1920))/vw(580, 1920) vw(580, 1920)
 
       &::before, &::after
         content: ''
@@ -359,7 +371,7 @@
         z-index: 1
         top: 0
         bottom: 0
-        width: rem(100)
+        width: vw(100, 1920)
 
       &::before
         left: 0
@@ -372,8 +384,9 @@
       .next-list
         position: relative
         overflow: auto
-        width: calc(100vw - rem(100))
-        height: rem(115)
+        background-color: $hex-black
+        width: calc(100vw - vw(100, 1920))
+        height: vw(115, 1920)
 
       ul
         position: absolute
@@ -383,53 +396,53 @@
         display: grid
         grid-auto-flow: column
         grid-auto-columns: minmax(min-content, max-content)
-        gap: rem(75)
-        padding: 0 rem(100)
+        gap: vw(75, 1920)
+        padding: 0 vw(100, 1920)
 
         li
           display: flex
           align-items: center
 
           .nextup
-            gap: rem(25)
+            gap: vw(25, 1920)
             opacity: .7
 
             .routeno dd
-              font-size: rem(96)
+              font-size: vw(96, 1920)
               white-space: nowrap
 
             .info
               +col
 
               .type
-                font-size: rem(36)
+                font-size: vw(36, 1920)
 
             .time dd
-              font-size: rem(48)
+              font-size: vw(48, 1920)
               white-space: nowrap
 
             > p
               white-space: nowrap
-              font-size: rem(40)
+              font-size: vw(40, 1920)
               line-height: 1.2
 
     footer
       display: flex
       justify-content: space-between
-      padding: rem(21) rem(25)
+      padding: vw(21, 1920) vw(25, 1920)
 
       .copyrights
         display: flex
-        gap: rem(15)
+        gap: vw(15, 1920)
 
         p
           +col-auto
-          font-size: rem(24)
+          font-size: vw(24, 1920)
           line-height: 1
 
           &:first-of-type::after
             content: '•'
-            padding-left: rem(15)
+            padding-left: vw(15, 1920)
 
       .sites
         display: flex
@@ -437,7 +450,7 @@
 
         ul
           display: flex
-          gap: rem(15)
+          gap: vw(15, 1920)
 
           li
             span
@@ -445,8 +458,8 @@
 
             i
               display: block
-              width: rem(24)
-              height: rem(24)
+              width: vw(24, 1920)
+              height: vw(24, 1920)
 
 .loading
   display: flex
@@ -459,9 +472,9 @@
 
   i
     display: block
-    width: rem(30)
-    height: rem(30)
-    border: rem(5) solid transparent
+    width: vw(30, 1920)
+    height: vw(30, 1920)
+    border: vw(5, 1920) solid transparent
     border-radius: 50%
     animation: spin 4s cubic-bezier(.4,0,.2,1) infinite
 
@@ -473,24 +486,24 @@
 
   25%
     transform: rotate(360deg)
-    border: rem(3) solid transparent
+    border: vw(3, 1920) solid transparent
     border-bottom-color: $hex-yellow
     border-left-color: $hex-yellow
 
   50%
     transform: rotate(720deg)
-    border: rem(3) solid transparent
+    border: vw(3, 1920) solid transparent
     border-top-color: $hex-yellow
     border-left-color: $hex-yellow
 
   75%
     transform: rotate(1080deg)
-    border: rem(3) solid transparent
+    border: vw(3, 1920) solid transparent
     border-top-color: $hex-yellow
     border-right-color: $hex-yellow
 
   100%
     transform: rotate(1440deg)
-    border: rem(3) solid transparent
+    border: vw(3, 1920) solid transparent
     border-right-color: $hex-yellow
     border-bottom-color: $hex-yellow

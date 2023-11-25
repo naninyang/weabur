@@ -20,6 +20,10 @@ const DustIcon = styled.i({
   background: `url(${images.icons.dust}) no-repeat 50% 50%/contain`,
 });
 
+const InfoIcon = styled.button({
+  background: `url(${images.icons.info}) no-repeat 50% 50%/contain`,
+});
+
 export default function Weather({ currentCity }: { currentCity: string }) {
   const [seoulDate, setSeoulDate] = useState<string>('');
   const [seoulTime, setSeoulTime] = useState<string>('');
@@ -93,7 +97,17 @@ export default function Weather({ currentCity }: { currentCity: string }) {
       ) : weatherInfo ? (
         <>
           <div className={styles.now}>
-            <span>{seoulDate}</span>
+            <span>
+              <i>
+                <InfoIcon type="button" />
+                <em>
+                  선택한 시 또는 군의
+                  <br />
+                  시청, 군청 위치의 날씨 정보입니다.
+                </em>
+              </i>
+              {seoulDate}
+            </span>
             <strong>
               {seoulTime}
               <Image

@@ -39,9 +39,7 @@ export async function fetchArrivalInfoList(cityCode: number, nodeId: string): Pr
     }
 
     const data: ArrivalInfo[] = await response.json();
-
     data.sort((a: ArrivalInfo, b: ArrivalInfo) => a.arrtime - b.arrtime);
-    console.log('Sorted API Data:', data);
     return data;
   } catch (error) {
     console.error('Fetch operation error:', error);
