@@ -86,7 +86,10 @@ export default function Weather({ currentCity }: { currentCity: string }) {
   return (
     <div className={styles.weather}>
       {isLoading ? (
-        <p>Loading weather data...</p>
+        <p className={styles.loading}>
+          <span>로딩 중</span>
+          <i />
+        </p>
       ) : weatherInfo ? (
         <>
           <div className={styles.now}>

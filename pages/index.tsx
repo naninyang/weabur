@@ -6,7 +6,7 @@ import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
 import Anchor from '@/components/Anchor';
-import { rem } from '@/styles/designSystem';
+import { hex, rem } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
 import Weather from '@/components/Weather';
 
@@ -23,7 +23,7 @@ const SearchIcon = styled.i({
 });
 
 const Select = styled.select({
-  background: `url(${images.icons.select}) no-repeat 100% 50%/${rem(64)} ${rem(64)}`,
+  background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${rem(64)} ${rem(64)}`,
 });
 
 const Dev1studio = styled.i({
@@ -61,6 +61,7 @@ export default function Home() {
   const [errorStationSearch, setErrorStationSearch] = useState<string>('');
   const [errorStationSelect, setErrorStationSelect] = useState<string>('');
   const [errorArrivalInfo, setErrorArrivalInfo] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCitySearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -109,6 +110,9 @@ export default function Home() {
     if (stationName.length < 2) {
       setErrorStationSelect('정류소명은 최소 2자 이상 입력해야 합니다.');
       return;
+    }
+    if (stationName.length >= 2) {
+      setIsLoading(true);
     }
     try {
       const stations = await fetchStationNoList(selectedCity, stationName);
@@ -331,7 +335,7 @@ export default function Home() {
             )}
           </div>
         )}
-        {selectedCity && stationList.length <= 0 && (
+        {selectedCity && stationList.length <= 0 && !isLoading && (
           <div className={styles.notice}>
             <p>정류소를 검색해주세요</p>
             {(errorCitySearch || errorStationSelect) && (
@@ -352,6 +356,12 @@ export default function Home() {
               </div>
             )}
           </div>
+        )}
+        {isLoading && stationList.length === 0 && (
+          <p className={styles.loading}>
+            <span>로딩 중</span>
+            <i />
+          </p>
         )}
         {/* {selectedStationName && !errorArrivalInfo && ( */}
         {selectedStationName && (

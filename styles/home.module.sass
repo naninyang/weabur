@@ -67,8 +67,12 @@
               +col
 
             select
+              padding-right: rem(128)
               width: 100%
               appearance: none
+              text-overflow: ellipsis
+              overflow: hidden
+              white-space: nowrap
 
     header
       padding: rem(25)
@@ -443,3 +447,50 @@
               display: block
               width: rem(24)
               height: rem(24)
+
+.loading
+  display: flex
+  justify-content: center
+  align-items: center
+  flex: 1
+
+  span
+    +screen-reader-only
+
+  i
+    display: block
+    width: rem(30)
+    height: rem(30)
+    border: rem(5) solid transparent
+    border-radius: 50%
+    animation: spin 4s cubic-bezier(.4,0,.2,1) infinite
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+    border-right-color: $hex-yellow
+    border-bottom-color: $hex-yellow
+
+  25%
+    transform: rotate(360deg)
+    border: rem(3) solid transparent
+    border-bottom-color: $hex-yellow
+    border-left-color: $hex-yellow
+
+  50%
+    transform: rotate(720deg)
+    border: rem(3) solid transparent
+    border-top-color: $hex-yellow
+    border-left-color: $hex-yellow
+
+  75%
+    transform: rotate(1080deg)
+    border: rem(3) solid transparent
+    border-top-color: $hex-yellow
+    border-right-color: $hex-yellow
+
+  100%
+    transform: rotate(1440deg)
+    border: rem(3) solid transparent
+    border-right-color: $hex-yellow
+    border-bottom-color: $hex-yellow
