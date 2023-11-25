@@ -274,6 +274,17 @@
         gap: rem(25)
         +col
 
+        p
+          display: flex
+          flex-direction: column
+          justify-content: center
+          align-items: center
+          flex: 1
+          width: 100%
+          font-size: rem(64)
+          line-height: 1.09375
+          color: $hex-fuchsia
+
         dt
           display: flex
           align-items: center
@@ -297,7 +308,7 @@
           text-align: right
 
           strong
-            width: rem(96)
+            width: rem(135)
             font-feature-settings: 'ss06'
             letter-spacing: -0.1em
             font-weight: normal
@@ -320,6 +331,7 @@
 
           strong
             display: flex
+            justify-content: flex-end
             gap: rem(16)
             font-weight: normal
             color: $hex-yellow
@@ -420,3 +432,24 @@
           +col-auto
           font-size: rem(24)
           line-height: 1
+
+          &:first-of-type::after
+            content: '•'
+            padding-left: rem(15)
+
+      .sites
+        display: flex
+        justify-content: flex-end
+
+        ul
+          display: flex
+          gap: rem(15)
+
+          li
+            span
+              +screen-reader-only
+
+            i
+              display: block
+              width: rem(24)
+              height: rem(24)

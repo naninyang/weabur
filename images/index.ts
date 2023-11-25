@@ -7,4 +7,11 @@ export const images = {
     select: require('./icons/select.svg'),
     temp: require('./icons/temp.svg'),
   },
+  family: {
+    dev1studio: require('./family/dev1studio.svg'),
+    develog: require('./family/develog.svg'),
+    github: require('./family/github.svg'),
+    postype: require('./family/postype.svg'),
+    velog: require('./family/velog.svg'),
+  },
 };

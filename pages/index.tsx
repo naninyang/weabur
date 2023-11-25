@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
+import Anchor from '@/components/Anchor';
 import { rem } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
+import Weather from '@/components/Weather';
 
 const DisabledIcon = styled.i({
   background: `url(${images.icons.disabled}) no-repeat 50% 50%/contain`,
-});
-
-const DustIcon = styled.i({
-  background: `url(${images.icons.dust}) no-repeat 50% 50%/contain`,
 });
 
 const LocationIcon = styled.i({
@@ -29,14 +26,31 @@ const Select = styled.select({
   background: `url(${images.icons.select}) no-repeat 100% 50%/${rem(64)} ${rem(64)}`,
 });
 
-const TempIcon = styled.i({
-  background: `url(${images.icons.temp}) no-repeat 50% 50%/contain`,
+const Dev1studio = styled.i({
+  background: `url(${images.family.dev1studio}) no-repeat 50% 50%/contain`,
+});
+
+const Develog = styled.i({
+  background: `url(${images.family.develog}) no-repeat 50% 50%/contain`,
+});
+
+const Github = styled.i({
+  background: `url(${images.family.github}) no-repeat 50% 50%/contain`,
+});
+
+const Postype = styled.i({
+  background: `url(${images.family.postype}) no-repeat 50% 50%/contain`,
+});
+
+const Velog = styled.i({
+  background: `url(${images.family.velog}) no-repeat 50% 50%/contain`,
 });
 
 export default function Home() {
   const [cityName, setCityName] = useState<string>('');
   const [cityList, setCityList] = useState<City[]>([]);
   const [selectedCity, setSelectedCity] = useState<number | null>(null);
+  const [currentCity, setCurrentCity] = useState<string>('');
   const [stationName, setStationName] = useState<string>('');
   const [stationList, setStationList] = useState<Station[]>([]);
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
@@ -57,7 +71,6 @@ export default function Home() {
     setSelectedStationName('');
     if (cityName.length < 2) {
       setErrorCitySearch('도시명은 최소 2자 이상 입력해야 합니다.');
-      console.log(errorCitySearch);
       return;
     }
     try {
@@ -75,6 +88,10 @@ export default function Home() {
 
   const handleCitySelect = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const cityCode = parseInt(event.target.value, 10);
+    const selectedCity = cityList.find((city) => city.citycode);
+    if (selectedCity) {
+      setCurrentCity(selectedCity.cityname);
+    }
     if (!isNaN(cityCode)) {
       setSelectedCity(cityCode);
       setStationList([]);
@@ -85,7 +102,6 @@ export default function Home() {
   const handleStationSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorStationSelect('');
-    console.log('selectedCity: ', selectedCity);
     if (!selectedCity) {
       setErrorStationSelect('먼저 도시를 선택해주세요.');
       return;
@@ -122,7 +138,6 @@ export default function Home() {
   };
 
   const loadArrivalInfo = async (station: Station) => {
-    console.log('Selected station state:', station);
     if (!station || !station.nodeid) {
       setErrorArrivalInfo('잘못된 접근입니다. 정류소명을 다시 검색하세요.');
       return;
@@ -264,7 +279,6 @@ export default function Home() {
             </>
           )}
         </div>
-
         {selectedStationName && (
           <header>
             <h1>
@@ -287,8 +301,9 @@ export default function Home() {
             <div className={styles.warning}>
               {errorCitySearch && <p>※ {errorCitySearch}</p>}
               {errorStationSelect && <p>※ {errorStationSelect}</p>}
-              <p>※ 서울, 대전 지역은 현재 서비스 준비 중입니다.</p>
+              <p>※ 서울, 대전, 원주 지역은 준비 중입니다.</p>
               <p>※ 대전은 계룡시 한정해서 서비스 중입니다.</p>
+              <p>※ 원주는 횡성군 한정해서 서비스 중입니다.</p>
             </div>
           </div>
         )}
@@ -386,58 +401,7 @@ export default function Home() {
                 )}
               </div>
               <hr />
-              <div className={styles.weather}>
-                <div className={styles.now}>
-                  <span>2023년 11월 20일</span>
-                  <strong>
-                    오후 4시 49분
-                    <Image
-                      src="https://cdn.weatherapi.com/weather/64x64/day/116.png"
-                      width="48"
-                      height="48"
-                      unoptimized
-                      priority
-                      alt="Partly cloudy"
-                    />
-                  </strong>
-                </div>
-                <div className={styles.temp}>
-                  <dl>
-                    <dt>
-                      <span>현재기온</span>
-                      <TempIcon />
-                    </dt>
-                    <dd>
-                      <strong>10</strong>
-                      <span>°C</span>
-                    </dd>
-                  </dl>
-                </div>
-                <div className={styles.dust}>
-                  <dl>
-                    <div>
-                      <dt>
-                        <span>미세먼지</span>
-                        <DustIcon />
-                      </dt>
-                      <dd>
-                        <strong>10</strong>
-                        <span>㎍/㎥</span>
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>
-                        <span>초미세먼지</span>
-                        <DustIcon />
-                      </dt>
-                      <dd>
-                        <strong>10</strong>
-                        <span>㎍/㎥</span>
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-              </div>
+              <Weather currentCity={currentCity} />
             </div>
             <div className={styles.next}>
               {arrivalInfo.length > 2 && !errorArrivalInfo && (
@@ -497,10 +461,43 @@ export default function Home() {
         )}
         <footer>
           <div className={styles.copyrights}>
-            <p>Copyrights WeaBur.</p>
-            <p>저작권자 웨버.</p>
+            <p>Copyrights WeaBur</p>
+            <p>저작권자 웨버</p>
           </div>
-          <div className={styles.sites}></div>
+          <div className={styles.sites}>
+            <ul>
+              <li>
+                <Anchor href="https://github.com/naninyang/weabur">
+                  <span>Github Repo</span>
+                  <Github />
+                </Anchor>
+              </li>
+              <li>
+                <Anchor href="https://dev1stud.io">
+                  <span>DEV1L.studio</span>
+                  <Dev1studio />
+                </Anchor>
+              </li>
+              <li>
+                <Anchor href="https://develog.dev1stud.io">
+                  <span>Develog</span>
+                  <Develog />
+                </Anchor>
+              </li>
+              <li>
+                <Anchor href="https://dev-il-studio.postype.com">
+                  <span>Postype</span>
+                  <Postype />
+                </Anchor>
+              </li>
+              <li>
+                <Anchor href="https://velog.io/@naninyang">
+                  <span>Velog</span>
+                  <Velog />
+                </Anchor>
+              </li>
+            </ul>
+          </div>
         </footer>
       </div>
     </main>

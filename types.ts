@@ -22,3 +22,8 @@ export interface ArrivalInfo {
   routetp: string;
   vehicletp: string;
 }
+
+export type CityLocation = {
+  cityTude: string;
+  cityName: string;
+};
