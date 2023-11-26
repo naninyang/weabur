@@ -3,9 +3,12 @@
 
 .weabur
   background-color: $hex-background
-  padding: calc(env(safe-area-inset-top) + vw(50, 1920)) calc(env(safe-area-inset-right) + vw(50, 1920)) calc(env(safe-area-inset-bottom) + vw(50, 1920)) calc(env(safe-area-inset-left) + vw(50, 1920))
+  padding: calc(env(safe-area-inset-top) + vw(25, 430)) calc(env(safe-area-inset-right) + vw(25, 430)) calc(env(safe-area-inset-bottom) + vw(25, 430)) calc(env(safe-area-inset-left) + vw(25, 430))
   min-height: 100dvh
   display: flex
+
+  +mq(minMedium)
+    padding: calc(env(safe-area-inset-top) + vw(50, 1920)) calc(env(safe-area-inset-right) + vw(50, 1920)) calc(env(safe-area-inset-bottom) + vw(50, 1920)) calc(env(safe-area-inset-left) + vw(50, 1920))
 
   .container
     display: flex
@@ -115,7 +118,7 @@
 
     header
       display: flex
-      padding: vw(25, 430)
+      padding: vw(17, 430) vw(25, 430)
 
       +mq(minMedium)
         padding: vw(25, 1920)
@@ -125,7 +128,7 @@
 
         s
           position: absolute
-          top: vw(6, 430)
+          top: vw(2, 430)
           left: 0
           display: inline-block
 
@@ -223,8 +226,11 @@
         +screen-reader-only
 
       .routeno
-        font-size: vw(128, 1920)
+        font-size: vw(32, 430)
         line-height: 1
+
+        +mq(minMedium)
+          font-size: vw(128, 1920)
 
       .info
         display: flex
@@ -233,9 +239,13 @@
 
         .type
           display: flex
-          gap: vw(15, 1920)
-          font-size: vw(48, 1920)
+          gap: vw(7, 430)
+          font-size: vw(16, 430)
           line-height: 1
+
+          +mq(minMedium)
+            gap: vw(15, 1920)
+            font-size: vw(48, 1920)
 
           .vehicle dd
             display: flex
@@ -250,12 +260,19 @@
 
           i
             display: block
-            width: vw(35, 1920)
-            height: vw(35, 1920)
+            width: vw(17, 430)
+            height: vw(17, 430)
+
+            +mq(minMedium)
+              width: vw(35, 1920)
+              height: vw(35, 1920)
 
         .time
-          font-size: vw(64, 1920)
+          font-size: vw(20, 430)
           line-height: 1
+
+          +mq(minMedium)
+            font-size: vw(64, 1920)
 
           strong
             font-weight: normal
@@ -302,16 +319,23 @@
         .item, .no-item
           .nextup > p
             text-align: center
-            font-size: vw(64, 1920)
+            font-size: vw(32, 1920)
             line-height: 1.09430
+
+            +mq(minMedium)
+              font-size: vw(64, 1920)
 
         .item
           display: flex
           flex-direction: column
-          gap: vw(50, 1920)
+          gap: vw(25, 430)
           transition: transform .5s cubic-bezier(.4,0,.2,1)
-          padding-top: vw(25, 1920)
+          padding-top: vw(17, 430)
           width: 100%
+
+          +mq(minMedium)
+            gap: vw(50, 1920)
+            padding-top: vw(25, 1920)
 
         .nextup
           gap: vw(25, 1920)
@@ -321,7 +345,10 @@
             align-items: flex-end
 
           > p
-            height: vw(128, 1920)
+            height: vw(128, 430)
+
+            +mq(minMedium)
+              height: vw(128, 1920)
 
         .no-item
           display: flex
@@ -403,20 +430,22 @@
             width: vw(43, 430)
             font-family: Pretendard, sans-serif
             font-size: vw(16, 430)
+            line-height: vw(32, 430)
 
             +mq(minMedium)
               width: vw(75, 1920)
               font-size: vw(32, 1920)
-              line-height: 2
+              line-height: vw(32, 1920)
 
         .now
           display: flex
           gap: vw(7, 430)
-          font-size: vw(20, 430)
+          font-size: vw(18, 430)
           line-height: 1
 
           +mq(minMedium)
             gap: vw(7, 1920)
+            font-size: vw(48, 1920)
             flex-direction: column
 
           span
@@ -499,7 +528,9 @@
       display: flex
       flex-wrap: nowrap
       position: relative
-      background: url(/background.webp) no-repeat 50% calc(50% + vw(115, 1920))/vw(580, 1920) vw(580, 1920)
+
+      +mq(minMedium)
+        background: url(/background.webp) no-repeat 50% calc(50% + vw(115, 1920))/vw(580, 1920) vw(580, 1920)
 
       &::before, &::after
         content: ''
@@ -508,7 +539,10 @@
         z-index: 1
         top: 0
         bottom: 0
-        width: vw(100, 1920)
+        width: vw(50, 430)
+
+        +mq(minMedium)
+          width: vw(100, 1920)
 
       &::before
         left: 0
@@ -522,72 +556,112 @@
         position: relative
         overflow: auto
         background-color: $hex-black
-        width: calc(100vw - vw(100, 1920))
-        height: vw(115, 1920)
+        width: calc(100vw - vw(50, 430))
+        height: vw(65, 430)
+
+        +mq(minMedium)
+          width: calc(100vw - vw(100, 1920))
+          height: vw(115, 1920)
 
       ul
         position: absolute
-        top: 50%
+        top: 0
         left: 0
-        transform: translateY(-50%)
         display: grid
         grid-auto-flow: column
         grid-auto-columns: minmax(min-content, max-content)
-        gap: vw(75, 1920)
-        padding: 0 vw(100, 1920)
+        gap: vw(37, 430)
+        padding: 0 vw(50, 430)
+
+        +mq(minMedium)
+          top: 50%
+          gap: vw(75, 1920)
+          transform: translateY(-50%)
+          padding: 0 vw(100, 1920)
 
         li
           display: flex
           align-items: center
 
           .nextup
-            gap: vw(25, 1920)
+            gap: vw(25, 430)
             opacity: .7
 
+            +mq(minMedium)
+              gap: vw(25, 1920)
+
             .routeno dd
-              font-size: vw(96, 1920)
               white-space: nowrap
+
+              +mq(minMedium)
+                font-size: vw(96, 1920)
 
             .info
               +col
 
               .type
-                font-size: vw(36, 1920)
+                +mq(minMedium)
+                  font-size: vw(36, 1920)
 
             .time dd
-              font-size: vw(48, 1920)
               white-space: nowrap
+
+              +mq(minMedium)
+                font-size: vw(48, 1920)
 
             > p
               white-space: nowrap
-              font-size: vw(40, 1920)
               line-height: 1.2
+
+              +mq(minMedium)
+                font-size: vw(40, 1920)
 
     footer
       display: flex
-      justify-content: space-between
-      padding: vw(21, 1920) vw(25, 1920)
+      padding: vw(21, 430) vw(25, 430)
+
+      +mq(maxSmall)
+        flex-direction: column
+        gap: vw(15, 430)
+
+      +mq(minMedium)
+        justify-content: space-between
+        padding: vw(21, 1920) vw(25, 1920)
 
       .copyrights
         display: flex
-        gap: vw(15, 1920)
+        gap: vw(15, 430)
+
+        +mq(minMedium)
+          gap: vw(15, 1920)
 
         p
           +col-auto
-          font-size: vw(24, 1920)
+          font-size: vw(16, 430)
           line-height: 1
+
+          +mq(minMedium)
+            font-size: vw(24, 1920)
 
           &:first-of-type::after
             content: '•'
-            padding-left: vw(15, 1920)
+            padding-left: vw(15, 430)
+
+            +mq(minMedium)
+              padding-left: vw(15, 1920)
 
       .sites
         display: flex
-        justify-content: flex-end
+
+        +mq(minMedium)
+          justify-content: flex-end
 
         ul
           display: flex
-          gap: vw(15, 1920)
+          gap: vw(15, 430)
+
+          +mq(minMedium)
+            gap: vw(15, 1920)
 
           li
             span
@@ -595,8 +669,12 @@
 
             i
               display: block
-              width: vw(24, 1920)
-              height: vw(24, 1920)
+              width: vw(16, 430)
+              height: vw(16, 430)
+
+              +mq(minMedium)
+                width: vw(24, 1920)
+                height: vw(24, 1920)
 
 .loading
   display: flex
