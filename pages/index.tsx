@@ -302,17 +302,19 @@ export default function Home() {
             )}
           </div>
         )}
-        {selectedCity && stationList.length <= 0 && !isLoading && (
+        {selectedCity && stationList.length <= 0 && (
           <>
-            <div className={styles.notice}>
-              <p>정류소를 검색해주세요</p>
-              {(errorCitySearch || errorStationSelect) && (
-                <div className={styles.warning}>
-                  {errorCitySearch && <p>※ {errorCitySearch}</p>}
-                  {errorStationSelect && <p>※ {errorStationSelect}</p>}
-                </div>
-              )}
-            </div>
+            {!isLoading && (
+              <div className={styles.notice}>
+                <p>정류소를 검색해주세요</p>
+                {(errorCitySearch || errorStationSelect) && (
+                  <div className={styles.warning}>
+                    {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                    {errorStationSelect && <p>※ {errorStationSelect}</p>}
+                  </div>
+                )}
+              </div>
+            )}
             {isLoading && (
               <p className={styles.loading}>
                 <span>로딩 중</span>
