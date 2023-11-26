@@ -275,14 +275,24 @@
         flex-direction: column-reverse
 
       hr
-        margin: vw(25, 1920) 0
+        margin: 0 vw(25, 430)
         border: 0
-        border-left: vw(2, 1920) solid $hex-lime
-        border-right: vw(3, 1920) solid $hex-lime
+
+        +mq(maxSmall)
+          border-top: vw(2, 1920) solid $hex-lime
+          border-bottom: vw(3, 1920) solid $hex-lime
+
+        +mq(minMedium)
+          margin: vw(25, 1920) 0
+          border-left: vw(2, 1920) solid $hex-lime
+          border-right: vw(3, 1920) solid $hex-lime
 
       .schedule, .weather
-        padding: vw(25, 1920)
-        height: vw(395, 1920)
+        padding: vw(7, 430) vw(25, 430)
+
+        +mq(minMedium)
+          padding: vw(25, 1920)
+          height: vw(395, 1920)
 
       .schedule
         display: flex
@@ -325,10 +335,11 @@
         display: flex
         flex-direction: column
         align-items: flex-end
-        gap: vw(25, 1920)
+        gap: vw(7, 430)
 
-        +mq(minSmall)
+        +mq(minMedium)
           +col
+          gap: vw(25, 1920)
 
         p
           display: flex
@@ -337,31 +348,47 @@
           align-items: center
           flex: 1
           width: 100%
-          font-size: vw(64, 1920)
+          font-size: vw(32, 430)
           line-height: 1.09430
           color: $hex-fuchsia
+
+          +mq(minMedium)
+            font-size: vw(64, 1920)
 
         dt
           display: flex
           align-items: center
-          gap: vw(5, 1920)
+          gap: vw(5, 430)
+
+          +mq(minMedium)
+            gap: vw(5, 1920)
 
           span
-            font-size: vw(40, 1920)
+            font-size: vw(20, 430)
             line-height: 1.430
+
+            +mq(minMedium)
+              font-size: vw(40, 1920)
 
           i
             display: block
-            width: vw(42, 1920)
-            height: vw(42, 1920)
+            width: vw(20, 430)
+            height: vw(20, 430)
+
+            +mq(minMedium)
+              width: vw(42, 1920)
+              height: vw(42, 1920)
 
         dd
           display: flex
           align-items: center
-          font-size: vw(64, 1920)
+          font-size: vw(32, 430)
           line-height: 1
           color: $hex-yellow
           text-align: right
+
+          +mq(minMedium)
+            font-size: vw(64, 1920)
 
           strong
             width: vw(135, 1920)
@@ -369,16 +396,23 @@
             letter-spacing: -0.1em
             font-weight: normal
 
+            +mq(minMedium)
+              width: vw(135, 1920)
+
           span
-            width: vw(75, 1920)
+            width: vw(75, 430)
             font-family: Pretendard, sans-serif
-            font-size: vw(32, 1920)
-            line-height: 2
+            font-size: vw(32, 430)
+
+            +mq(minMedium)
+              width: vw(75, 1920)
+              font-size: vw(32, 1920)
+              line-height: 2
 
         .now
           display: flex
-          gap: vw(28, 1920)
-          font-size: vw(48, 1920)
+          gap: vw(7, 430)
+          font-size: vw(20, 430)
           line-height: 1
 
           +mq(minMedium)
@@ -389,16 +423,23 @@
             display: flex
             justify-content: flex-end
             align-items: center
-            gap: rem(7)
+            gap: vw(7, 430)
             color: $hex-white
+
+            +mq(minMedium)
+              gap: vw(7, 1920)
 
             i
               position: relative
 
               button
                 display: block
-                width: vw(48, 1920)
-                height: vw(48, 1920)
+                width: vw(20, 430)
+                height: vw(20, 430)
+
+                +mq(minMedium)
+                  width: vw(48, 1920)
+                  height: vw(48, 1920)
 
                 &:hover + em
                   display: inline-flex
@@ -407,16 +448,21 @@
                 display: none
                 position: absolute
                 left: 50%
-                top: vw(60, 1920)
+                top: vw(60, 430)
                 transform: translateX(-50%)
                 background-color: $hex-white
-                padding: rem(15)
+                padding: vw(15, 430)
                 font-family: Pretendard, sans-serif
-                font-size: rem(16)
+                font-size: vw(20, 430)
                 font-style: normal
                 line-height: 1.25
                 color: $hex-black
                 white-space: nowrap
+
+                +mq(minMedium)
+                  top: vw(60, 1920)
+                  padding: vw(15, 1920)
+                  font-size: vw(16, 1920)
 
           strong
             display: flex
@@ -425,8 +471,12 @@
             color: $hex-yellow
 
             img
-              width: vw(48, 1920)
-              height: vw(48, 1920)
+              width: vw(20, 430)
+              height: vw(20, 430)
+
+              +mq(minMedium)
+                width: vw(48, 1920)
+                height: vw(48, 1920)
 
         .temp dl
           display: flex
