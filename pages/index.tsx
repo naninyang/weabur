@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -6,9 +6,11 @@ import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
 import Anchor from '@/components/Anchor';
-import { hex, rem, vw } from '@/styles/designSystem';
-import styles from '@/styles/home.module.sass';
+import Missing from '@/components/Missing';
+import ArrivalTimer from '@/components/ArrivalTimer';
 import Weather from '@/components/Weather';
+import { hex, vw } from '@/styles/designSystem';
+import styles from '@/styles/home.module.sass';
 
 const DisabledIcon = styled.i({
   background: `url(${images.icons.disabled}) no-repeat 50% 50%/contain`,
@@ -154,49 +156,6 @@ export default function Home() {
       console.error('Error loading arrival info:', error);
       setErrorArrivalInfo('국토교통부 TAGO 서버 오류입니다. 새로고침 하세요.');
     }
-  };
-
-  const Missing = ({ ArrTime }: { ArrTime: number }) => {
-    const [missingTime, setMissingTime] = useState(ArrTime);
-
-    useEffect(() => {
-      if (missingTime <= 0) return;
-      const timerId = setInterval(() => {
-        setMissingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-      }, 1000);
-      return () => clearInterval(timerId);
-    }, [missingTime]);
-    return missingTime === 0 && <div className={styles.missing} />;
-  };
-
-  const ArrivalTimer = ({ initialArrtime }: { initialArrtime: number }) => {
-    const [arrtime, setArrtime] = useState(initialArrtime);
-
-    useEffect(() => {
-      const countTimer = setInterval(() => {
-        setArrtime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-      }, 1000);
-
-      return () => clearInterval(countTimer);
-    }, []);
-
-    const formatArrivalTime = (seconds: number) => {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const remainingSeconds = seconds % 60;
-
-      if (hours > 0) {
-        return `${hours}시간 ${minutes}분 ${remainingSeconds}초 남음`;
-      } else if (minutes > 0) {
-        return `${minutes}분 ${remainingSeconds}초 남음`;
-      } else if (remainingSeconds > 0) {
-        return `${remainingSeconds}초 남음`;
-      } else {
-        return <strong>지나감</strong>;
-      }
-    };
-
-    return formatArrivalTime(arrtime);
   };
 
   const busColors: { [key: string]: string } = {
