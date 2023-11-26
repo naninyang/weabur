@@ -391,7 +391,7 @@
             font-size: vw(64, 1920)
 
           strong
-            width: vw(135, 1920)
+            width: vw(70, 430)
             font-feature-settings: 'ss06'
             letter-spacing: -0.1em
             font-weight: normal
@@ -400,9 +400,9 @@
               width: vw(135, 1920)
 
           span
-            width: vw(75, 430)
+            width: vw(43, 430)
             font-family: Pretendard, sans-serif
-            font-size: vw(32, 430)
+            font-size: vw(16, 430)
 
             +mq(minMedium)
               width: vw(75, 1920)
@@ -447,22 +447,21 @@
               em
                 display: none
                 position: absolute
-                left: 50%
-                top: vw(60, 430)
-                transform: translateX(-50%)
+                top: vw(30, 430)
+                left: 0
                 background-color: $hex-white
-                padding: vw(15, 430)
+                padding: rem(15)
                 font-family: Pretendard, sans-serif
-                font-size: vw(20, 430)
+                font-size: rem(20)
                 font-style: normal
                 line-height: 1.25
                 color: $hex-black
                 white-space: nowrap
 
                 +mq(minMedium)
+                  transform: translateX(-50%)
+                  left: 50%
                   top: vw(60, 1920)
-                  padding: vw(15, 1920)
-                  font-size: vw(16, 1920)
 
           strong
             display: flex
