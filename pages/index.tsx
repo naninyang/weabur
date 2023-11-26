@@ -258,8 +258,10 @@ export default function Home() {
         </div>
         {selectedStationName && (
           <header>
-            <h1>
+            <s>
               <LocationIcon />
+            </s>
+            <h1>
               <span aria-label="정류소 이름">{selectedStationName}</span>
               {selectedStationNo && <em aria-label="정류소 번호">{selectedStationNo}</em>}
             </h1>
@@ -296,15 +298,23 @@ export default function Home() {
           </div>
         )}
         {selectedCity && stationList.length <= 0 && !isLoading && (
-          <div className={styles.notice}>
-            <p>정류소를 검색해주세요</p>
-            {(errorCitySearch || errorStationSelect) && (
-              <div className={styles.warning}>
-                {errorCitySearch && <p>※ {errorCitySearch}</p>}
-                {errorStationSelect && <p>※ {errorStationSelect}</p>}
-              </div>
+          <>
+            <div className={styles.notice}>
+              <p>정류소를 검색해주세요</p>
+              {(errorCitySearch || errorStationSelect) && (
+                <div className={styles.warning}>
+                  {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                  {errorStationSelect && <p>※ {errorStationSelect}</p>}
+                </div>
+              )}
+            </div>
+            {isLoading && (
+              <p className={styles.loading}>
+                <span>로딩 중</span>
+                <i />
+              </p>
             )}
-          </div>
+          </>
         )}
         {selectedStationName == '' && selectedCity && stationList.length > 0 && arrivalInfo.length <= 0 && (
           <div className={styles.notice}>
@@ -316,12 +326,6 @@ export default function Home() {
               </div>
             )}
           </div>
-        )}
-        {isLoading && stationList.length === 0 && (
-          <p className={styles.loading}>
-            <span>로딩 중</span>
-            <i />
-          </p>
         )}
         {/* {selectedStationName && !errorArrivalInfo && ( */}
         {selectedStationName && (

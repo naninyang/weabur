@@ -30,6 +30,9 @@
         gap: vw(25, 1920)
         padding: vw(20, 1920)
 
+        +mq(maxExtraSmall)
+          flex-direction: column
+
         hr
           margin: 0
           border: 0
@@ -75,21 +78,25 @@
               white-space: nowrap
 
     header
+      display: flex
       padding: vw(25, 1920)
 
-      h1
-        display: flex
-        align-items: flex-end
-        font-weight: normal
+      s
+        display: inline-block
+        margin-top: vw(12, 1920)
 
-        i
-          display: inline-block
-          width: vw(84, 1920)
-          height: vw(84, 1920)
+      i
+        display: inline-block
+        width: vw(84, 1920)
+        height: vw(84, 1920)
+
+      h1
+        position: relative
 
         span
           font-size: vw(96, 1920)
           font-weight: normal
+          word-break: break-all
           line-height: 1
           color: $hex-aqua
 
