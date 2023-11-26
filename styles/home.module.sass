@@ -10,34 +10,54 @@
   .container
     display: flex
     flex-direction: column
-    gap: vw(5, 1920)
+    gap: vw(5, 430)
     background-color: $hex-black
     width: 100%
+
+    +mq(minMedium)
+      gap: vw(5, 1920)
 
     .search
       display: flex
       flex-direction: column
-      border: vw(5, 1920) solid $hex-yellow
+      border: vw(5, 430) solid $hex-yellow
+
+      +mq(minMedium)
+        border: vw(5, 1920) solid $hex-yellow
 
       hr
         margin: 0
         border: 0
-        border-top: vw(2, 1920) solid $hex-yellow
-        border-bottom: vw(3, 1920) solid $hex-yellow
+        border-top: vw(2, 430) solid $hex-yellow
+        border-bottom: vw(3, 430) solid $hex-yellow
+
+        +mq(minMedium)
+          border-top: vw(2, 1920) solid $hex-yellow
+          border-bottom: vw(3, 1920) solid $hex-yellow
 
       .form-group
         display: flex
-        gap: vw(25, 1920)
-        padding: vw(20, 1920)
+        gap: vw(25, 430)
+        padding: vw(20, 430)
 
-        +mq(maxExtraSmall)
+        +mq(minMedium)
+          gap: vw(25, 1920)
+          padding: vw(20, 1920)
+
+        +mq(maxSmall)
           flex-direction: column
 
         hr
           margin: 0
           border: 0
-          border-left: vw(2, 1920) solid $hex-aqua
-          border-right: vw(3, 1920) solid $hex-aqua
+
+          +mq(maxSmall)
+            border-top: vw(2, 430) solid $hex-aqua
+            border-bottom: vw(3, 430) solid $hex-aqua
+
+          +mq(minMedium)
+            border-left: vw(2, 1920) solid $hex-aqua
+            border-right: vw(3, 1920) solid $hex-aqua
 
         form
           +col
@@ -45,17 +65,26 @@
           fieldset
             display: flex
             width: 100%
-            gap: vw(25, 1920)
+            gap: vw(25, 430)
+
+            +mq(minMedium)
+              gap: vw(25, 1920)
 
             input, select, button
+              padding: 0
               background-color: transparent
 
             input, select
               width: 100%
+              height: vw(36, 430)
               border: 0
               color: $hex-white
-              font-size: vw(64, 1920)
+              font-size: vw(36, 430)
               line-height: 1
+
+              +mq(minMedium)
+                height: vw(64, 1920)
+                font-size: vw(64, 1920)
 
             button
               span
@@ -63,52 +92,86 @@
 
               i
                 display: inline-block
-                width: vw(64, 1920)
-                height: vw(64, 1920)
+                width: vw(36, 430)
+                height: vw(36, 430)
+
+                +mq(minMedium)
+                  width: vw(64, 1920)
+                  height: vw(64, 1920)
 
             div
               +col
 
             select
-              padding-right: vw(128, 1920)
+              padding-right: vw(128, 430)
               width: 100%
               appearance: none
               text-overflow: ellipsis
               overflow: hidden
               white-space: nowrap
 
+              +mq(minMedium)
+                padding-right: vw(128, 1920)
+
     header
       display: flex
-      padding: vw(25, 1920)
+      padding: vw(25, 430)
 
-      s
-        display: inline-block
-        margin-top: vw(12, 1920)
-
-      i
-        display: inline-block
-        width: vw(84, 1920)
-        height: vw(84, 1920)
+      +mq(minMedium)
+        padding: vw(25, 1920)
 
       h1
         position: relative
 
-        span
-          font-size: vw(96, 1920)
-          font-weight: normal
-          word-break: break-all
-          line-height: 1
-          color: $hex-aqua
+        s
+          position: absolute
+          top: vw(6, 430)
+          left: 0
+          display: inline-block
 
-        em
-          padding-left: vw(25, 1920)
-          font-size: vw(64, 1920)
-          font-style: normal
-          font-feature-settings: 'ss06'
-          line-height: 1
-          color: $hex-white
-          opacity: .5
-          letter-spacing: -0.1em
+          +mq(minMedium)
+            top: vw(12, 1920)
+
+        i
+          display: inline-block
+          width: vw(24, 430)
+          height: vw(24, 430)
+          position: relative
+
+          +mq(minMedium)
+            width: vw(84, 1920)
+            height: vw(84, 1920)
+
+        > span
+          display: block
+          padding-left: vw(24, 430)
+
+          +mq(minMedium)
+            padding-left: vw(84, 1920)
+
+          span
+            font-size: vw(24, 430)
+            font-weight: normal
+            word-break: break-all
+            line-height: 1
+            color: $hex-aqua
+
+            +mq(minMedium)
+              font-size: vw(96, 1920)
+
+          em
+            padding-left: vw(25, 430)
+            font-size: vw(32, 430)
+            font-style: normal
+            font-feature-settings: 'ss06'
+            line-height: 1
+            color: $hex-white
+            opacity: .5
+            letter-spacing: -0.1em
+
+            +mq(minMedium)
+              padding-left: vw(25, 1920)
+              font-size: vw(64, 1920)
 
     .notice
       display: flex
@@ -116,19 +179,28 @@
       justify-content: center
       align-items: center
       text-align: center
-      gap: vw(27, 1920)
+      gap: vw(27, 430)
       flex: 1
 
+      +mq(minMedium)
+        gap: vw(27, 1920)
+
       > p
-        font-size: vw(128, 1920)
+        font-size: vw(32, 430)
         line-height: 1
         color: $hex-aqua
 
+        +mq(minMedium)
+          font-size: vw(128, 1920)
+
       .warning
         p
-          font-size: vw(64, 1920)
+          font-size: vw(24, 430)
           line-height: 1.171875
           color: $hex-fuchsia
+
+          +mq(minMedium)
+            font-size: vw(64, 1920)
 
     .nextup
       display: flex
@@ -199,6 +271,9 @@
       display: flex
       width: 100%
 
+      +mq(maxSmall)
+        flex-direction: column-reverse
+
       hr
         margin: vw(25, 1920) 0
         border: 0
@@ -218,7 +293,7 @@
           .nextup > p
             text-align: center
             font-size: vw(64, 1920)
-            line-height: 1.09375
+            line-height: 1.09430
 
         .item
           display: flex
@@ -251,7 +326,9 @@
         flex-direction: column
         align-items: flex-end
         gap: vw(25, 1920)
-        +col
+
+        +mq(minSmall)
+          +col
 
         p
           display: flex
@@ -261,7 +338,7 @@
           flex: 1
           width: 100%
           font-size: vw(64, 1920)
-          line-height: 1.09375
+          line-height: 1.09430
           color: $hex-fuchsia
 
         dt
@@ -271,7 +348,7 @@
 
           span
             font-size: vw(40, 1920)
-            line-height: 1.375
+            line-height: 1.430
 
           i
             display: block
@@ -300,10 +377,13 @@
 
         .now
           display: flex
-          flex-direction: column
-          gap: vw(7, 1920)
+          gap: vw(28, 1920)
           font-size: vw(48, 1920)
           line-height: 1
+
+          +mq(minMedium)
+            gap: vw(7, 1920)
+            flex-direction: column
 
           span
             display: flex

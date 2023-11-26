@@ -9,7 +9,7 @@ import Anchor from '@/components/Anchor';
 import Missing from '@/components/Missing';
 import ArrivalTimer from '@/components/ArrivalTimer';
 import Weather from '@/components/Weather';
-import { hex, vw } from '@/styles/designSystem';
+import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
 
 const DisabledIcon = styled.i({
@@ -25,7 +25,10 @@ const SearchIcon = styled.i({
 });
 
 const Select = styled.select({
-  background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${vw(64, 1920)} ${vw(64, 1920)}`,
+  background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${vw(36, 430)} ${vw(36, 430)}`,
+  [mq.minMedium]: {
+    background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${vw(64, 1920)} ${vw(64, 1920)}`,
+  },
 });
 
 const Dev1studio = styled.i({
@@ -258,12 +261,14 @@ export default function Home() {
         </div>
         {selectedStationName && (
           <header>
-            <s>
-              <LocationIcon />
-            </s>
             <h1>
-              <span aria-label="정류소 이름">{selectedStationName}</span>
-              {selectedStationNo && <em aria-label="정류소 번호">{selectedStationNo}</em>}
+              <s>
+                <LocationIcon />
+              </s>
+              <span>
+                <span aria-label="정류소 이름">{selectedStationName}</span>
+                {selectedStationNo && <em aria-label="정류소 번호">{selectedStationNo}</em>}
+              </span>
             </h1>
           </header>
         )}
