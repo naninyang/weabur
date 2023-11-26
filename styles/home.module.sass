@@ -124,33 +124,32 @@
         padding: vw(25, 1920)
 
       h1
-        position: relative
+        display: flex
 
         s
-          position: absolute
-          top: vw(2, 430)
-          left: 0
           display: inline-block
 
-          +mq(minMedium)
-            top: vw(12, 1920)
-
-        i
-          display: inline-block
-          width: vw(24, 430)
-          height: vw(24, 430)
-          position: relative
+          +mq(maxSmall)
+            display: flex
+            margin-top: vw(2, 430)
 
           +mq(minMedium)
-            width: vw(84, 1920)
-            height: vw(84, 1920)
+            margin-top: vw(12, 1920)
+
+          i
+            display: inline-block
+            width: vw(24, 430)
+            height: vw(24, 430)
+            position: relative
+
+            +mq(minMedium)
+              width: vw(84, 1920)
+              height: vw(84, 1920)
 
         > span
-          display: block
-          padding-left: vw(24, 430)
-
-          +mq(minMedium)
-            padding-left: vw(84, 1920)
+          +mq(maxSmall)
+            display: flex
+            flex-direction: column
 
           span
             font-size: vw(24, 430)
@@ -159,18 +158,23 @@
             line-height: 1
             color: $hex-aqua
 
+            +mq(maxSmall)
+              vertical-align: super
+
             +mq(minMedium)
               font-size: vw(96, 1920)
 
           em
-            padding-left: vw(25, 430)
-            font-size: vw(32, 430)
+            font-size: vw(20, 430)
             font-style: normal
             font-feature-settings: 'ss06'
             line-height: 1
             color: $hex-white
             opacity: .5
             letter-spacing: -0.1em
+
+            +mq(maxSmall)
+              line-height: vw(24, 430)
 
             +mq(minMedium)
               padding-left: vw(25, 1920)
@@ -319,7 +323,7 @@
         .item, .no-item
           .nextup > p
             text-align: center
-            font-size: vw(32, 1920)
+            font-size: vw(24, 430)
             line-height: 1.09430
 
             +mq(minMedium)
@@ -527,10 +531,12 @@
       flex: 1
       display: flex
       flex-wrap: nowrap
+      flex-direction: column
       position: relative
 
-      +mq(minMedium)
-        background: url(/background.webp) no-repeat 50% calc(50% + vw(115, 1920))/vw(580, 1920) vw(580, 1920)
+      .dummy
+        flex: 1
+        background: url(/background.webp) no-repeat 50% 100%/contain
 
       &::before, &::after
         content: ''
@@ -687,11 +693,16 @@
 
   i
     display: block
-    width: vw(30, 1920)
-    height: vw(30, 1920)
-    border: vw(5, 1920) solid transparent
+    width: vw(30, 430)
+    height: vw(30, 430)
+    border: vw(5, 430) solid transparent
     border-radius: 50%
     animation: spin 4s cubic-bezier(.4,0,.2,1) infinite
+
+    +mq(minMedium)
+      width: vw(30, 1920)
+      height: vw(30, 1920)
+      border: vw(5, 1920) solid transparent
 
 @keyframes spin
   0%
@@ -701,24 +712,44 @@
 
   25%
     transform: rotate(360deg)
-    border: vw(3, 1920) solid transparent
+    border: vw(3, 430) solid transparent
     border-bottom-color: $hex-yellow
     border-left-color: $hex-yellow
+
+    +mq(minMedium)
+      border: vw(3, 1920) solid transparent
+      border-bottom-color: $hex-yellow
+      border-left-color: $hex-yellow
 
   50%
     transform: rotate(720deg)
-    border: vw(3, 1920) solid transparent
+    border: vw(3, 430) solid transparent
     border-top-color: $hex-yellow
     border-left-color: $hex-yellow
 
+    +mq(minMedium)
+      border: vw(3, 1920) solid transparent
+      border-top-color: $hex-yellow
+      border-left-color: $hex-yellow
+
   75%
     transform: rotate(1080deg)
-    border: vw(3, 1920) solid transparent
+    border: vw(3, 430) solid transparent
     border-top-color: $hex-yellow
     border-right-color: $hex-yellow
 
+    +mq(minMedium)
+      border: vw(3, 1920) solid transparent
+      border-top-color: $hex-yellow
+      border-left-color: $hex-yellow
+
   100%
     transform: rotate(1440deg)
-    border: vw(3, 1920) solid transparent
+    border: vw(3, 430) solid transparent
     border-right-color: $hex-yellow
     border-bottom-color: $hex-yellow
+
+    +mq(minMedium)
+      border: vw(3, 1920) solid transparent
+      border-top-color: $hex-yellow
+      border-left-color: $hex-yellow

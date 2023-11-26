@@ -499,6 +499,7 @@ export default function Home() {
                   </ul>
                 </PerfectScrollbar>
               )}
+              <div className={styles.dummy} />
             </div>
           </>
         )}
