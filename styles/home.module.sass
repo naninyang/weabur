@@ -125,6 +125,7 @@
 
       h1
         display: flex
+        font-weight: normal
 
         s
           display: inline-block
@@ -153,7 +154,6 @@
 
           span
             font-size: vw(24, 430)
-            font-weight: normal
             word-break: break-all
             line-height: 1
             color: $hex-aqua
@@ -193,7 +193,7 @@
         gap: vw(27, 1920)
 
       > p
-        font-size: vw(32, 430)
+        font-size: vw(27, 430)
         line-height: 1
         color: $hex-aqua
 
@@ -201,10 +201,18 @@
           font-size: vw(128, 1920)
 
       .warning
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+
         p
           font-size: vw(24, 430)
           line-height: 1.171875
           color: $hex-fuchsia
+
+          +mq(maxSmall)
+            display: flex
+            flex-direction: column
 
           +mq(minMedium)
             font-size: vw(64, 1920)
@@ -432,7 +440,7 @@
 
           span
             width: vw(55, 430)
-            font-family: Pretendard, sans-serif
+            font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
             font-size: vw(16, 430)
             line-height: vw(32, 430)
 
@@ -693,16 +701,11 @@
 
   i
     display: block
-    width: vw(30, 430)
-    height: vw(30, 430)
-    border: vw(5, 430) solid transparent
+    width: rem(50)
+    height: rem(50)
+    border: rem(5) solid transparent
     border-radius: 50%
     animation: spin 4s cubic-bezier(.4,0,.2,1) infinite
-
-    +mq(minMedium)
-      width: vw(30, 1920)
-      height: vw(30, 1920)
-      border: vw(5, 1920) solid transparent
 
 @keyframes spin
   0%
@@ -712,44 +715,24 @@
 
   25%
     transform: rotate(360deg)
-    border: vw(3, 430) solid transparent
+    border: rem(5) solid transparent
     border-bottom-color: $hex-yellow
     border-left-color: $hex-yellow
-
-    +mq(minMedium)
-      border: vw(3, 1920) solid transparent
-      border-bottom-color: $hex-yellow
-      border-left-color: $hex-yellow
 
   50%
     transform: rotate(720deg)
-    border: vw(3, 430) solid transparent
+    border: rem(5) solid transparent
     border-top-color: $hex-yellow
     border-left-color: $hex-yellow
 
-    +mq(minMedium)
-      border: vw(3, 1920) solid transparent
-      border-top-color: $hex-yellow
-      border-left-color: $hex-yellow
-
   75%
     transform: rotate(1080deg)
-    border: vw(3, 430) solid transparent
+    border: rem(5) solid transparent
     border-top-color: $hex-yellow
     border-right-color: $hex-yellow
 
-    +mq(minMedium)
-      border: vw(3, 1920) solid transparent
-      border-top-color: $hex-yellow
-      border-left-color: $hex-yellow
-
   100%
     transform: rotate(1440deg)
-    border: vw(3, 430) solid transparent
+    border: rem(5) solid transparent
     border-right-color: $hex-yellow
     border-bottom-color: $hex-yellow
-
-    +mq(minMedium)
-      border: vw(3, 1920) solid transparent
-      border-top-color: $hex-yellow
-      border-left-color: $hex-yellow

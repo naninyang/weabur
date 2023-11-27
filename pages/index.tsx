@@ -80,12 +80,15 @@ export default function Home() {
       return;
     }
     try {
+      setIsLoading(true);
       const cities: City[] = await fetchCityCodeList();
       const filteredCities: City[] = cities.filter((city: City) => city.cityname.includes(cityName));
       if (filteredCities.length > 0) {
+        setIsLoading(false);
         setCityList(filteredCities);
       } else {
         setErrorCitySearch('찾으려는 도시가 없습니다.');
+        setIsLoading(false);
       }
     } catch (err) {
       setErrorCitySearch('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
@@ -93,6 +96,13 @@ export default function Home() {
   };
 
   const handleCitySelect = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setArrivalInfo([]);
+    setSelectedStationName('');
+    setCurrentCity('');
+    setStationList([]);
+    setSelectedCity(null);
+    setSelectedStation(null);
+    setStationName('');
     const cityCode = parseInt(event.target.value, 10);
     const selectedCity = cityList.find((city) => city.citycode);
     if (selectedCity) {
@@ -107,7 +117,10 @@ export default function Home() {
 
   const handleStationSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrorStationSelect('');
+    setArrivalInfo([]);
+    setSelectedStationName('');
+    setStationList([]);
+    setSelectedStation(null);
     if (!selectedCity) {
       setErrorStationSelect('먼저 도시를 선택해주세요.');
       return;
@@ -116,10 +129,8 @@ export default function Home() {
       setErrorStationSelect('정류소명은 최소 2자 이상 입력해야 합니다.');
       return;
     }
-    if (stationName.length >= 2) {
-      setIsLoading(true);
-    }
     try {
+      setIsLoading(true);
       const stations = await fetchStationNoList(selectedCity, stationName);
       if (stations.length === 0) {
         setErrorStationSelect('찾으려는 정류소가 없습니다.');
@@ -127,10 +138,12 @@ export default function Home() {
       } else {
         const stations: Station[] = await fetchStationNoList(selectedCity, stationName);
         setStationList(stations);
+        setIsLoading(false);
       }
     } catch (err) {
       setErrorStationSelect('국토교통부 TAGO 서버 오류입니다. 1분 뒤 시도하세요.');
       setStationList([]);
+      setIsLoading(false);
     }
   };
 
@@ -280,16 +293,32 @@ export default function Home() {
           </div>
         )} */}
         {cityList.length <= 0 && (
-          <div className={styles.notice}>
-            <p>도시를 먼저 검색해주세요</p>
-            <div className={styles.warning}>
-              {errorCitySearch && <p>※ {errorCitySearch}</p>}
-              {errorStationSelect && <p>※ {errorStationSelect}</p>}
-              <p>※ 서울, 대전, 원주 지역은 준비 중입니다.</p>
-              <p>※ 대전은 계룡시 한정해서 서비스 중입니다.</p>
-              <p>※ 원주는 횡성군 한정해서 서비스 중입니다.</p>
-            </div>
-          </div>
+          <>
+            {!isLoading && (
+              <div className={styles.notice}>
+                <p>도시를 먼저 검색해주세요</p>
+                <div className={styles.warning}>
+                  {errorCitySearch && <p>※ {errorCitySearch}</p>}
+                  {errorStationSelect && <p>※ {errorStationSelect}</p>}
+                  <p>
+                    ※ 서울, 대전, 원주 지역은 <span>준비 중입니다.</span>
+                  </p>
+                  <p>
+                    ※ 대전은 계룡시 한정해서 <span>서비스 중입니다.</span>
+                  </p>
+                  <p>
+                    ※ 원주는 횡성군 한정해서 <span>서비스 중입니다.</span>
+                  </p>
+                </div>
+              </div>
+            )}
+            {isLoading && (
+              <p className={styles.loading}>
+                <span>도시 목록 불러오는 중</span>
+                <i />
+              </p>
+            )}
+          </>
         )}
         {cityList.length > 0 && selectedCity === null && (
           <div className={styles.notice}>
@@ -317,7 +346,7 @@ export default function Home() {
             )}
             {isLoading && (
               <p className={styles.loading}>
-                <span>로딩 중</span>
+                <span>정류소 목록 불러오는 중</span>
                 <i />
               </p>
             )}
