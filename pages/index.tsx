@@ -189,6 +189,7 @@ export default function Home() {
     공항버스: '#65A6D2',
     관광버스: '#F4B542',
   };
+
   const timestamp = Date.now();
   return (
     <main className={styles.weabur}>

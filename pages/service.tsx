@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { images } from '@/images';
+import Image from 'next/image';
 import styled from '@emotion/styled';
+import { images } from '@/images';
+import Seo from '@/components/Seo';
 import Nav from '@/components/Nav';
 import styles from '@/styles/service.module.sass';
-import Image from 'next/image';
 
 const Pwa = styled.i({
   background: `url(${images.misc.pwa}) no-repeat 50% 50%/contain`,
@@ -26,8 +27,10 @@ export default function Service() {
     }
   };
 
+  const timestamp = Date.now();
   return (
     <main className={styles.service}>
+      <Seo pageTitle="서비스 소개" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
       <Nav />
       <div className={styles.container}>
         <section>
