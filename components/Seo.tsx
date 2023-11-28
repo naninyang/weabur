@@ -14,11 +14,11 @@ const Seo = ({ pageTitle, pageDescription, pageImg, pageImgWidth, pageImgHeight,
   const router = useRouter();
   const pagePath = router.asPath;
   const domain = 'https://weabur.dev1stud.io';
-
   const title = pageTitle;
-  const defaultTitle = '버스정보와 날씨정보를 알려드려요';
+  const defaultTitle = '웨버 Weabur';
   const finTitle = `${title} - ${defaultTitle}` || defaultTitle;
-  const description = pageDescription;
+  const defaultDescription = '버스정보와 날씨정보를 알려드려요';
+  const description = pageDescription || defaultDescription;
   const url = `${domain}${pagePath}`;
   const imgUrl = `${pageImg}`;
   const imgWidth = pageImgWidth || 1280;
