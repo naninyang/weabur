@@ -19,5 +19,6 @@ export const images = {
     cross: require('./misc/cross.svg'),
     logo: require('./misc/logo.svg'),
     menu: require('./misc/menu.svg'),
+    pwa: require('./misc/pwa.svg'),
   },
 };

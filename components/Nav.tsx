@@ -60,18 +60,25 @@ const Container = styled.div({
   },
   '& ol': {
     display: 'flex',
-    gap: rem(25),
+    gap: rem(12),
     [mq.maxSmall]: {
       width: '100%',
       justifyContent: 'flex-end',
     },
+    [mq.minMedium]: {
+      gap: rem(25),
+    },
     '& li': {
       '& a': {
-        fontSize: rem(20),
+        fontSize: rem(16),
         fontFamily:
           "Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif",
         lineHeight: 1.25,
+        letterSpacing: '-.07em',
         color: hex.white,
+        [mq.minMedium]: {
+          fontSize: rem(20),
+        },
         '&:hover, &:focus': {
           textDecoration: 'underline',
         },
@@ -90,8 +97,8 @@ export function useDesktop() {
 }
 
 const Item = styled(Anchor)<ItemProps>(({ currentRouter }) => ({
-  fontWeight: currentRouter ? 300 : 500,
-  opacity: currentRouter ? 0.7 : undefined,
+  fontWeight: currentRouter ? 500 : 300,
+  opacity: currentRouter ? undefined : 0.7,
 }));
 
 const ButtonMenu = styled.button({});
@@ -180,15 +187,6 @@ export default function Nav() {
                   currentRouter={router.pathname === '/service' ? true : false}
                 >
                   서비스 소개
-                </Item>
-              </li>
-              <li>
-                <Item
-                  href="/contact-us"
-                  aria-current={router.pathname === '/contact-us' ? true : false}
-                  currentRouter={router.pathname === '/contact-us' ? true : false}
-                >
-                  문의하기
                 </Item>
               </li>
               <li>
