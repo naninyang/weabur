@@ -241,8 +241,18 @@
         font-size: vw(32, 430)
         line-height: 1
 
+        dd
+          max-width: vw(700, 430)
+          width: 100%
+          overflow: hidden
+          white-space: nowrap
+          text-overflow: ellipsis
+
         +mq(minMedium)
           font-size: vw(128, 1920)
+
+          dd
+            max-width: vw(170, 430)
 
       .info
         display: flex
