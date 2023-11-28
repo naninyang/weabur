@@ -44,14 +44,16 @@
     right: 0
     left: 0
     padding: rem(50)
-    backdrop-filter: blur(rem(20))
     z-index: 1070
-    mask-image: linear-gradient(to bottom, black 77.77%, transparent 100%)
-    background-color: rgba($hex-background, .75)
 
     button
       top: rem(50)
       right: rem(50)
+
+    +mq(maxSmall)
+      backdrop-filter: blur(rem(20))
+      mask-image: linear-gradient(to bottom, black 77.77%, transparent 100%)
+      background-color: rgba($hex-background, .75)
 
   .container
     display: flex
