@@ -28,8 +28,6 @@ const Seo = ({ pageTitle, pageDescription, pageImg, pageImgWidth, pageImgHeight,
   return (
     <Head>
       <title>{finTitle}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-      <meta name="format-detection" content="telephone=no" />
       <meta name="description" content={description} />
       <meta property="og:locale" content="ko_KR" />
       <meta property="og:url" content={url} />
