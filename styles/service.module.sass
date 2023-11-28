@@ -23,6 +23,20 @@
   +mq(minMedium)
     overflow-x: scroll
     padding: calc(env(safe-area-inset-top) + vw(25, 1920)) calc(env(safe-area-inset-right) + vw(25, 1920)) calc(env(safe-area-inset-bottom) + vw(25, 1920)) calc(env(safe-area-inset-left) + vw(25, 1920))
+    scrollbar-width: thin
+    scrollbar-color: #fff #000
+
+    &::-webkit-scrollbar
+      width: rem(5)
+      background-color: $hex-background
+
+    &::-webkit-scrollbar-track
+      background-color: transparent
+
+    &::-webkit-scrollbar-thumb
+      background: linear-gradient(45deg, #4098D9, #DD41BD)
+      border: rem(5) solid $hex-background
+      border-radius: rem(10)
 
   div[class^="css"]
     position: fixed
