@@ -9,6 +9,7 @@ import Anchor from '@/components/Anchor';
 import Missing from '@/components/Missing';
 import ArrivalTimer from '@/components/ArrivalTimer';
 import Weather from '@/components/Weather';
+import Nav from '@/components/Nav';
 import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
 
@@ -272,6 +273,7 @@ export default function Home() {
             </>
           )}
         </div>
+        <Nav />
         {selectedStationName && (
           <header>
             <h1>

@@ -15,4 +15,9 @@ export const images = {
     postype: require('./family/postype.svg'),
     velog: require('./family/velog.svg'),
   },
+  misc: {
+    cross: require('./misc/cross.svg'),
+    logo: require('./misc/logo.svg'),
+    menu: require('./misc/menu.svg'),
+  },
 };
