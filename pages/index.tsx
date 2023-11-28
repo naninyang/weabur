@@ -5,6 +5,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
 import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
+import Seo from '@/components/Seo';
 import Anchor from '@/components/Anchor';
 import Missing from '@/components/Missing';
 import ArrivalTimer from '@/components/ArrivalTimer';
@@ -188,9 +189,10 @@ export default function Home() {
     공항버스: '#65A6D2',
     관광버스: '#F4B542',
   };
-
+  const timestamp = Date.now();
   return (
     <main className={styles.weabur}>
+      <Seo pageTitle="서비스 이용" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
       <div className={styles.container}>
         <div className={styles.search}>
           <div className={styles['form-group']}>
