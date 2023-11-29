@@ -20,7 +20,7 @@ const Container = styled.header({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  '& strong': {
+  '& strong, & a': {
     display: 'inline-block',
     width: rem(70),
     height: rem(25),
@@ -143,10 +143,17 @@ export default function Nav() {
 
   return (
     <Container>
-      <strong>
-        <span>웨버 WeaBur</span>
-        <Weabur />
-      </strong>
+      {router.pathname === '/' ? (
+        <strong>
+          <span>날씨와 버스 정보를 한번에! 웨버</span>
+          <Weabur />
+        </strong>
+      ) : (
+        <Anchor href="/">
+          <span>서비스 화면으로 이동</span>
+          <Weabur />
+        </Anchor>
+      )}
       {isDesktop ? (
         <>
           {isActive ? (
