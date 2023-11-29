@@ -9,7 +9,19 @@ import { images } from '@/images';
 import Footer from '@/components/Footer';
 
 const Main = styled.main({
-  background: `url(${images.misc.code}) no-repeat 50% 50%/cover`,
+  '& .dummy': {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    background: `url(${images.misc.code}) no-repeat 50% 50%/cover`,
+    '& div': {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, .75)',
+    },
+  },
 });
 
 function OpenSources({ licenses }: { licenses: string[] }) {
@@ -24,6 +36,9 @@ function OpenSources({ licenses }: { licenses: string[] }) {
   return (
     <Main className={styles.sources}>
       <Seo pageTitle="Open Sources" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
+      <div className="dummy">
+        <div />
+      </div>
       <div className={styles.wrapper}>
         <Nav />
         <div className={styles.container}>

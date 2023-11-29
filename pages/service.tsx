@@ -10,7 +10,19 @@ import styles from '@/styles/service.module.sass';
 import Footer from '@/components/Footer';
 
 const Main = styled.main({
-  background: `url(${images.misc.service}) no-repeat 50% 50%/cover`,
+  '& .dummy': {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    background: `url(${images.misc.service}) no-repeat 50% 50%/cover`,
+    '& div': {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, .75)',
+    },
+  },
 });
 
 const Pwa = styled.i({
@@ -50,6 +62,9 @@ export default function Service() {
   return (
     <Main className={styles.service}>
       <Seo pageTitle="서비스 소개" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
+      <div className="dummy">
+        <div />
+      </div>
       <div className={styles.wrapper}>
         <Nav />
         <div className={styles.container}>

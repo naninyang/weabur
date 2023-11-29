@@ -6,7 +6,19 @@ import Footer from '@/components/Footer';
 import styles from '@/styles/safari.module.sass';
 
 const Main = styled.main({
-  background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
+  '& .dummy': {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
+    '& div': {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, .75)',
+    },
+  },
 });
 
 export default function Safari() {
@@ -14,6 +26,9 @@ export default function Safari() {
   return (
     <Main className={styles.safari}>
       <Seo pageTitle="사파리에서 앱 내려받기" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
+      <div className="dummy">
+        <div />
+      </div>
       <div className={styles.wrapper}>
         <Nav />
         <div className={styles.container}>
