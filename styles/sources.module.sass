@@ -1,0 +1,155 @@
+@import "pretendard/dist/web/static/pretendard"
+@import './designSystem'
+
+.sources
+  padding: calc(env(safe-area-inset-top) + vw(25, 430)) calc(env(safe-area-inset-right) + vw(25, 430)) calc(env(safe-area-inset-bottom) + vw(25, 430)) calc(env(safe-area-inset-left) + vw(25, 430))
+  min-height: 100dvh
+  display: flex
+  flex-direction: column
+  gap: rem(75)
+  scrollbar-width: thin
+  scrollbar-color: #fff #000
+
+  &::-webkit-scrollbar
+    width: rem(5)
+    background-color: $hex-background
+
+  &::-webkit-scrollbar-track
+    background-color: transparent
+
+  &::-webkit-scrollbar-thumb
+    background: linear-gradient(45deg, #4098D9, #DD41BD)
+    border: rem(5) solid $hex-background
+    border-radius: rem(10)
+
+  &::before
+    content: ''
+    display: block
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    opacity: .27
+
+  +mq(minMedium)
+    padding: calc(env(safe-area-inset-top) + vw(25, 1920)) calc(env(safe-area-inset-right) + vw(25, 1920)) calc(env(safe-area-inset-bottom) + vw(25, 1920)) calc(env(safe-area-inset-left) + vw(25, 1920))
+
+  div[class^="css"]
+    position: fixed
+    top: 0
+    right: 0
+    left: 0
+    padding: rem(50)
+    z-index: 1070
+    backdrop-filter: blur(rem(20))
+    mask-image: linear-gradient(to bottom, black 77.77%, transparent 100%)
+    background-color: rgba($hex-background, .75)
+
+    button
+      top: rem(50)
+      right: rem(50)
+
+  .container
+    display: flex
+    flex-direction: column
+    gap: rem(75)
+    padding-top: rem(125)
+    width: 100%
+    position: relative
+
+    h1
+      display: flex
+      justify-content: center
+      width: 100%
+
+      em
+        display: flex
+        flex-direction: column
+        text-align: right
+        font-size: rem(48)
+        font-weight: normal
+        line-height: 0.83333333
+
+        +mq(minMedium)
+          font-size: rem(128)
+          line-height: 0.71875
+
+      em
+        font-style: normal
+
+      .yellow
+        color: $hex-yellow
+
+      .aqua
+        color: $hex-aqua
+
+      .fuchsia
+        color: $hex-fuchsia
+
+  dl
+    display: flex
+    justify-content: center
+    gap: rem(15)
+    font-size: rem(16)
+
+    +mq(maxMedium)
+      flex-direction: column
+      align-items: center
+
+    +mq(minLarge)
+      gap: rem(50)
+
+    div
+      display: flex
+      gap: rem(25)
+
+      +mq(maxMedium)
+        width: 100%
+        justify-content: center
+
+    dt, dd
+      line-height: 1
+
+      +mq(maxMedium)
+        +coln
+
+    dt
+      color: var(--txt-subject)
+
+      +mq(maxMedium)
+        width: rem(120)
+        text-align: right
+
+    dd
+      font-weight: 900
+      color: $hex-yellow
+
+      +mq(maxMedium)
+        width: rem(96)
+
+  hr
+    margin: rem(20) 0
+    border: 1px solid $hex-lime
+
+    +mq(minLarge)
+      margin: rem(25) 0
+
+  .list
+    margin: 0 auto
+    width: 100%
+    max-width: rem(720)
+
+    & :last-of-type hr
+      display: none
+
+    pre, code
+      white-space: pre-wrap
+      font-size: rem(14)
+
+    section
+      +col
+      display: flex
+      flex-direction: column
+      position: relative
+      justify-content: center

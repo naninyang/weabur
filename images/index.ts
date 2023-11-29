@@ -16,6 +16,7 @@ export const images = {
     velog: require('./family/velog.svg'),
   },
   misc: {
+    code: require('./misc/code.svg'),
     cross: require('./misc/cross.svg'),
     logo: require('./misc/logo.svg'),
     menu: require('./misc/menu.svg'),
