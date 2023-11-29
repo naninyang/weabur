@@ -121,8 +121,8 @@ export default function Service() {
                     <Safari />
                   </Anchor>
                 ) : deviceisFirefox === 'isFirefox' ? (
-                  <p>
-                    FireFox에서는 내려받을 수 없습니다. <em>Chrome 또는 Safari를 이용해 주세요</em>
+                  <p className="dgm">
+                    Firefox에서는 내려받을 수 없습니다. <em>Chrome 또는 Safari를 이용해 주세요</em>
                   </p>
                 ) : (
                   <button type="button" onClick={onInstallPWA} className={styles.pwa}>

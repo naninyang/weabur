@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <style jsx global>
         {`
+          .dgm,
           body,
           pre,
           input,
