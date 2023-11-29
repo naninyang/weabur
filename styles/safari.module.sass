@@ -169,6 +169,7 @@
 
   footer
     +mq(maxSmall)
+      position: relative
       padding: 0
 
     +mq(minMedium)
@@ -180,6 +181,5 @@
       div:last-of-type
         &::before
           content: '•'
-          padding-right: rem(12)
-          line-height: 1
-          fontSize: vw(24, 1920)
+          padding-right: vw(15, 1920)
+          font-size: vw(24, 1920)
