@@ -1,9 +1,12 @@
 import '@/styles/globals.sass';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import 'pretendard/dist/web/static/Pretendard-Black.css';
+import 'pretendard/dist/web/static/Pretendard-Light.css';
+import 'pretendard/dist/web/static/Pretendard-Medium.css';
+import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
-const DungGeunMoFallback = localFont({ src: '../fonts/DungGeunMo.woff' });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -21,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
           button,
           textarea,
           select {
-            font-family: ${DungGeunMo.style.fontFamily}, ${DungGeunMoFallback.style.fontFamily}, monospace;
+            font-family: ${DungGeunMo.style.fontFamily}, monospace;
           }
         `}
       </style>
