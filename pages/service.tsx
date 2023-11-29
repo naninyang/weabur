@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from '@emotion/styled';
-import { isSafari } from 'react-device-detect';
+import { isSafari, isFirefox } from 'react-device-detect';
 import { images } from '@/images';
 import Seo from '@/components/Seo';
 import Anchor from '@/components/Anchor';
@@ -39,7 +39,8 @@ const Safari = styled.i({
 
 export default function Service() {
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-  const [device, setDevice] = useState<string>();
+  const [deviceSafari, setDeviceSafari] = useState<string>();
+  const [deviceisFirefox, setDeviceisFirefox] = useState<string>();
 
   const onInstallPWA = () => {
     if (deferredPrompt) {
@@ -58,7 +59,10 @@ export default function Service() {
 
   useEffect(() => {
     if (isSafari) {
-      setDevice('isSafari');
+      setDeviceSafari('isSafari');
+    }
+    if (isFirefox) {
+      setDeviceisFirefox('isFirefox');
     }
   }, []);
 
@@ -111,11 +115,15 @@ export default function Service() {
                 <em>구글의 크롬 및 애플 사파리(모바일 포함)에서 앱을 내려받을 수 있어요.</em>
               </p>
               <div className={styles.link}>
-                {device === 'isSafari' ? (
+                {deviceSafari === 'isSafari' ? (
                   <Anchor href="/safari" className={styles.pwa}>
                     <span>Safari 앱 내려받기</span>
                     <Safari />
                   </Anchor>
+                ) : deviceisFirefox === 'isFirefox' ? (
+                  <p>
+                    FireFox에서는 내려받을 수 없습니다. <em>Chrome 또는 Safari를 이용해 주세요</em>
+                  </p>
                 ) : (
                   <button type="button" onClick={onInstallPWA} className={styles.pwa}>
                     <span>앱 내려받기</span>
