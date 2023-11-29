@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from '@emotion/styled';
+import { isSafari } from 'react-device-detect';
 import { images } from '@/images';
 import Seo from '@/components/Seo';
+import Anchor from '@/components/Anchor';
 import Nav from '@/components/Nav';
 import styles from '@/styles/service.module.sass';
 
@@ -10,8 +12,14 @@ const Pwa = styled.i({
   background: `url(${images.misc.pwa}) no-repeat 50% 50%/contain`,
 });
 
+const Safari = styled.i({
+  background: `url(${images.misc.safari}) no-repeat 50% 50%/contain`,
+});
+
 export default function Service() {
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [device, setDevice] = useState<string>();
+
   const onInstallPWA = () => {
     if (deferredPrompt) {
       const promptEvent = deferredPrompt as any;
@@ -26,6 +34,12 @@ export default function Service() {
       });
     }
   };
+
+  useEffect(() => {
+    if (isSafari) {
+      setDevice('isSafari');
+    }
+  }, []);
 
   const timestamp = Date.now();
   return (
@@ -72,10 +86,17 @@ export default function Service() {
               <em>구글의 크롬 및 애플 사파리(모바일 포함)에서 앱을 내려받을 수 있어요.</em>
             </p>
             <div className={styles.link}>
-              <button type="button" onClick={onInstallPWA}>
-                <span>앱 내려받기</span>
-                <Pwa />
-              </button>
+              {device === 'isSafari' ? (
+                <Anchor href="/safari" className={styles.pwa}>
+                  <span>Safari 앱 내려받기</span>
+                  <Safari />
+                </Anchor>
+              ) : (
+                <button type="button" onClick={onInstallPWA} className={styles.pwa}>
+                  <span>앱 내려받기</span>
+                  <Pwa />
+                </button>
+              )}
             </div>
           </div>
         </section>
