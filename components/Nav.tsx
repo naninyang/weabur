@@ -240,15 +240,6 @@ export default function Nav() {
               </li>
               <li>
                 <Item
-                  href="/contact-us"
-                  aria-current={router.pathname === '/contact-us' ? true : false}
-                  currentRouter={router.pathname === '/contact-us' ? true : false}
-                >
-                  문의하기
-                </Item>
-              </li>
-              <li>
-                <Item
                   href="/open-sources"
                   aria-current={router.pathname === '/open-sources' ? true : false}
                   currentRouter={router.pathname === '/open-sources' ? true : false}
