@@ -20,7 +20,9 @@ export const images = {
     cross: require('./misc/cross.svg'),
     logo: require('./misc/logo.svg'),
     menu: require('./misc/menu.svg'),
+    mobile: require('./misc/mobile.svg'),
     pwa: require('./misc/pwa.svg'),
     safari: require('./misc/safari.svg'),
+    service: require('./misc/service.svg'),
   },
 };

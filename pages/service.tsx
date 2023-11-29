@@ -6,7 +6,20 @@ import { images } from '@/images';
 import Seo from '@/components/Seo';
 import Anchor from '@/components/Anchor';
 import Nav from '@/components/Nav';
+import { mq } from '@/styles/designSystem';
 import styles from '@/styles/service.module.sass';
+
+const Main = styled.main({
+  [mq.maxSmall]: {
+    '&::before': {
+      opacity: 0.25,
+      background: `url(${images.misc.service}) no-repeat 50% 50%/cover`,
+    },
+  },
+  [mq.minMedium]: {
+    background: `url(${images.misc.service}) no-repeat 50% 50%/cover`,
+  },
+});
 
 const Pwa = styled.i({
   background: `url(${images.misc.pwa}) no-repeat 50% 50%/contain`,
@@ -43,7 +56,7 @@ export default function Service() {
 
   const timestamp = Date.now();
   return (
-    <main className={styles.service}>
+    <Main className={styles.service}>
       <Seo pageTitle="서비스 소개" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
       <Nav />
       <div className={styles.container}>
@@ -118,6 +131,6 @@ export default function Service() {
           </div>
         </section>
       </div>
-    </main>
+    </Main>
   );
 }

@@ -1,11 +1,26 @@
+import styled from '@emotion/styled';
+import { images } from '@/images';
 import Nav from '@/components/Nav';
 import Seo from '@/components/Seo';
+import { mq } from '@/styles/designSystem';
 import styles from '@/styles/safari.module.sass';
+
+const Main = styled.main({
+  [mq.maxSmall]: {
+    '&::before': {
+      opacity: 0.25,
+      background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
+    },
+  },
+  [mq.minMedium]: {
+    background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
+  },
+});
 
 export default function Safari() {
   const timestamp = Date.now();
   return (
-    <main className={styles.safari}>
+    <Main className={styles.safari}>
       <Seo pageTitle="사파리에서 앱 내려받기" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
       <Nav />
       <div className={styles.container}>
@@ -41,6 +56,6 @@ export default function Safari() {
           </div>
         </section>
       </div>
-    </main>
+    </Main>
   );
 }
