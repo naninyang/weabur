@@ -20,7 +20,7 @@ const Container = styled.header({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  '& strong, & a': {
+  '& strong, & > a': {
     display: 'inline-block',
     width: rem(70),
     height: rem(25),
