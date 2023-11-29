@@ -10,7 +10,7 @@ type ItemProps = {
   currentRouter?: boolean;
 };
 
-const Container = styled.div({
+const Container = styled.header({
   display: 'flex',
   alignItems: 'center',
   gap: rem(25),

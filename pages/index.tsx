@@ -11,6 +11,7 @@ import Missing from '@/components/Missing';
 import ArrivalTimer from '@/components/ArrivalTimer';
 import Weather from '@/components/Weather';
 import Nav from '@/components/Nav';
+import Footer from '@/components/Footer';
 import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
 
@@ -31,26 +32,6 @@ const Select = styled.select({
   [mq.minMedium]: {
     background: `${hex.black} url(${images.icons.select}) no-repeat 100% 50%/${vw(64, 1920)} ${vw(64, 1920)}`,
   },
-});
-
-const Dev1studio = styled.i({
-  background: `url(${images.family.dev1studio}) no-repeat 50% 50%/contain`,
-});
-
-const Develog = styled.i({
-  background: `url(${images.family.develog}) no-repeat 50% 50%/contain`,
-});
-
-const Github = styled.i({
-  background: `url(${images.family.github}) no-repeat 50% 50%/contain`,
-});
-
-const Postype = styled.i({
-  background: `url(${images.family.postype}) no-repeat 50% 50%/contain`,
-});
-
-const Velog = styled.i({
-  background: `url(${images.family.velog}) no-repeat 50% 50%/contain`,
 });
 
 export default function Home() {
@@ -278,7 +259,7 @@ export default function Home() {
         </div>
         <Nav />
         {selectedStationName && (
-          <header>
+          <div className={styles.header}>
             <h1>
               <s>
                 <LocationIcon />
@@ -288,7 +269,7 @@ export default function Home() {
                 {selectedStationNo && <em aria-label="정류소 번호">{selectedStationNo}</em>}
               </span>
             </h1>
-          </header>
+          </div>
         )}
         {/* {errorArrivalInfo && (
           <div className={styles.notice}>
@@ -539,46 +520,7 @@ export default function Home() {
             </div>
           </>
         )}
-        <footer>
-          <div className={styles.copyrights}>
-            <p>Copyrights WeaBur</p>
-            <p>저작권자 웨버</p>
-          </div>
-          <div className={styles.sites}>
-            <ul>
-              <li>
-                <Anchor href="https://github.com/naninyang/weabur">
-                  <span>Github Repo</span>
-                  <Github />
-                </Anchor>
-              </li>
-              <li>
-                <Anchor href="https://dev1stud.io">
-                  <span>DEV1L.studio</span>
-                  <Dev1studio />
-                </Anchor>
-              </li>
-              <li>
-                <Anchor href="https://develog.dev1stud.io">
-                  <span>Develog</span>
-                  <Develog />
-                </Anchor>
-              </li>
-              <li>
-                <Anchor href="https://dev-il-studio.postype.com">
-                  <span>Postype</span>
-                  <Postype />
-                </Anchor>
-              </li>
-              <li>
-                <Anchor href="https://velog.io/@naninyang">
-                  <span>Velog</span>
-                  <Velog />
-                </Anchor>
-              </li>
-            </ul>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </main>
   );

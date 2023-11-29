@@ -6,11 +6,10 @@ import Seo from '@/components/Seo';
 import styles from '@/styles/sources.module.sass';
 import styled from '@emotion/styled';
 import { images } from '@/images';
+import Footer from '@/components/Footer';
 
 const Main = styled.main({
-  '&::before': {
-    background: `url(${images.misc.code}) no-repeat 50% 50%/cover`,
-  },
+  background: `url(${images.misc.code}) no-repeat 50% 50%/cover`,
 });
 
 function OpenSources({ licenses }: { licenses: string[] }) {
@@ -25,38 +24,41 @@ function OpenSources({ licenses }: { licenses: string[] }) {
   return (
     <Main className={styles.sources}>
       <Seo pageTitle="Open Sources" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
-      <Nav />
-      <div className={styles.container}>
-        <h1>
-          <em>
-            <span className={styles.yellow}>Open</span> <span className={styles.aqua}>Sources</span>
-          </em>
-        </h1>
-        <dl>
-          <div>
-            <dt>기획</dt>
-            <dd>클로이 Chloe</dd>
+      <div className={styles.wrapper}>
+        <Nav />
+        <div className={styles.container}>
+          <h1>
+            <em>
+              <span className={styles.yellow}>Open</span> <span className={styles.aqua}>Sources</span>
+            </em>
+          </h1>
+          <dl>
+            <div>
+              <dt>기획</dt>
+              <dd>클로이 Chloe</dd>
+            </div>
+            <div>
+              <dt>UX 디자인</dt>
+              <dd>클로이 Chloe</dd>
+            </div>
+            <div>
+              <dt>프론트엔드 개발</dt>
+              <dd>클로이 Chloe</dd>
+            </div>
+          </dl>
+          <div className={styles.list}>
+            <hr />
+            {licenses.map((license, index) => (
+              <section key={index}>
+                <pre>
+                  <code>{license}</code>
+                </pre>
+                <hr />
+              </section>
+            ))}
           </div>
-          <div>
-            <dt>UX 디자인</dt>
-            <dd>클로이 Chloe</dd>
-          </div>
-          <div>
-            <dt>프론트엔드 개발</dt>
-            <dd>클로이 Chloe</dd>
-          </div>
-        </dl>
-        <div className={styles.list}>
-          <hr />
-          {licenses.map((license, index) => (
-            <section key={index}>
-              <pre>
-                <code>{license}</code>
-              </pre>
-              <hr />
-            </section>
-          ))}
         </div>
+        <Footer />
       </div>
     </Main>
   );

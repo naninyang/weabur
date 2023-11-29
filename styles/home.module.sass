@@ -116,7 +116,7 @@
               +mq(minMedium)
                 padding-right: vw(128, 1920)
 
-    header
+    .header
       display: flex
       padding: vw(17, 430) vw(25, 430)
 
@@ -639,66 +639,6 @@
 
               +mq(minMedium)
                 font-size: vw(40, 1920)
-
-    footer
-      display: flex
-      padding: vw(21, 430) vw(25, 430)
-
-      +mq(maxSmall)
-        flex-direction: column
-        gap: vw(15, 430)
-
-      +mq(minMedium)
-        justify-content: space-between
-        padding: vw(21, 1920) vw(25, 1920)
-
-      .copyrights
-        display: flex
-        gap: vw(15, 430)
-
-        +mq(minMedium)
-          gap: vw(15, 1920)
-
-        p
-          +col-auto
-          font-size: vw(16, 430)
-          line-height: 1
-
-          +mq(minMedium)
-            font-size: vw(24, 1920)
-
-          &:first-of-type::after
-            content: '•'
-            padding-left: vw(15, 430)
-
-            +mq(minMedium)
-              padding-left: vw(15, 1920)
-
-      .sites
-        display: flex
-
-        +mq(minMedium)
-          justify-content: flex-end
-
-        ul
-          display: flex
-          gap: vw(15, 430)
-
-          +mq(minMedium)
-            gap: vw(15, 1920)
-
-          li
-            span
-              +screen-reader-only
-
-            i
-              display: block
-              width: vw(16, 430)
-              height: vw(16, 430)
-
-              +mq(minMedium)
-                width: vw(24, 1920)
-                height: vw(24, 1920)
 
 .loading
   display: flex
