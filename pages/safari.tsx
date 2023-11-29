@@ -3,17 +3,21 @@ import { images } from '@/images';
 import Seo from '@/components/Seo';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import { mq, rem } from '@/styles/designSystem';
 import styles from '@/styles/safari.module.sass';
 
 const Main = styled.main({
   '& .dummy': {
+    background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
     position: 'fixed',
     top: 0,
     left: 0,
     display: 'flex',
     width: '100%',
     height: '100%',
-    background: `url(${images.misc.mobile}) no-repeat 50% 50%/cover`,
+    [mq.minMedium]: {
+      height: `calc(100% - ${rem(16)})`,
+    },
     '& div': {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, .75)',

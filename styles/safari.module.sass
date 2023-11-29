@@ -174,8 +174,8 @@
 
     +mq(minMedium)
       position: fixed
-      bottom: vw(25, 1920)
-      left: vw(25, 1920)
+      bottom: calc(env(safe-area-inset-bottom) + vw(45, 1920))
+      left: calc(env(safe-area-inset-bottom) + vw(25, 1920))
       gap: rem(12)
 
       div:last-of-type
