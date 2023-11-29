@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="ko-KR">
       <Head>
         <link color="#141414" href="/favicon/safari-pinned-tab.svg" rel="mask-icon" />
         <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
