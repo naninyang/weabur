@@ -8,6 +8,7 @@ export default async function getCityCodeList(req: NextApiRequest, res: NextApiR
   }
 
   const url = `https://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCtyCodeList?serviceKey=${apiKey}&_type=json&numOfRows=100`;
+  // 국토교통부_(TAGO)_버스정류소정보 > 도시코드 목록 조회
 
   try {
     const response = await fetch(url);

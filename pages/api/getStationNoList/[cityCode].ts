@@ -9,6 +9,7 @@ export default async function getStationNoList(req: NextApiRequest, res: NextApi
   }
 
   const url = `https://apis.data.go.kr/1613000/BusSttnInfoInqireService/getSttnNoList?serviceKey=${apiKey}&cityCode=${cityCode}&nodeNm=${nodeNm}&_type=json&numOfRows=100`;
+  // 국토교통부_(TAGO)_버스정류소정보 > 정류소번호 목록조회
 
   try {
     const response = await fetch(url);

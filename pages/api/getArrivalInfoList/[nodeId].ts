@@ -13,6 +13,7 @@ export default async function getArrivalInfoList(req: NextApiRequest, res: NextA
   }
 
   const url = `https://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList?serviceKey=${apiKey}&cityCode=${cityCode}&nodeId=${nodeId}&_type=json&numOfRows=100`;
+  // 국토교통부_(TAGO)_버스도착정보 > 정류소별도착예쩡정보 목록 조회
 
   try {
     const response = await fetch(url);
