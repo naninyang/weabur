@@ -129,7 +129,11 @@ const MenuAfter = styled.hr({
 
 export default function Nav() {
   const router = useRouter();
-  const home = router.pathname === '/';
+  const home =
+    router.pathname === '/' ||
+    router.pathname === '/misc' ||
+    router.pathname === '/seoul' ||
+    router.pathname === '/daejeon';
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const openMenu = () => {
@@ -143,7 +147,10 @@ export default function Nav() {
 
   return (
     <Container>
-      {router.pathname === '/' ? (
+      {router.pathname === '/' ||
+      router.pathname === '/misc' ||
+      router.pathname === '/seoul' ||
+      router.pathname === '/daejeon' ? (
         <strong>
           <span>날씨와 버스 정보를 한번에! 웨버</span>
           <Weabur />
@@ -180,8 +187,22 @@ export default function Nav() {
                 <li>
                   <Item
                     href="/"
-                    aria-current={router.pathname === '/' ? true : false}
-                    currentRouter={router.pathname === '/' ? true : false}
+                    aria-current={
+                      router.pathname === '/' ||
+                      router.pathname === '/misc' ||
+                      router.pathname === '/seoul' ||
+                      router.pathname === '/daejeon'
+                        ? true
+                        : false
+                    }
+                    currentRouter={
+                      router.pathname === '/' ||
+                      router.pathname === '/misc' ||
+                      router.pathname === '/seoul' ||
+                      router.pathname === '/daejeon'
+                        ? true
+                        : false
+                    }
                   >
                     서비스 이용
                   </Item>
@@ -229,8 +250,22 @@ export default function Nav() {
                 <li>
                   <Item
                     href="/"
-                    aria-current={router.pathname === '/' ? true : false}
-                    currentRouter={router.pathname === '/' ? true : false}
+                    aria-current={
+                      router.pathname === '/' ||
+                      router.pathname === '/misc' ||
+                      router.pathname === '/seoul' ||
+                      router.pathname === '/daejeon'
+                        ? true
+                        : false
+                    }
+                    currentRouter={
+                      router.pathname === '/' ||
+                      router.pathname === '/misc' ||
+                      router.pathname === '/seoul' ||
+                      router.pathname === '/daejeon'
+                        ? true
+                        : false
+                    }
                   >
                     서비스 이용
                   </Item>
