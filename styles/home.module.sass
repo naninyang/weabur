@@ -39,8 +39,8 @@
 
       .form-group
         display: flex
-        gap: vw(25, 430)
-        padding: vw(20, 430)
+        gap: vw(7, 430)
+        padding: 0
 
         +mq(minMedium)
           gap: vw(25, 1920)
@@ -49,19 +49,32 @@
         +mq(maxSmall)
           flex-direction: column
 
-        > select
+        .area-option
+          display: flex
+          gap: vw(20, 430)
+          padding: vw(15, 430)
+          +col
+
+          +mq(minMedium)
+            gap: vw(25, 1920)
+            padding: vw(20, 1920)
+
+          +mq(maxSmall)
+            flex-direction: column
+
+        select
           background-color: transparent
           width: 100%
-          height: vw(36, 430)
+          height: vw(24, 430)
           border: 0
           color: $hex-white
-          font-size: vw(36, 430)
+          font-size: vw(24, 430)
           line-height: 1
 
           +mq(minMedium)
-            width: vw(400, 1920)
-            height: vw(64, 1920)
-            font-size: vw(64, 1920)
+            width: vw(320, 1920)
+            height: vw(48, 1920)
+            font-size: vw(48, 1920)
 
         hr
           margin: 0
@@ -75,13 +88,19 @@
             border-left: vw(2, 1920) solid $hex-aqua
             border-right: vw(3, 1920) solid $hex-aqua
 
+        > form
+          padding: vw(15, 430)
+
+          +mq(minMedium)
+            padding: vw(20, 1920)
+
         form
           +col
 
           fieldset
             display: flex
             width: 100%
-            gap: vw(25, 430)
+            gap: vw(15, 430)
 
             +mq(minMedium)
               gap: vw(25, 1920)
@@ -92,15 +111,15 @@
 
             input, select
               width: 100%
-              height: vw(36, 430)
+              height: vw(24, 430)
               border: 0
               color: $hex-white
-              font-size: vw(36, 430)
+              font-size: vw(24, 430)
               line-height: 1
 
               +mq(minMedium)
-                height: vw(64, 1920)
-                font-size: vw(64, 1920)
+                height: vw(48, 1920)
+                font-size: vw(48, 1920)
 
             button
               span
@@ -108,12 +127,12 @@
 
               i
                 display: inline-block
-                width: vw(36, 430)
-                height: vw(36, 430)
+                width: vw(24, 430)
+                height: vw(24, 430)
 
                 +mq(minMedium)
-                  width: vw(64, 1920)
-                  height: vw(64, 1920)
+                  width: vw(48, 1920)
+                  height: vw(48, 1920)
 
             div
               +col

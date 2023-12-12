@@ -158,34 +158,36 @@ export default function Seoul() {
       <div className={styles.container}>
         <div className={styles.search}>
           <div className={styles['form-group']}>
-            <Select
-              className={styles.select}
-              value={selectedLocation}
-              onChange={handleLocationChange}
-              title="선택하면 해당 지역으로 자동으로 이동합니다"
-            >
-              <option value="seoul">서울특별시</option>
-              <option value="daejeon">대전광역시</option>
-              <option value="wonju">원주시</option>
-              <option value="misc">기타지역</option>
-            </Select>
-            <form onSubmit={fetchStationByName}>
-              <fieldset>
-                <legend>정류소명 검색폼</legend>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="정류소명 검색"
-                    value={stationName}
-                    onChange={(e) => setStationName(e.target.value)}
-                  />
-                </div>
-                <button type="submit">
-                  <span>검색하기</span>
-                  <SearchIcon />
-                </button>
-              </fieldset>
-            </form>
+            <div className={styles['area-option']}>
+              <Select
+                className={styles.select}
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                title="선택하면 해당 지역으로 자동으로 이동합니다"
+              >
+                <option value="seoul">서울특별시</option>
+                <option value="daejeon">대전광역시</option>
+                <option value="wonju">원주시</option>
+                <option value="misc">기타지역</option>
+              </Select>
+              <form onSubmit={fetchStationByName}>
+                <fieldset>
+                  <legend>정류소명 검색폼</legend>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="정류소명 검색"
+                      value={stationName}
+                      onChange={(e) => setStationName(e.target.value)}
+                    />
+                  </div>
+                  <button type="submit">
+                    <span>검색하기</span>
+                    <SearchIcon />
+                  </button>
+                </fieldset>
+              </form>
+            </div>
             {stationInfo.length > 0 && (
               <>
                 <hr />

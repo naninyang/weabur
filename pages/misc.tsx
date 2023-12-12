@@ -205,34 +205,36 @@ export default function Home() {
       <div className={styles.container}>
         <div className={styles.search}>
           <div className={styles['form-group']}>
-            <Select
-              className={styles.select}
-              value={selectedLocation}
-              onChange={handleLocationChange}
-              title="선택하면 해당 지역으로 자동으로 이동합니다"
-            >
-              <option value="misc">기타지역</option>
-              <option value="seoul">서울특별시</option>
-              <option value="daejeon">대전광역시</option>
-              <option value="wonju">원주시</option>
-            </Select>
-            <form onSubmit={handleCitySearch}>
-              <fieldset>
-                <legend>도시 검색폼</legend>
-                <div>
-                  <input
-                    type="search"
-                    placeholder="도시 검색"
-                    value={cityName}
-                    onChange={(e) => setCityName(e.target.value)}
-                  />
-                </div>
-                <button type="submit">
-                  <span>검색하기</span>
-                  <SearchIcon />
-                </button>
-              </fieldset>
-            </form>
+            <div className={styles['area-option']}>
+              <Select
+                className={styles.select}
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                title="선택하면 해당 지역으로 자동으로 이동합니다"
+              >
+                <option value="misc">기타지역</option>
+                <option value="seoul">서울특별시</option>
+                <option value="daejeon">대전광역시</option>
+                <option value="wonju">원주시</option>
+              </Select>
+              <form onSubmit={handleCitySearch}>
+                <fieldset>
+                  <legend>도시 검색폼</legend>
+                  <div>
+                    <input
+                      type="search"
+                      placeholder="도시 검색"
+                      value={cityName}
+                      onChange={(e) => setCityName(e.target.value)}
+                    />
+                  </div>
+                  <button type="submit">
+                    <span>검색하기</span>
+                    <SearchIcon />
+                  </button>
+                </fieldset>
+              </form>
+            </div>
             {cityList.length > 0 && (
               <>
                 <hr />
