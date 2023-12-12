@@ -230,274 +230,316 @@
           +mq(minMedium)
             font-size: vw(64, 1920)
 
-    .nextup
+    .misc
       display: flex
-      position: relative
+      flex-direction: column
+      gap: vw(5, 430)
+      flex: 1
 
-      .missing
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        opacity: .77
-        z-index: 1
-        cursor: default
-        touch-action: none
-        user-select: none
-        background-color: $hex-black
+      .nextup
+        display: flex
+        position: relative
 
-      dt
-        +screen-reader-only
-
-      .routeno
-        font-size: vw(32, 430)
-        line-height: 1
-
-        dd
-          max-width: vw(700, 430)
+        .missing
+          position: absolute
+          top: 0
+          left: 0
           width: 100%
-          overflow: hidden
-          white-space: nowrap
-          text-overflow: ellipsis
+          height: 100%
+          opacity: .77
+          z-index: 1
+          cursor: default
+          touch-action: none
+          user-select: none
+          background-color: $hex-black
 
-        +mq(minMedium)
-          font-size: vw(128, 1920)
+        dt
+          +screen-reader-only
+
+        .routeno
+          font-size: vw(32, 430)
+          line-height: 1
 
           dd
-            max-width: vw(170, 430)
-
-      .info
-        display: flex
-        flex-direction: column
-        justify-content: space-between
-
-        .type
-          display: flex
-          gap: vw(7, 430)
-          font-size: vw(16, 430)
-          line-height: 1
+            max-width: vw(700, 430)
+            width: 100%
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
 
           +mq(minMedium)
-            gap: vw(15, 1920)
-            font-size: vw(48, 1920)
+            font-size: vw(128, 1920)
 
-          .vehicle dd
+            dd
+              max-width: vw(170, 430)
+
+        .info
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+
+          .type
             display: flex
-            align-items: center
-
-            span
-              color: $hex-yellow
-
-            .vehicletp
-              color: $hex-white
-              opacity: .5
-
-          i
-            display: block
-            width: vw(17, 430)
-            height: vw(17, 430)
+            gap: vw(7, 430)
+            font-size: vw(16, 430)
+            line-height: 1
 
             +mq(minMedium)
-              width: vw(35, 1920)
-              height: vw(35, 1920)
+              gap: vw(15, 1920)
+              font-size: vw(48, 1920)
 
-        .time
-          font-size: vw(20, 430)
-          line-height: 1
+            .vehicle dd
+              display: flex
+              align-items: center
 
-          +mq(minMedium)
-            font-size: vw(64, 1920)
+              span
+                color: $hex-yellow
 
-          strong
-            font-weight: normal
+              .vehicletp
+                color: $hex-white
+                opacity: .5
 
-      > p
-        width: 100%
-        display: flex
-        justify-content: center
-        align-items: center
-        color: $hex-fuchsia
+            i
+              display: block
+              width: vw(17, 430)
+              height: vw(17, 430)
 
-    .mixed
-      display: flex
-      width: 100%
+              +mq(minMedium)
+                width: vw(35, 1920)
+                height: vw(35, 1920)
 
-      +mq(maxSmall)
-        flex-direction: column-reverse
-
-      hr
-        margin: 0 vw(25, 430)
-        border: 0
-
-        +mq(maxSmall)
-          border-top: vw(2, 1920) solid $hex-lime
-          border-bottom: vw(3, 1920) solid $hex-lime
-
-        +mq(minMedium)
-          margin: vw(25, 1920) 0
-          border-left: vw(2, 1920) solid $hex-lime
-          border-right: vw(3, 1920) solid $hex-lime
-
-      .schedule, .weather
-        padding: vw(7, 430) vw(25, 430)
-
-        +mq(minMedium)
-          padding: vw(25, 1920)
-          height: vw(395, 1920)
-
-      .schedule
-        display: flex
-        +col-auto
-        min-width: 50%
-
-        .item, .no-item
-          .nextup > p
-            text-align: center
-            font-size: vw(24, 430)
-            line-height: 1.09430
+          .time
+            font-size: vw(20, 430)
+            line-height: 1
 
             +mq(minMedium)
               font-size: vw(64, 1920)
 
-        .item
-          display: flex
-          flex-direction: column
-          gap: vw(25, 430)
-          transition: transform .5s cubic-bezier(.4,0,.2,1)
-          padding-top: vw(17, 430)
+            strong
+              font-weight: normal
+
+        > p
           width: 100%
-
-          +mq(minMedium)
-            gap: vw(50, 1920)
-            padding-top: vw(25, 1920)
-
-        .nextup
-          gap: vw(25, 1920)
-          justify-content: space-between
-
-          .info
-            align-items: flex-end
-
-          > p
-            height: vw(128, 430)
-
-            +mq(minMedium)
-              height: vw(128, 1920)
-
-        .no-item
           display: flex
-          flex: 1
-
-          .nextup
-            flex: 1
-            align-items: center
-
-      .weather
-        display: flex
-        flex-direction: column
-        align-items: flex-end
-        gap: vw(7, 430)
-
-        +mq(minMedium)
-          +col
-          gap: vw(25, 1920)
-
-        p
-          display: flex
-          flex-direction: column
           justify-content: center
           align-items: center
-          flex: 1
-          width: 100%
-          font-size: vw(32, 430)
-          line-height: 1.09430
           color: $hex-fuchsia
 
-          +mq(minMedium)
-            font-size: vw(64, 1920)
+      .mixed
+        display: flex
+        width: 100%
 
-        dt
+        +mq(maxSmall)
+          flex-direction: column-reverse
+
+        hr
+          margin: 0 vw(25, 430)
+          border: 0
+
+          +mq(maxSmall)
+            border-top: vw(2, 1920) solid $hex-lime
+            border-bottom: vw(3, 1920) solid $hex-lime
+
+          +mq(minMedium)
+            margin: vw(25, 1920) 0
+            border-left: vw(2, 1920) solid $hex-lime
+            border-right: vw(3, 1920) solid $hex-lime
+
+        .schedule, .weather
+          padding: vw(7, 430) vw(25, 430)
+
+          +mq(minMedium)
+            padding: vw(25, 1920)
+            height: vw(395, 1920)
+
+        .schedule
           display: flex
-          align-items: center
-          gap: vw(5, 430)
+          +col-auto
+          min-width: 50%
 
-          +mq(minMedium)
-            gap: vw(5, 1920)
+          .item, .no-item
+            .nextup > p
+              text-align: center
+              font-size: vw(24, 430)
+              line-height: 1.09430
 
-          span
-            font-size: vw(20, 430)
-            line-height: 1.430
+              +mq(minMedium)
+                font-size: vw(64, 1920)
 
-            +mq(minMedium)
-              font-size: vw(40, 1920)
-
-          i
-            display: block
-            width: vw(20, 430)
-            height: vw(20, 430)
-
-            +mq(minMedium)
-              width: vw(42, 1920)
-              height: vw(42, 1920)
-
-        dd
-          display: flex
-          align-items: center
-          font-size: vw(32, 430)
-          line-height: 1
-          color: $hex-yellow
-          text-align: right
-
-          +mq(minMedium)
-            font-size: vw(64, 1920)
-
-          strong
-            width: vw(70, 430)
-            font-feature-settings: 'ss06'
-            letter-spacing: -0.1em
-            font-weight: normal
-
-            +mq(minMedium)
-              width: vw(135, 1920)
-
-          span
-            width: vw(55, 430)
-            font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
-            font-size: vw(16, 430)
-            line-height: vw(32, 430)
-
-            +mq(minMedium)
-              width: vw(100, 1920)
-              font-size: vw(32, 1920)
-              line-height: vw(32, 1920)
-
-        .now
-          display: flex
-          gap: vw(7, 430)
-          font-size: vw(18, 430)
-          line-height: 1
-
-          +mq(minMedium)
-            gap: vw(7, 1920)
-            font-size: vw(48, 1920)
-            flex-direction: column
-
-          span
+          .item
             display: flex
-            justify-content: flex-end
+            flex-direction: column
+            gap: vw(25, 430)
+            transition: transform .5s cubic-bezier(.4,0,.2,1)
+            padding-top: vw(17, 430)
+            width: 100%
+
+            +mq(minMedium)
+              gap: vw(50, 1920)
+              padding-top: vw(25, 1920)
+
+          .nextup
+            gap: vw(25, 1920)
+            justify-content: space-between
+
+            .info
+              align-items: flex-end
+
+            > p
+              height: vw(128, 430)
+
+              +mq(minMedium)
+                height: vw(128, 1920)
+
+          .no-item
+            display: flex
+            flex: 1
+
+            .nextup
+              flex: 1
+              align-items: center
+
+        .weather
+          display: flex
+          flex-direction: column
+          align-items: flex-end
+          gap: vw(7, 430)
+
+          +mq(minMedium)
+            +col
+            gap: vw(25, 1920)
+
+          p
+            display: flex
+            flex-direction: column
+            justify-content: center
             align-items: center
+            flex: 1
+            width: 100%
+            font-size: vw(32, 430)
+            line-height: 1.09430
+            color: $hex-fuchsia
+
+            +mq(minMedium)
+              font-size: vw(64, 1920)
+
+          dt
+            display: flex
+            align-items: center
+            gap: vw(5, 430)
+
+            +mq(minMedium)
+              gap: vw(5, 1920)
+
+            span
+              font-size: vw(20, 430)
+              line-height: 1.430
+
+              +mq(minMedium)
+                font-size: vw(40, 1920)
+
+            i
+              display: block
+              width: vw(20, 430)
+              height: vw(20, 430)
+
+              +mq(minMedium)
+                width: vw(42, 1920)
+                height: vw(42, 1920)
+
+          dd
+            display: flex
+            align-items: center
+            font-size: vw(32, 430)
+            line-height: 1
+            color: $hex-yellow
+            text-align: right
+
+            +mq(minMedium)
+              font-size: vw(64, 1920)
+
+            strong
+              width: vw(70, 430)
+              font-feature-settings: 'ss06'
+              letter-spacing: -0.1em
+              font-weight: normal
+
+              +mq(minMedium)
+                width: vw(135, 1920)
+
+            span
+              width: vw(55, 430)
+              font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
+              font-size: vw(16, 430)
+              line-height: vw(32, 430)
+
+              +mq(minMedium)
+                width: vw(100, 1920)
+                font-size: vw(32, 1920)
+                line-height: vw(32, 1920)
+
+          .now
+            display: flex
             gap: vw(7, 430)
-            color: $hex-white
+            font-size: vw(18, 430)
+            line-height: 1
 
             +mq(minMedium)
               gap: vw(7, 1920)
+              font-size: vw(48, 1920)
+              flex-direction: column
 
-            i
-              position: relative
+            span
+              display: flex
+              justify-content: flex-end
+              align-items: center
+              gap: vw(7, 430)
+              color: $hex-white
 
-              button
-                display: block
+              +mq(minMedium)
+                gap: vw(7, 1920)
+
+              i
+                position: relative
+
+                button
+                  display: block
+                  width: vw(20, 430)
+                  height: vw(20, 430)
+
+                  +mq(minMedium)
+                    width: vw(48, 1920)
+                    height: vw(48, 1920)
+
+                  &:hover + em
+                    display: inline-flex
+
+                em
+                  display: none
+                  position: absolute
+                  top: vw(30, 430)
+                  left: 0
+                  background-color: $hex-white
+                  padding: rem(15)
+                  font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
+                  font-size: rem(20)
+                  font-style: normal
+                  line-height: 1.25
+                  color: $hex-black
+                  white-space: nowrap
+
+                  +mq(minMedium)
+                    transform: translateX(-50%)
+                    left: 50%
+                    top: vw(60, 1920)
+
+            strong
+              display: flex
+              justify-content: flex-end
+              font-weight: normal
+              color: $hex-yellow
+
+              img
                 width: vw(20, 430)
                 height: vw(20, 430)
 
@@ -505,153 +547,117 @@
                   width: vw(48, 1920)
                   height: vw(48, 1920)
 
-                &:hover + em
-                  display: inline-flex
+          .temp dl
+            display: flex
+            align-items: center
 
-              em
-                display: none
-                position: absolute
-                top: vw(30, 430)
-                left: 0
-                background-color: $hex-white
-                padding: rem(15)
-                font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
-                font-size: rem(20)
-                font-style: normal
-                line-height: 1.25
-                color: $hex-black
+          .dust
+            dl
+              display: flex
+              flex-direction: column
+
+              div
+                display: flex
+                justify-content: flex-end
+                align-items: center
+
+                dt
+                  align-items: center
+
+      .next
+        flex: 1
+        display: flex
+        flex-wrap: nowrap
+        flex-direction: column
+        position: relative
+
+        .dummy
+          flex: 1
+          background: url(/background.webp) no-repeat 50% 100%/contain
+
+        &::before, &::after
+          content: ''
+          display: block
+          position: absolute
+          z-index: 1
+          top: 0
+          bottom: 0
+          width: vw(50, 430)
+
+          +mq(minMedium)
+            width: vw(100, 1920)
+
+        &::before
+          left: 0
+          background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.00) 77.77%)
+
+        &::after
+          right: 0
+          background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0%, #000 77.77%)
+
+        .next-list
+          position: relative
+          overflow: auto
+          background-color: $hex-black
+          width: calc(100vw - vw(50, 430))
+          height: vw(65, 430)
+
+          +mq(minMedium)
+            width: calc(100vw - vw(100, 1920))
+            height: vw(115, 1920)
+
+        ul
+          position: absolute
+          top: 0
+          left: 0
+          display: grid
+          grid-auto-flow: column
+          grid-auto-columns: minmax(min-content, max-content)
+          gap: vw(37, 430)
+          padding: 0 vw(50, 430)
+
+          +mq(minMedium)
+            top: 50%
+            gap: vw(75, 1920)
+            transform: translateY(-50%)
+            padding: 0 vw(100, 1920)
+
+          li
+            display: flex
+            align-items: center
+
+            .nextup
+              gap: vw(25, 430)
+              opacity: .7
+
+              +mq(minMedium)
+                gap: vw(25, 1920)
+
+              .routeno dd
                 white-space: nowrap
 
                 +mq(minMedium)
-                  transform: translateX(-50%)
-                  left: 50%
-                  top: vw(60, 1920)
+                  font-size: vw(96, 1920)
 
-          strong
-            display: flex
-            justify-content: flex-end
-            font-weight: normal
-            color: $hex-yellow
+              .info
+                +col
 
-            img
-              width: vw(20, 430)
-              height: vw(20, 430)
+                .type
+                  +mq(minMedium)
+                    font-size: vw(36, 1920)
 
-              +mq(minMedium)
-                width: vw(48, 1920)
-                height: vw(48, 1920)
+              .time dd
+                white-space: nowrap
 
-        .temp dl
-          display: flex
-          align-items: center
-
-        .dust
-          dl
-            display: flex
-            flex-direction: column
-
-            div
-              display: flex
-              justify-content: flex-end
-              align-items: center
-
-              dt
-                align-items: center
-
-    .next
-      flex: 1
-      display: flex
-      flex-wrap: nowrap
-      flex-direction: column
-      position: relative
-
-      .dummy
-        flex: 1
-        background: url(/background.webp) no-repeat 50% 100%/contain
-
-      &::before, &::after
-        content: ''
-        display: block
-        position: absolute
-        z-index: 1
-        top: 0
-        bottom: 0
-        width: vw(50, 430)
-
-        +mq(minMedium)
-          width: vw(100, 1920)
-
-      &::before
-        left: 0
-        background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.00) 77.77%)
-
-      &::after
-        right: 0
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0%, #000 77.77%)
-
-      .next-list
-        position: relative
-        overflow: auto
-        background-color: $hex-black
-        width: calc(100vw - vw(50, 430))
-        height: vw(65, 430)
-
-        +mq(minMedium)
-          width: calc(100vw - vw(100, 1920))
-          height: vw(115, 1920)
-
-      ul
-        position: absolute
-        top: 0
-        left: 0
-        display: grid
-        grid-auto-flow: column
-        grid-auto-columns: minmax(min-content, max-content)
-        gap: vw(37, 430)
-        padding: 0 vw(50, 430)
-
-        +mq(minMedium)
-          top: 50%
-          gap: vw(75, 1920)
-          transform: translateY(-50%)
-          padding: 0 vw(100, 1920)
-
-        li
-          display: flex
-          align-items: center
-
-          .nextup
-            gap: vw(25, 430)
-            opacity: .7
-
-            +mq(minMedium)
-              gap: vw(25, 1920)
-
-            .routeno dd
-              white-space: nowrap
-
-              +mq(minMedium)
-                font-size: vw(96, 1920)
-
-            .info
-              +col
-
-              .type
                 +mq(minMedium)
-                  font-size: vw(36, 1920)
+                  font-size: vw(48, 1920)
 
-            .time dd
-              white-space: nowrap
+              > p
+                white-space: nowrap
+                line-height: 1.2
 
-              +mq(minMedium)
-                font-size: vw(48, 1920)
-
-            > p
-              white-space: nowrap
-              line-height: 1.2
-
-              +mq(minMedium)
-                font-size: vw(40, 1920)
+                +mq(minMedium)
+                  font-size: vw(40, 1920)
 
 .loading
   display: flex

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -171,6 +171,7 @@ export default function Home() {
     공항버스: '#65A6D2',
     관광버스: '#F4B542',
   };
+
   const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState('');
   const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -210,7 +211,6 @@ export default function Home() {
               onChange={handleLocationChange}
               title="선택하면 해당 지역으로 자동으로 이동합니다"
             >
-              <option value="">지역 선택</option>
               <option value="misc">기타지역</option>
               <option value="seoul">서울특별시</option>
               <option value="daejeon">대전광역시</option>
@@ -389,7 +389,7 @@ export default function Home() {
         )}
         {/* {selectedStationName && !errorArrivalInfo && ( */}
         {selectedStationName && (
-          <>
+          <div className={styles.misc}>
             <div className={styles.mixed}>
               <div className={styles.schedule}>
                 {arrivalInfo.length > 0 ? (
@@ -556,7 +556,7 @@ export default function Home() {
               )}
               <div className={styles.dummy} />
             </div>
-          </>
+          </div>
         )}
         <Footer />
       </div>
