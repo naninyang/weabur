@@ -325,7 +325,7 @@ export default function Home() {
                 <div className={styles.warning}>
                   {errorCitySearch && <p>※ {errorCitySearch}</p>}
                   {errorStationSelect && <p>※ {errorStationSelect}</p>}
-                  <p>※ 원주시는 횡성군 한정해서서비스 중입니다.</p>
+                  <p>※ 원주시는 횡성군 한정해서 서비스 중입니다.</p>
                   <p>※ 횡성군 이외의 원주시 지역은 서비스가 불가합니다.</p>
                 </div>
               </div>

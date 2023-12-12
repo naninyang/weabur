@@ -1,12 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
-import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
-import Seo from '@/components/Seo';
 import Nav from '@/components/Nav';
+import WeatherSeoul from '@/components/WeatherSeoul';
 import Footer from '@/components/Footer';
 import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
@@ -19,7 +16,19 @@ const Select = styled.select({
   },
 });
 
-export default function Home() {
+const LocationIcon = styled.i({
+  background: `url(${images.icons.location}) no-repeat 50% 50%/contain`,
+});
+
+const SearchIcon = styled.i({
+  background: `url(${images.icons.search}) no-repeat 50% 50%/contain`,
+});
+
+const DisabledIcon = styled.i({
+  background: `url(${images.icons.disabled}) no-repeat 50% 50%/contain`,
+});
+
+export default function Seoul() {
   const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState('');
   const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,32 +55,30 @@ export default function Home() {
     }
   };
 
-  const timestamp = Date.now();
   return (
     <main className={styles.weabur}>
-      <Seo pageTitle="서비스 이용" pageImg={`https://weabur.dev1stud.io/og-image.png?ts=${timestamp}`} />
       <div className={styles.container}>
         <div className={styles.search}>
           <div className={styles['form-group']}>
-            <form>
-              <fieldset>
-                <legend>선택하면 해당 지역으로 자동으로 이동합니다</legend>
-                <Select className={styles.select} value={selectedLocation} onChange={handleLocationChange}>
-                  <option value="">지역 선택</option>
-                  <option value="misc">기타지역</option>
-                  <option value="seoul">서울특별시</option>
-                  <option value="daejeon">대전광역시</option>
-                </Select>
-              </fieldset>
-            </form>
+            <div className={styles['area-option']}>
+              <Select
+                className={styles.select}
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                title="선택하면 해당 지역으로 자동으로 이동합니다"
+              >
+                <option value="daejeon">대전광역시</option>
+                <option value="seoul">서울특별시</option>
+                <option value="misc">기타지역</option>
+              </Select>
+            </div>
           </div>
         </div>
         <Nav />
         <div className={styles.notice}>
-          <p>지역을 먼저 검색해주세요</p>
+          {/* <p>정류소를 선택해주세요</p> */}
           <div className={styles.warning}>
-            <p>※ 원주시는 횡성군 한정해서 서비스 중입니다.</p>
-            <p>※ 횡성군 이외의 원주시 지역은 서비스가 불가합니다.</p>
+            <p>※ 준비 중입니다.</p>
           </div>
         </div>
         <Footer />
