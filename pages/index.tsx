@@ -70,6 +70,10 @@ export default function Home() {
         <Nav />
         <div className={styles.notice}>
           <p>지역을 먼저 검색해주세요</p>
+          <div className={styles.warning}>
+            <p>※ 원주시는 횡성군 한정해서서비스 중입니다.</p>
+            <p>※ 횡성군 이외의 원주시 지역은 서비스가 불가합니다.</p>
+          </div>
         </div>
         <Footer />
       </div>

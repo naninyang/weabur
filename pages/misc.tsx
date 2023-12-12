@@ -215,7 +215,6 @@ export default function Home() {
                 <option value="misc">기타지역</option>
                 <option value="seoul">서울특별시</option>
                 <option value="daejeon">대전광역시</option>
-                <option value="wonju">원주시</option>
               </Select>
               <form onSubmit={handleCitySearch}>
                 <fieldset>
@@ -326,15 +325,8 @@ export default function Home() {
                 <div className={styles.warning}>
                   {errorCitySearch && <p>※ {errorCitySearch}</p>}
                   {errorStationSelect && <p>※ {errorStationSelect}</p>}
-                  <p>
-                    ※ 서울, 대전, 원주 지역은 <span>준비 중입니다.</span>
-                  </p>
-                  <p>
-                    ※ 대전은 계룡시 한정해서 <span>서비스 중입니다.</span>
-                  </p>
-                  <p>
-                    ※ 원주는 횡성군 한정해서 <span>서비스 중입니다.</span>
-                  </p>
+                  <p>※ 원주시는 횡성군 한정해서서비스 중입니다.</p>
+                  <p>※ 횡성군 이외의 원주시 지역은 서비스가 불가합니다.</p>
                 </div>
               </div>
             )}

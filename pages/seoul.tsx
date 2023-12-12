@@ -167,7 +167,6 @@ export default function Seoul() {
               >
                 <option value="seoul">서울특별시</option>
                 <option value="daejeon">대전광역시</option>
-                <option value="wonju">원주시</option>
                 <option value="misc">기타지역</option>
               </Select>
               <form onSubmit={fetchStationByName}>
