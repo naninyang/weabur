@@ -34,9 +34,7 @@
 
 ## TO-DO
 
-- 서울 검색
 - 대전 검색
-- 원주 검색
 
 ## Supported PWA App. Download
 
