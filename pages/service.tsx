@@ -135,19 +135,20 @@ export default function Service() {
           </section>
           <section>
             <h1>
+              <em>원주시 웨버 서비스는</em>{' '}
               <em>
-                현재는 <span className={styles.fuchsia}>일부 지역에서만</span>
-              </em>{' '}
-              <em>서비스 됩니다.</em>
+                <span className={styles.fuchsia}>지원되지 않습니다</span>
+              </em>
             </h1>
             <div className={styles.content}>
-              <p>국토교통부 TAGO API를 사용하여 데이터를 가져오고 있습니다.</p>
-              <p>서울, 대전, 원주 지역은 TAGO에서 서비스 지역이 아닙니다.</p>
+              <p>기타 지역 웨버 서비스는 국토교통부 TAGO 서비스의 데이터 이용합니다.</p>
               <p>
-                대전은 계룡시 한정해서 서비스 중이고,
-                <em>원주는 횡성군 한정해서 서비스 중입니다.</em>
+                서울특별시 웨버 서비스는 정류소정보조회서비스 데이터를 이용하며,{' '}
+                <em>대전광역시 웨버 서비스는 대전광역시 버스정보시스템의 데이터를 이용합니다.</em>
               </p>
-              <p>서비스 지역은 추후 업데이트가 예정되어 있습니다.</p>
+              <p>
+                원주시는 횡성군 한정해서 서비스 중입니다. <em>횡성군 이외의 원주시는 지원할 예정이 없습니다.</em>
+              </p>
             </div>
           </section>
         </div>
