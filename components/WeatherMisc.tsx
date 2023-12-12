@@ -8,6 +8,7 @@ import styles from '@/styles/home.module.sass';
 interface WeatherInfo {
   temperature: string;
   conditionIconUrl: string;
+  conditionIconTxt: string;
   pm2_5: number;
   pm10: number;
 }
@@ -24,7 +25,7 @@ const InfoIcon = styled.button({
   background: `url(${images.icons.info}) no-repeat 50% 50%/contain`,
 });
 
-export default function Weather({ currentCity }: { currentCity: string }) {
+export default function WeatherMisc({ currentCity }: { currentCity: string }) {
   const [seoulDate, setSeoulDate] = useState<string>('');
   const [seoulTime, setSeoulTime] = useState<string>('');
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null);
@@ -71,7 +72,8 @@ export default function Weather({ currentCity }: { currentCity: string }) {
         if (weatherResponse.ok) {
           setWeatherInfo({
             temperature: weatherData.current.temp_c,
-            conditionIconUrl: `http:${weatherData.current.condition.icon}`,
+            conditionIconUrl: `https:${weatherData.current.condition.icon}`,
+            conditionIconTxt: weatherData.current.condition.text,
             pm2_5: weatherData.current.air_quality.pm2_5,
             pm10: weatherData.current.air_quality.pm10,
           });
@@ -116,7 +118,7 @@ export default function Weather({ currentCity }: { currentCity: string }) {
                 height="48"
                 unoptimized
                 priority
-                alt="Partly cloudy"
+                alt={weatherInfo.conditionIconTxt}
               />
             </strong>
           </div>

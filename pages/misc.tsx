@@ -9,7 +9,7 @@ import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/u
 import Seo from '@/components/Seo';
 import Missing from '@/components/Missing';
 import ArrivalTimer from '@/components/ArrivalTimer';
-import Weather from '@/components/Weather';
+import WeatherMisc from '@/components/WeatherMisc';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { hex, mq, vw } from '@/styles/designSystem';
@@ -498,7 +498,7 @@ export default function Home() {
                 )}
               </div>
               <hr />
-              <Weather currentCity={currentCity} />
+              <WeatherMisc currentCity={currentCity} />
             </div>
             <div className={styles.next}>
               {arrivalInfo.length > 2 && (

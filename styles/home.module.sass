@@ -659,6 +659,354 @@
                 +mq(minMedium)
                   font-size: vw(40, 1920)
 
+    .seoul
+      display: flex
+      flex-direction: column
+
+      .weather
+        display: flex
+        flex-direction: column
+        padding: vw(17, 430) vw(25, 430)
+
+        +mq(maxSmall)
+          gap: vw(12, 430)
+
+        +mq(minMedium)
+          padding: vw(25, 1920)
+
+        p
+          display: flex
+          flex-direction: column
+          justify-content: center
+          align-items: center
+          flex: 1
+          width: 100%
+          font-size: vw(32, 430)
+          line-height: 1.09430
+          color: $hex-fuchsia
+
+          +mq(minMedium)
+            font-size: vw(64, 1920)
+
+        dt
+          display: flex
+          align-items: center
+          gap: vw(5, 430)
+
+          +mq(minMedium)
+            gap: vw(5, 1920)
+
+          span
+            font-size: vw(20, 430)
+            line-height: 1.430
+
+            +mq(minMedium)
+              font-size: vw(40, 1920)
+
+          i, img
+            display: block
+            width: vw(20, 430)
+            height: vw(20, 430)
+
+            +mq(minMedium)
+              width: vw(42, 1920)
+              height: vw(42, 1920)
+
+        dd
+          display: flex
+          align-items: center
+          gap: vw(12, 430)
+          font-size: vw(32, 430)
+          line-height: 1
+          color: $hex-yellow
+          text-align: right
+
+          +mq(minMedium)
+            gap: vw(12, 1920)
+            font-size: vw(64, 1920)
+
+          strong
+            font-feature-settings: 'ss06'
+            letter-spacing: -0.1em
+            font-weight: normal
+
+          span
+            font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
+            font-size: vw(16, 430)
+            line-height: vw(32, 430)
+
+            +mq(minMedium)
+              font-size: vw(32, 1920)
+              line-height: vw(32, 1920)
+
+        .now
+          display: flex
+          gap: vw(7, 430)
+          font-size: vw(18, 430)
+          line-height: 1
+
+          +mq(maxSmall)
+            flex-direction: column
+
+          +mq(minMedium)
+            gap: vw(27, 1920)
+            font-size: vw(48, 1920)
+
+          span
+            display: flex
+            align-items: center
+            gap: vw(7, 430)
+            color: $hex-white
+
+            +mq(minMedium)
+              gap: vw(7, 1920)
+
+            i
+              position: relative
+
+              button
+                display: block
+                width: vw(20, 430)
+                height: vw(20, 430)
+
+                +mq(minMedium)
+                  width: vw(48, 1920)
+                  height: vw(48, 1920)
+
+                &:hover + em
+                  display: inline-flex
+
+              em
+                display: none
+                position: absolute
+                top: vw(30, 430)
+                left: 0
+                background-color: $hex-white
+                padding: rem(15)
+                font-family: Pretendard, 'Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,system-ui,'Nanum Gothic','Malgun Gothic',sans-serif
+                font-size: rem(20)
+                font-style: normal
+                line-height: 1.25
+                color: $hex-black
+                white-space: nowrap
+
+                +mq(minMedium)
+                  transform: translateX(-50%)
+                  left: 50%
+                  top: vw(60, 1920)
+
+          strong
+            display: flex
+            font-weight: normal
+            color: $hex-yellow
+
+            +mq(minMedium)
+              justify-content: flex-end
+
+            img
+              width: vw(20, 430)
+              height: vw(20, 430)
+
+              +mq(minMedium)
+                width: vw(48, 1920)
+                height: vw(48, 1920)
+
+        .info
+          display: flex
+          gap: vw(2, 430)
+
+          +mq(maxSmall)
+            flex-direction: column
+
+          +mq(minMedium)
+            gap: vw(32, 1920)
+
+        .temp dl
+          display: flex
+          align-items: center
+          gap: vw(17, 430)
+
+          +mq(maxSmall)
+            dt
+              justify-content: flex-end
+              width: vw(125, 430)
+
+          +mq(minMedium)
+            gap: vw(17, 1920)
+
+        .dust
+          dl
+            display: flex
+            gap: vw(2, 430)
+
+            +mq(maxSmall)
+              display: flex
+              flex-direction: column
+
+            +mq(minMedium)
+              gap: vw(32, 1920)
+
+            div
+              display: flex
+              align-items: center
+              gap: vw(17, 430)
+
+              +mq(minMedium)
+                justify-content: flex-end
+                gap: vw(17, 1920)
+
+              dt
+                +mq(maxSmall)
+                  justify-content: flex-end
+                  width: vw(125, 430)
+
+      .nextup
+        display: flex
+        flex-direction: column
+        gap: vw(17, 430)
+        padding: vw(17, 430) vw(25, 430)
+        border-top: 1px solid $hex-lime
+
+        +mq(minMedium)
+          gap: vw(45, 1920)
+          padding: vw(25, 1920)
+
+        dt
+          +screen-reader-only
+
+        .summary
+          display: flex
+          justify-content: space-between
+
+          +mq(maxSmall)
+            flex-direction: column
+
+          .routeno
+            font-size: vw(64, 430)
+            line-height: 1
+
+            +mq(minMedium)
+              font-size: vw(128, 1920)
+
+          .info
+            display: flex
+            gap: vw(7, 430)
+
+            +mq(maxSmall)
+              flex-direction: column
+
+            +mq(minMedium)
+              gap: vw(25, 1920)
+
+            .router
+              display: flex
+              flex-direction: column
+
+              +mq(maxSmall)
+                gap: vw(7, 430)
+
+              +mq(minMedium)
+                align-items: flex-end
+
+              .route, .term
+                flex: 1
+
+              .route
+                font-size: vw(32, 430)
+                line-height: 1
+
+                +mq(minMedium)
+                  font-size: vw(48, 1920)
+
+              .term
+                display: flex
+                flex-direction: column
+                gap: vw(5, 430)
+                font-size: vw(16, 430)
+
+                +mq(minMedium)
+                  align-items: flex-end
+                  gap: vw(5, 1920)
+                  font-size: vw(24, 1920)
+
+            .timing
+              display: flex
+              font-size: vw(24, 430)
+              line-height: 1
+              color: $hex-yellow
+
+              +mq(maxSmall)
+                gap: vw(17, 430)
+
+              +mq(minMedium)
+                flex-direction: column
+                font-size: vw(48, 1920)
+
+              div
+                +mq(minMedium)
+                  flex: 1
+
+                dl
+                  display: flex
+                  gap: vw(5, 430)
+
+                  dt
+                    position: static
+                    overflow: visible
+                    margin: 0
+                    width: auto
+                    height: auto
+                    clip: auto
+
+        .schedule
+          display: flex
+          gap: vw(27, 430)
+
+          +mq(maxSmall)
+            flex-direction: column
+
+          +mq(minMedium)
+            justify-content: flex-end
+            gap: vw(50, 1920)
+
+          .item
+            display: flex
+            flex-direction: column
+
+            +mq(minMedium)
+              align-items: flex-end
+
+            .vehicle dd
+              display: flex
+              align-items: center
+              gap: vw(7, 430)
+              font-size: vw(32, 430)
+              line-height: 1
+
+              +mq(minMedium)
+                flex-direction: row-reverse
+                gap: vw(7, 1920)
+                font-size: vw(48, 1920)
+
+              .vehicletp
+                color: $hex-yellow
+
+              i
+                display: block
+                width: vw(32, 430)
+                height: vw(32, 430)
+
+                +mq(minMedium)
+                  width: vw(40, 1920)
+                  height: vw(40, 1920)
+
+            .time
+              font-size: vw(24, 430)
+              line-height: 1
+
+              +mq(minMedium)
+                font-size: vw(64, 1920)
+
 .loading
   display: flex
   justify-content: center
