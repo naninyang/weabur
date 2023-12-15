@@ -10,9 +10,20 @@ import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
 import { GA_TRACKING_ID, pageview } from '@/utils/gtag';
 import '@/styles/globals.sass';
+
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
 
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      const registInit = async () => {
+        const registration = await navigator.serviceWorker.register('/service-worker.js');
+        registration.waiting?.postMessage('SKIP_WAITING');
+      };
+      registInit();
+    }
+  }, []);
+
   const router = useRouter();
   useEffect(() => {
     const handleRouteChange = (url: any) => {
