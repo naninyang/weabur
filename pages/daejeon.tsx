@@ -222,6 +222,7 @@ export default function Seoul() {
                     <input
                       type="text"
                       value={searchTerm}
+                      placeholder="정류소명 검색"
                       onChange={(e) => {
                         setSearchTerm(e.target.value);
                         setSearched(false);
