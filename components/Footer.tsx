@@ -14,11 +14,21 @@ const Container = styled.footer({
     justifyContent: 'space-between',
     padding: `${vw(21, 1920)} ${vw(25, 1920)}`,
   },
-  '& .copyrights': {
+  '& .services': {
     display: 'flex',
     gap: vw(7, 430),
+    [mq.maxSmall]: {
+      flexDirection: 'column',
+    },
     [mq.minMedium]: {
       gap: vw(15, 1920),
+    },
+    '& .copyrights': {
+      display: 'flex',
+      gap: vw(7, 430),
+      [mq.minMedium]: {
+        gap: vw(15, 1920),
+      },
     },
     '& p': {
       ...mixIn.colAuto,
@@ -42,9 +52,9 @@ const Container = styled.footer({
       lineHeight: 1,
       [mq.minMedium]: {
         fontSize: vw(24, 1920),
-      },
-      '&::before': {
-        content: "'•'",
+        '&::before': {
+          content: "'•'",
+        },
       },
       '& li': {
         fontSize: vw(16, 430),
@@ -125,9 +135,11 @@ const Velog = styled.i({
 export default function Footer() {
   return (
     <Container>
-      <div className="copyrights">
-        <p>Copyrights WeaBur</p>
-        <p>저작권자 웨버</p>
+      <div className="services">
+        <div className="copyrights">
+          <p>Copyrights WeaBur</p>
+          <p>저작권자 웨버</p>
+        </div>
         <ul>
           <li>
             <Anchor href="/misc">서울웨버</Anchor>
