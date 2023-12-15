@@ -4,6 +4,15 @@
     <loc>https://weabur.dev1stud.io</loc>
   </sitemap>
   <sitemap>
+    <loc>https://weabur.dev1stud.io/misc</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://weabur.dev1stud.io/seoul</loc>
+  </sitemap>
+    <sitemap>
+    <loc>https://weabur.dev1stud.io/daejeon</loc>
+  </sitemap>
+  <sitemap>
     <loc>https://weabur.dev1stud.io/service</loc>
   </sitemap>
   <sitemap>
