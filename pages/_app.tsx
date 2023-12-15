@@ -8,10 +8,36 @@ import 'pretendard/dist/web/static/Pretendard-Light.css';
 import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
-import { GA_TRACKING_ID, pageview } from '../utils/gtag';
 import '@/styles/globals.sass';
 
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
+
+export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID;
+
+type EventProps = {
+  action: string;
+  category: string;
+  label: string;
+  value: string | number;
+};
+
+export const pageview = (url: string) => {
+  if (typeof window !== 'undefined') {
+    window.gtag('config', GA_TRACKING_ID as string, {
+      page_path: url,
+    });
+  }
+};
+
+export const event = ({ action, category, label, value }: EventProps): void => {
+  if (typeof window !== 'undefined') {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value,
+    });
+  }
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
