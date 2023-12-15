@@ -142,10 +142,10 @@ export default function Footer() {
         </div>
         <ul>
           <li>
-            <Anchor href="/misc">서울웨버</Anchor>
+            <Anchor href="/seoul">서울웨버</Anchor>
           </li>
           <li>
-            <Anchor href="/misc">대전웨버</Anchor>
+            <Anchor href="/daejeon">대전웨버</Anchor>
           </li>
           <li>
             <Anchor href="/misc">지역웨버</Anchor>
