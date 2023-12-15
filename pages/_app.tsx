@@ -6,6 +6,8 @@ import 'pretendard/dist/web/static/Pretendard-Light.css';
 import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
+import Script from 'next/script';
+import { GA_TRACKING_ID, pageview } from '@/utils/gtag';
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,6 +17,16 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="format-detection" content="telephone=no" />
       </Head>
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
       <style jsx global>
         {`
           .dgm,
