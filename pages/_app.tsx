@@ -1,16 +1,31 @@
-import '@/styles/globals.sass';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import Script from 'next/script';
 import 'pretendard/dist/web/static/Pretendard-Black.css';
 import 'pretendard/dist/web/static/Pretendard-Light.css';
 import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
-import Script from 'next/script';
 import { GA_TRACKING_ID, pageview } from '@/utils/gtag';
+import '@/styles/globals.sass';
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: any) => {
+      pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Head>
