@@ -8,7 +8,7 @@ import 'pretendard/dist/web/static/Pretendard-Light.css';
 import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
-import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
+import { GA_TRACKING_ID, pageview } from './gtag';
 import '@/styles/globals.sass';
 
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
