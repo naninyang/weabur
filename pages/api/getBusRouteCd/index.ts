@@ -37,6 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const response = await fetch(
         `http://openapitraffic.daejeon.go.kr/api/rest/busRouteInfo/getStaionByRouteAll?serviceKey=${apiKey}&reqPage=${page}`,
       );
+      // 대전광역시_노선정보조회 서비스 > 전체노선별경유정류소 정보 조회
+
       const xml = await response.text();
       const result = await parseStringPromise(xml, { explicitArray: false });
       const items = result.ServiceResult.msgBody.itemList as BusStop[];

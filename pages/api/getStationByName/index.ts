@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { stSrch } = req.query;
   const apiKey = process.env.DATA_GO_KR_API_SERVICE_KEY;
   const url = `http://ws.bus.go.kr/api/rest/stationinfo/getStationByName?serviceKey=${apiKey}&stSrch=${stSrch}`;
+  // 서울특별시_정류소정보조회 서비스 > getStationByNameList
 
   try {
     const response = await fetch(url);

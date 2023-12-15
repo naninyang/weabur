@@ -46,6 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await fetch(
       `http://openapitraffic.daejeon.go.kr/api/rest/arrive/getArrInfoByStopID?serviceKey=${apiKey}&BusStopID=${BusStopID}`,
     );
+    // 대전광역시_정류소별 도착정보 조회 서비스 > 정류소ID별 도착예쩡 정보 조회
+
     const xml = await response.text();
     const data = await parseStringPromise(xml, { explicitArray: false });
     const parsedData: ApiResponse = data as ApiResponse;

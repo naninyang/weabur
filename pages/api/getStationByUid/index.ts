@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { arsId } = req.query;
   const apiKey = process.env.DATA_GO_KR_API_SERVICE_KEY;
   const url = `http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid?serviceKey=${apiKey}&arsId=${arsId}`;
+  // 서울특별시_정류소정보조회 서비스 > getStationByUidItem
 
   try {
     const response = await fetch(url);

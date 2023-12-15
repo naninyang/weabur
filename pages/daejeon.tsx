@@ -116,7 +116,6 @@ export default function Seoul() {
       }));
 
       setBusPosInfo(updatedBusPosInfo);
-      console.log('busPosInfo:::::::::: ', busPosInfo);
     } catch (error) {
       console.error('Error:', error);
     }
