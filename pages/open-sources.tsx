@@ -25,13 +25,6 @@ const Main = styled.main({
 });
 
 function OpenSources({ licenses }: { licenses: string[] }) {
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedPage = localStorage.getItem('currentPage');
-    setCurrentPage(storedPage);
-  }, []);
-
   const timestamp = Date.now();
   return (
     <Main className={styles.sources}>

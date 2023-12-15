@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { images } from '@/images';
@@ -126,6 +126,11 @@ export default function Seoul() {
     9: '폐지버스',
     0: '공용버스',
   };
+
+  useEffect(() => {
+    localStorage.removeItem('currentPage');
+    localStorage.setItem('currentPage', 'seoul');
+  }, []);
 
   const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState('');

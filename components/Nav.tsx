@@ -87,18 +87,11 @@ const Container = styled.header({
   },
 });
 
-export function useDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
-  const desktop = useMediaQuery({ query: `(min-width: ${rem(768)})` });
-  useEffect(() => {
-    setIsDesktop(desktop);
-  }, [desktop]);
-  return isDesktop;
-}
-
-const Item = styled(Anchor)<ItemProps>(({ currentRouter }) => ({
-  fontWeight: currentRouter ? 500 : 300,
-  opacity: currentRouter ? undefined : 0.7,
+const Item = styled.li<ItemProps>(({ currentRouter }) => ({
+  '& a': {
+    fontWeight: currentRouter ? 500 : 300,
+    opacity: currentRouter ? undefined : 0.7,
+  },
 }));
 
 const ButtonMenu = styled.button({});
@@ -127,6 +120,15 @@ const MenuAfter = styled.hr({
   borderLeft: `${rem(2)} solid ${hex.fuchsia} !important`,
 });
 
+export function useDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const desktop = useMediaQuery({ query: `(min-width: ${rem(768)})` });
+  useEffect(() => {
+    setIsDesktop(desktop);
+  }, [desktop]);
+  return isDesktop;
+}
+
 export default function Nav() {
   const router = useRouter();
   const home =
@@ -145,6 +147,13 @@ export default function Nav() {
 
   const isDesktop = useDesktop();
 
+  const [currentPage, setCurrentPage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedPage = localStorage.getItem('currentPage');
+    setCurrentPage(storedPage);
+  }, []);
+
   return (
     <Container>
       {router.pathname === '/' ||
@@ -156,10 +165,19 @@ export default function Nav() {
           <Weabur />
         </strong>
       ) : (
-        <Anchor href="/">
-          <span>서비스 화면으로 이동</span>
-          <Weabur />
-        </Anchor>
+        <>
+          {currentPage ? (
+            <Anchor href={`/${currentPage}`}>
+              <span>서비스 화면으로 이동</span>
+              <Weabur />
+            </Anchor>
+          ) : (
+            <Anchor href="/">
+              <span>서비스 화면으로 이동</span>
+              <Weabur />
+            </Anchor>
+          )}
+        </>
       )}
       {isDesktop ? (
         <>
@@ -184,48 +202,57 @@ export default function Nav() {
           {isActive && (
             <ol>
               {!home && (
-                <li>
-                  <Item
-                    href="/"
-                    aria-current={
-                      router.pathname === '/' ||
-                      router.pathname === '/misc' ||
-                      router.pathname === '/seoul' ||
-                      router.pathname === '/daejeon'
-                        ? true
-                        : false
-                    }
-                    currentRouter={
-                      router.pathname === '/' ||
-                      router.pathname === '/misc' ||
-                      router.pathname === '/seoul' ||
-                      router.pathname === '/daejeon'
-                        ? true
-                        : false
-                    }
-                  >
-                    서비스 이용
-                  </Item>
-                </li>
+                <Item
+                  currentRouter={
+                    router.pathname === '/' ||
+                    router.pathname === '/misc' ||
+                    router.pathname === '/seoul' ||
+                    router.pathname === '/daejeon'
+                      ? true
+                      : false
+                  }
+                >
+                  {currentPage ? (
+                    <Anchor
+                      href={`/${currentPage}`}
+                      aria-current={
+                        router.pathname === '/' ||
+                        router.pathname === '/misc' ||
+                        router.pathname === '/seoul' ||
+                        router.pathname === '/daejeon'
+                          ? true
+                          : false
+                      }
+                    >
+                      서비스 이용
+                    </Anchor>
+                  ) : (
+                    <Anchor
+                      href="/"
+                      aria-current={
+                        router.pathname === '/' ||
+                        router.pathname === '/misc' ||
+                        router.pathname === '/seoul' ||
+                        router.pathname === '/daejeon'
+                          ? true
+                          : false
+                      }
+                    >
+                      서비스 이용
+                    </Anchor>
+                  )}
+                </Item>
               )}
-              <li>
-                <Item
-                  href="/service"
-                  aria-current={router.pathname === '/service' ? true : false}
-                  currentRouter={router.pathname === '/service' ? true : false}
-                >
+              <Item currentRouter={router.pathname === '/service' ? true : false}>
+                <Anchor href="/service" aria-current={router.pathname === '/service' ? true : false}>
                   서비스 소개
-                </Item>
-              </li>
-              <li>
-                <Item
-                  href="/open-sources"
-                  aria-current={router.pathname === '/open-sources' ? true : false}
-                  currentRouter={router.pathname === '/open-sources' ? true : false}
-                >
+                </Anchor>
+              </Item>
+              <Item currentRouter={router.pathname === '/open-sources' ? true : false}>
+                <Anchor href="/open-sources" aria-current={router.pathname === '/open-sources' ? true : false}>
                   오픈소스
-                </Item>
-              </li>
+                </Anchor>
+              </Item>
             </ol>
           )}
         </>
@@ -247,8 +274,17 @@ export default function Nav() {
           {isActive && (
             <ol>
               {!home && (
-                <li>
-                  <Item
+                <Item
+                  currentRouter={
+                    router.pathname === '/' ||
+                    router.pathname === '/misc' ||
+                    router.pathname === '/seoul' ||
+                    router.pathname === '/daejeon'
+                      ? true
+                      : false
+                  }
+                >
+                  <Anchor
                     href="/"
                     aria-current={
                       router.pathname === '/' ||
@@ -258,37 +294,21 @@ export default function Nav() {
                         ? true
                         : false
                     }
-                    currentRouter={
-                      router.pathname === '/' ||
-                      router.pathname === '/misc' ||
-                      router.pathname === '/seoul' ||
-                      router.pathname === '/daejeon'
-                        ? true
-                        : false
-                    }
                   >
                     서비스 이용
-                  </Item>
-                </li>
+                  </Anchor>
+                </Item>
               )}
-              <li>
-                <Item
-                  href="/service"
-                  aria-current={router.pathname === '/service' ? true : false}
-                  currentRouter={router.pathname === '/service' ? true : false}
-                >
+              <Item currentRouter={router.pathname === '/service' ? true : false}>
+                <Anchor href="/service" aria-current={router.pathname === '/service' ? true : false}>
                   서비스 소개
-                </Item>
-              </li>
-              <li>
-                <Item
-                  href="/open-sources"
-                  aria-current={router.pathname === '/open-sources' ? true : false}
-                  currentRouter={router.pathname === '/open-sources' ? true : false}
-                >
+                </Anchor>
+              </Item>
+              <Item currentRouter={router.pathname === '/open-sources' ? true : false}>
+                <Anchor href="/open-sources" aria-current={router.pathname === '/open-sources' ? true : false}>
                   오픈소스
-                </Item>
-              </li>
+                </Anchor>
+              </Item>
             </ol>
           )}
         </>

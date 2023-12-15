@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -197,6 +197,11 @@ export default function Seoul() {
       }
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem('currentPage');
+    localStorage.setItem('currentPage', 'daejeon');
+  }, []);
 
   return (
     <main className={styles.weabur}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -45,6 +45,11 @@ export default function Home() {
       }
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem('currentPage');
+    localStorage.setItem('currentPage', '');
+  }, []);
 
   const timestamp = Date.now();
   return (

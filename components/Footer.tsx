@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Anchor from './Anchor';
 import { images } from '@/images';
-import { mq, mixIn, vw } from '@/styles/designSystem';
+import { mq, mixIn, vw, hex } from '@/styles/designSystem';
 
 const Container = styled.footer({
   display: 'flex',
@@ -32,6 +32,43 @@ const Container = styled.footer({
         paddingLeft: vw(7, 430),
         [mq.minMedium]: {
           paddingLeft: vw(15, 1920),
+        },
+      },
+    },
+    '& ul': {
+      display: 'flex',
+      gap: vw(2, 430),
+      fontSize: vw(16, 430),
+      lineHeight: 1,
+      [mq.minMedium]: {
+        fontSize: vw(24, 1920),
+      },
+      '&::before': {
+        content: "'•'",
+      },
+      '& li': {
+        fontSize: vw(16, 430),
+        lineHeight: 1,
+        [mq.minMedium]: {
+          fontSize: vw(24, 1920),
+        },
+        '&::after': {
+          content: "'/'",
+          paddingLeft: vw(5, 430),
+          [mq.minMedium]: {
+            paddingLeft: vw(12, 1920),
+          },
+        },
+        '&:last-of-type::after': {
+          display: 'none',
+        },
+      },
+      '& a': {
+        color: hex.white,
+        fontSize: vw(16, 430),
+        lineHeight: 1,
+        [mq.minMedium]: {
+          fontSize: vw(24, 1920),
         },
       },
     },
@@ -91,6 +128,17 @@ export default function Footer() {
       <div className="copyrights">
         <p>Copyrights WeaBur</p>
         <p>저작권자 웨버</p>
+        <ul>
+          <li>
+            <Anchor href="/misc">서울웨버</Anchor>
+          </li>
+          <li>
+            <Anchor href="/misc">대전웨버</Anchor>
+          </li>
+          <li>
+            <Anchor href="/misc">지역웨버</Anchor>
+          </li>
+        </ul>
       </div>
       <div className="sites">
         <ul>
