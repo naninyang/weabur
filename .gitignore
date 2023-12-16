@@ -216,6 +216,7 @@ node_modules
 psd
 thumb
 sketch
+public/data
 
 ### StorybookJs ###
 # gitignore template for the Storybook, UI guide for front apps
