@@ -126,9 +126,9 @@ export default function Seoul() {
       setBusPosInfo(updatedBusPosInfo);
     } catch (error) {
       setErrorDaejeon(
-        '대전광역시 데이터는 현재 쓸 수 없습니다. 대전광역시 정류소별 도착정보 조회 서비스에 문제가 있습니다. 현재 오류신고를 해둔 상태입니다.',
+        `대전광역시 데이터는 현재 쓸 수 없습니다. <em>대전광역시 정류소별 도착정보 조회 API 서버에</em> 문제가 있습니다. <em>현재 오류신고를 해둔 상태입니다.</em>`,
       );
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
 
     const selectedData = {
@@ -291,34 +291,33 @@ export default function Seoul() {
             <p>정류소를 먼저 검색해주세요</p>
           </div>
         )}
-        {searched && searchTerm.length < 3 && (
-          <div className={styles.notice}>
-            <p>정류소를 검색해주세요</p>
-            <div className={styles.warning}>
-              <p>※ 도시명은 최소 3자 이상 입력해야 합니다.</p>
-            </div>
-          </div>
-        )}
         {loading && (
           <p className={styles.loading}>
             <span>정류소 목록 불러오는 중</span>
             <i />
           </p>
         )}
-        {searched && !loading && busStops.length === 0 && (
-          <div className={styles.notice}>
-            <p>정류소를 검색해주세요</p>
-            <div className={styles.warning}>
-              <p>※ 찾으려는 도시가 없습니다.</p>
+        {!searched && !loading && (
+          <>
+            <div className={styles.notice}>
+              <p>정류소를 검색해주세요</p>
+              <div className={styles.warning}>
+                {searchTerm.length < 3 && <p>※ 도시명은 최소 3자 이상 입력해야 합니다.</p>}
+                {busStops.length === 0 && <p>※ 찾으려는 도시가 없습니다.</p>}
+              </div>
             </div>
-          </div>
+          </>
         )}
         {busStops.length > 0 && !selectedBusStop.busstopNm && (
           <div className={styles.notice}>
             <p>정류소를 선택해주세요</p>
           </div>
         )}
-        {errorDaejeon && <p className={styles.warning}>{errorDaejeon}</p>}
+        {!searched && !loading && errorDaejeon && (
+          <div className={`${styles.warning} ${styles['daejeon-error']}`}>
+            <p dangerouslySetInnerHTML={{ __html: errorDaejeon }} />
+          </div>
+        )}
         {busPosInfo && busPosInfo.length > 0 && (
           <div className={styles.misc}>
             <div className={styles.mixed}>

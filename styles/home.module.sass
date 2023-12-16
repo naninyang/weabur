@@ -232,18 +232,31 @@
         +mq(minMedium)
           font-size: vw(128, 1920)
 
-      .warning
-        display: flex
-        flex-direction: column
-        gap: rem(7)
+    .daejeon-error
+      display: flex
+      justify-content: center
+      align-items: center
+      flex: 1
 
-        p
-          font-size: vw(16, 430)
-          line-height: 1.375
-          color: $hex-fuchsia
+      p
+        text-align: center
 
-          +mq(minMedium)
-            font-size: vw(64, 1920)
+        em
+          display: block
+          font-style: normal
+
+    .warning
+      display: flex
+      flex-direction: column
+      gap: rem(7)
+
+      p
+        font-size: vw(16, 430)
+        line-height: 1.375
+        color: $hex-fuchsia
+
+        +mq(minMedium)
+          font-size: vw(64, 1920)
 
     .misc
       display: flex
