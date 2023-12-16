@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function getStationNoList(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { cityCode, nodeNm } = req.query;
 
   const apiKey = process.env.DATA_GO_KR_API_SERVICE_KEY;

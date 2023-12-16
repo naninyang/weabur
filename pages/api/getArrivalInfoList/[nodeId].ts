@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function getArrivalInfoList(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { nodeId, cityCode } = req.query;
 
   if (!cityCode || typeof cityCode !== 'string' || !nodeId) {

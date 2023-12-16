@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface BusStopID {
   BUS_NODE_ID: string;
@@ -34,7 +34,7 @@ const convertFieldNames = (data: any): ApiResponse => {
   return { itemList: convertedItemList };
 };
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { BusStopID } = req.query;
 
   if (!BusStopID) {
