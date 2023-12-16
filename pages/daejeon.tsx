@@ -61,6 +61,7 @@ export default function Seoul() {
   const [busStops, setBusStops] = useState<BusStop[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [busPosInfo, setBusPosInfo] = useState<BusStopID[] | null>(null);
 
   const [selectedBusStop, setSelectedBusStop] = useState({
     busstopNm: '',
@@ -71,6 +72,14 @@ export default function Seoul() {
   });
 
   const fetchStationByName = async (event: React.FormEvent<HTMLFormElement>) => {
+    setBusPosInfo(null);
+    setSelectedBusStop({
+      busstopNm: '',
+      busStopId: '',
+      busNodeId: '',
+      gpsLati: '',
+      gpsLong: '',
+    });
     event.preventDefault();
     if (searchTerm.length < 3) {
       setSearched(true);
@@ -91,8 +100,6 @@ export default function Seoul() {
     setLoading(false);
   };
 
-  const [busPosInfo, setBusPosInfo] = useState<BusStopID[] | null>(null);
-
   const handleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
     const selectedId = event.target.value;
@@ -104,7 +111,7 @@ export default function Seoul() {
       const response = await fetch(`/api/getArrInfoByStopID?BusStopID=${selected.busNodeId}`);
       const data = await response.json();
 
-      const sortedBusPosInfo = [...data.ServiceResult.msgBody.itemList].sort((a, b) => {
+      const sortedBusPosInfo = [...data.itemList].sort((a, b) => {
         const timeA = parseInt(a.extimeSec, 10);
         const timeB = parseInt(b.extimeSec, 10);
         return timeA - timeB;

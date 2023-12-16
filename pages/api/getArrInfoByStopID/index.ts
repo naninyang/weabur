@@ -1,5 +1,4 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseStringPromise } from 'xml2js';
 
 interface BusStopID {
   BUS_NODE_ID: string;
@@ -20,46 +19,37 @@ interface BusStopID {
 }
 
 interface ApiResponse {
-  ServiceResult: {
-    msgBody: {
-      itemList: BusStopID[];
-    };
-  };
+  itemList: BusStopID[];
 }
 
-const convertFieldNames = (obj: BusStopID): BusStopID => {
-  const newObj: any = {};
-
-  Object.keys(obj).forEach((key) => {
-    const newKey = key.toLowerCase().replace(/_([a-z])/g, (match, p1) => p1.toUpperCase());
-    newObj[newKey] = obj[key as keyof BusStopID];
+const convertFieldNames = (data: any): ApiResponse => {
+  const convertedItemList: BusStopID[] = data.ITEM_LIST.map((item: BusStopID) => {
+    const convertedItem: any = {};
+    Object.keys(item).forEach((key) => {
+      const newKey = key.toLowerCase().replace(/_([a-z])/g, (match, p1) => p1.toUpperCase());
+      convertedItem[newKey] = item[key as keyof BusStopID];
+    });
+    return convertedItem as BusStopID;
   });
 
-  return newObj as BusStopID;
+  return { itemList: convertedItemList };
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { BusStopID } = req.query;
-  const apiKey = process.env.DATA_GO_KR_API_SERVICE_KEY;
+
+  if (!BusStopID) {
+    res.status(400).json({ message: 'BusStopID is required' });
+    return;
+  }
 
   try {
     const response = await fetch(
-      `http://openapitraffic.daejeon.go.kr/api/rest/arrive/getArrInfoByStopID?serviceKey=${apiKey}&BusStopID=${BusStopID}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/getArrInfoByStopID/fetchBusStopData?BusStopID=${BusStopID}`,
     );
-    // 대전광역시_정류소별 도착정보 조회 서비스 > 정류소ID별 도착예정 정보 조회
-
-    const xml = await response.text();
-    const data = await parseStringPromise(xml, { explicitArray: false });
-    const parsedData: ApiResponse = data as ApiResponse;
-    const items = parsedData.ServiceResult.msgBody.itemList;
-    if (items) {
-      const convertedItems = items.map((item: BusStopID) => convertFieldNames(item));
-      res
-        .status(200)
-        .json({ ...data, ServiceResult: { ...data.ServiceResult, msgBody: { itemList: convertedItems } } });
-    } else {
-      res.status(200).json(data);
-    }
+    const data: ApiResponse = await response.json();
+    const convertedData = convertFieldNames(data);
+    res.status(200).json(convertedData);
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
