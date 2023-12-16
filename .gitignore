@@ -225,3 +225,6 @@ public/data
 storybook-static/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,nextjs,react,storybookjs
+
+# Sentry Config File
+.sentryclirc

@@ -8,6 +8,8 @@ import 'pretendard/dist/web/static/Pretendard-Light.css';
 import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
+import { SWRConfig } from 'swr';
+import * as Sentry from '@Sentry/nextjs';
 import '@/styles/globals.sass';
 
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
@@ -64,7 +66,20 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher: (url: string) =>
+          fetch(url).then((res) => {
+            if (!res.ok) {
+              throw new Error(`An error occurred while fetching the data. Status: ${res.status}`);
+            }
+            return res.json();
+          }),
+        onError: (error) => {
+          Sentry.captureException(error);
+        },
+      }}
+    >
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="format-detection" content="telephone=no" />
@@ -93,6 +108,6 @@ export default function App({ Component, pageProps }: AppProps) {
         `}
       </style>
       <Component {...pageProps} />
-    </>
+    </SWRConfig>
   );
 }
