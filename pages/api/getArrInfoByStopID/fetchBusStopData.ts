@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { parseStringPromise } from 'xml2js';
 
-export default async function fetchBusStopData(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   const busStopID = req.query.BusStopID as string;
   const apiKey = process.env.DATA_GO_KR_API_SERVICE_KEY;
 
