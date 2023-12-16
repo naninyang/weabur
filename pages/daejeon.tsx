@@ -62,6 +62,7 @@ export default function Seoul() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [busPosInfo, setBusPosInfo] = useState<BusStopID[] | null>(null);
+  const [errorDaejeon, setErrorDaejeon] = useState('');
 
   const [selectedBusStop, setSelectedBusStop] = useState({
     busstopNm: '',
@@ -124,6 +125,9 @@ export default function Seoul() {
       }));
       setBusPosInfo(updatedBusPosInfo);
     } catch (error) {
+      setErrorDaejeon(
+        '대전광역시 데이터는 현재 쓸 수 없습니다. 대전광역시 정류소별 도착정보 조회 서비스에 문제가 있습니다. 현재 오류신고를 해둔 상태입니다.',
+      );
       console.error('Error:', error);
     }
 
@@ -314,6 +318,7 @@ export default function Seoul() {
             <p>정류소를 선택해주세요</p>
           </div>
         )}
+        {errorDaejeon && <p className={styles.warning}>{errorDaejeon}</p>}
         {busPosInfo && busPosInfo.length > 0 && (
           <div className={styles.misc}>
             <div className={styles.mixed}>
