@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import * as Sentry from '@sentry/nextjs';
 import { parseStringPromise } from 'xml2js';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,6 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     res.status(200).json(jsonData);
   } catch (error) {
+    Sentry.captureException(error);
+    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }

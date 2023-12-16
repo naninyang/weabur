@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import * as Sentry from '@sentry/nextjs';
 
 interface BusStopID {
   BUS_NODE_ID: string;
@@ -50,6 +51,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const convertedData = convertFieldNames(data);
     res.status(200).json(convertedData);
   } catch (error) {
+    Sentry.captureException(error);
+    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
