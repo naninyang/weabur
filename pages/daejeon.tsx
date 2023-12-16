@@ -80,7 +80,9 @@ export default function Seoul() {
       gpsLati: '',
       gpsLong: '',
     });
+
     event.preventDefault();
+
     if (searchTerm.length < 3) {
       setSearched(true);
       setLoading(false);
@@ -104,7 +106,6 @@ export default function Seoul() {
     event.preventDefault();
     const selectedId = event.target.value;
     const selected = busStops.find((busStop) => busStop.busStopId === selectedId);
-
     if (!selected) return;
 
     try {
@@ -121,7 +122,6 @@ export default function Seoul() {
         ...busPos,
         routeTp: busPos.routeTp.replace(/\s/g, ''),
       }));
-
       setBusPosInfo(updatedBusPosInfo);
     } catch (error) {
       console.error('Error:', error);
@@ -175,7 +175,6 @@ export default function Seoul() {
     const totalSeconds = parseInt(extimeSec, 10);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-
     return `${minutes > 0 ? `${minutes}분 ` : ''}${seconds}초`;
   }
 

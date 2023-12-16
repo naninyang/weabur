@@ -31,7 +31,6 @@ const convertFieldNames = (data: any): ApiResponse => {
     });
     return convertedItem as BusStopID;
   });
-
   return { itemList: convertedItemList };
 };
 
