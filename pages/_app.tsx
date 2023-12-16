@@ -9,7 +9,7 @@ import 'pretendard/dist/web/static/Pretendard-Medium.css';
 import 'pretendard/dist/web/static/Pretendard-Regular.css';
 import localFont from 'next/font/local';
 import { SWRConfig } from 'swr';
-import * as Sentry from '@Sentry/nextjs';
+import * as Sentry from '@sentry/nextjs';
 import '@/styles/globals.sass';
 
 const DungGeunMo = localFont({ src: '../fonts/DungGeunMo.woff2' });
