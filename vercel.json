@@ -2,11 +2,10 @@
   "version": 2,
   "builds": [{ "src": "/api/**/*.ts", "use": "@vercel/node" }],
   "routes": [
-    { "src": "/api/getArrInfoByStopID", "dest": "/api/getArrInfoByStopID/index.ts", "region": "all" },
+    { "src": "/api/getArrInfoByStopID", "dest": "/api/getArrInfoByStopID/index.ts" },
     {
       "src": "/api/getArrInfoByStopID/fetchBusStopData",
-      "dest": "/api/getArrInfoByStopID/fetchBusStopData.ts",
-      "region": "all"
+      "dest": "/api/getArrInfoByStopID/fetchBusStopData.ts"
     }
   ]
 }
