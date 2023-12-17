@@ -91,7 +91,7 @@ export default function Seoul() {
       const busPosInfo = await fetchArrivalInfoByStopID(selected.busNodeId);
       setBusPosInfo(busPosInfo);
     } catch (error) {
-      console.error('Error?:', error);
+      console.error('Error??:', error);
       setErrorApiServer(
         `대전광역시 데이터는 현재 쓸 수 없습니다. <em>대전광역시 정류소별 도착정보 조회 API 서버에</em> 문제가 있습니다. <em>현재 오류신고를 해둔 상태입니다.</em>`,
       );
