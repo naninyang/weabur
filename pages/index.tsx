@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { ArrivalInfo, City, Station } from '@/types';
 import { images } from '@/images';
-import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/api';
+import { fetchCityCodeList, fetchStationNoList, fetchArrivalInfoList } from '@/utils/misc';
 import Seo from '@/components/Seo';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';

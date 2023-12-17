@@ -1,35 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+import { StationInfo, BusArrivalInfo } from '@/types';
 import { images } from '@/images';
+import { fetchStationByName, fetchBusArrivals } from '@/utils/seoul';
 import Nav from '@/components/Nav';
 import WeatherSeoul from '@/components/WeatherSeoul';
 import Footer from '@/components/Footer';
 import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
-
-interface StationInfo {
-  arsId: string;
-  stId: string;
-  stNm: string;
-  tmY: string;
-  tmX: string;
-}
-
-interface BusArrivalInfo {
-  busRouteAbrv: string;
-  firstTm: string;
-  lastTm: string;
-  sectNm: string;
-  nxtStn: string;
-  routeType: string;
-  busType1: string;
-  busType2: string;
-  isArrive1: string;
-  isArrive2: string;
-  arrmsg1: string;
-  arrmsg2: string;
-}
 
 const Select = styled.select({
   appearance: 'none',
@@ -56,24 +35,31 @@ export default function Seoul() {
   const [stationInfo, setStationInfo] = useState<StationInfo[]>([]);
   const [busArrivals, setBusArrivals] = useState<BusArrivalInfo[]>([]);
   const [errorStation, setErrorStation] = useState<string>('');
+  const [selectedArsId, setSelectedArsId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchStationByName = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleStationSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorStation('');
     setBusArrivals([]);
+    setStationInfo([]);
     if (stationName.length < 2) {
       setErrorStation('정류소명은 최소 2자 이상 입력해야 합니다.');
+      setIsLoading(false);
       return;
     }
     try {
-      const response = await fetch(`/api/getStationByName?stSrch=${stationName}`);
-      const data = await response.json();
-      setStationInfo(data.msgBody.itemList);
+      const stations = await fetchStationByName(stationName);
+      if (stations === undefined) {
+        setErrorStation('검색된 정류소가 없습니다.');
+      } else {
+        setStationInfo(stations);
+      }
     } catch (error) {
       setErrorStation('서울 버스정보시스템 서버 오류 입니다. 다시 시도하세요');
     }
   };
 
-  const [selectedArsId, setSelectedArsId] = useState<string | null>(null);
   const selectedStationLatitude = selectedArsId
     ? stationInfo.find((station) => station.arsId === selectedArsId)?.tmY
     : null;
@@ -85,14 +71,15 @@ export default function Seoul() {
     ? stationInfo.find((station) => station.arsId === selectedArsId)?.stNm
     : null;
 
-  const fetchBusArrivals = async (arsId: string) => {
+  const handleBusArrivalSearch = async (arsId: string) => {
     setSelectedArsId(arsId);
+    setIsLoading(true);
     try {
-      const response = await fetch(`/api/getStationByUid?arsId=${arsId}`);
-      const data = await response.json();
-      setBusArrivals(data.msgBody.itemList);
+      const arrivals = await fetchBusArrivals(arsId);
+      setBusArrivals(arrivals);
+      setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching bus arrivals');
+      console.error('Error fetching bus arrivals:', error);
     }
   };
 
@@ -174,7 +161,7 @@ export default function Seoul() {
                 <option value="daejeon">대전광역시</option>
                 <option value="misc">기타지역</option>
               </Select>
-              <form onSubmit={fetchStationByName}>
+              <form onSubmit={handleStationSearch}>
                 <fieldset>
                   <legend>정류소명 검색폼</legend>
                   <div>
@@ -199,7 +186,7 @@ export default function Seoul() {
                   <fieldset>
                     <legend>정류소 선택</legend>
                     <div>
-                      <Select onChange={(e) => fetchBusArrivals(e.target.value)}>
+                      <Select onChange={(e) => handleBusArrivalSearch(e.target.value)}>
                         <option value="">정류소 선택</option>
                         {stationInfo.map((station) => (
                           <option key={station.arsId} value={station.arsId}>
@@ -216,19 +203,39 @@ export default function Seoul() {
         </div>
         <Nav />
         {busArrivals.length === 0 && stationInfo.length === 0 && (
-          <div className={styles.notice}>
-            <p>정류소를 검색해주세요</p>
-            {errorStation && (
-              <div className={styles.warning}>
-                <p>{errorStation}</p>
+          <>
+            {!isLoading && (
+              <div className={styles.notice}>
+                <p>정류소를 검색해주세요</p>
+                {errorStation && (
+                  <div className={styles.warning}>
+                    <p>{errorStation}</p>
+                  </div>
+                )}
               </div>
             )}
-          </div>
+            {isLoading && (
+              <p className={styles.loading}>
+                <span>정류소 목록 불러오는 중</span>
+                <i />
+              </p>
+            )}
+          </>
         )}
         {stationInfo.length > 0 && busArrivals.length === 0 && (
-          <div className={styles.notice}>
-            <p>정류소를 선택해주세요</p>
-          </div>
+          <>
+            {!isLoading && (
+              <div className={styles.notice}>
+                <p>정류소를 선택해주세요</p>
+              </div>
+            )}
+            {isLoading && (
+              <p className={styles.loading}>
+                <span>정류소 목록 불러오는 중</span>
+                <i />
+              </p>
+            )}
+          </>
         )}
         {busArrivals.length > 0 && (
           <>
@@ -245,101 +252,109 @@ export default function Seoul() {
                 </h1>
               </div>
             )}
-            <div className={styles.seoul}>
-              {selectedStationLatitude && selectedStationLongitude && (
-                <WeatherSeoul latitude={selectedStationLatitude} longitude={selectedStationLongitude} />
-              )}
-              {busArrivals.map((info, index) => (
-                <div key={index} className={styles.nextup}>
-                  <div className={styles.summary}>
-                    <div className={styles.routeno}>
-                      <dl>
-                        <dt>노선(버스)번호</dt>
-                        <dd style={{ color: `${busColors[info.routeType]}` }}>{info.busRouteAbrv}</dd>
-                      </dl>
-                    </div>
-                    <div className={styles.info}>
-                      <div className={styles.router}>
-                        <div className={styles.route}>
-                          <dl>
-                            <dt>노션(버스)유형</dt>
-                            <dd style={{ color: `${busColors[info.routeType]}` }}>{busTypes[info.routeType]}</dd>
-                          </dl>
+            {!isLoading && (
+              <div className={styles.seoul}>
+                {selectedStationLatitude && selectedStationLongitude && (
+                  <WeatherSeoul latitude={selectedStationLatitude} longitude={selectedStationLongitude} />
+                )}
+                {busArrivals.map((info, index) => (
+                  <div key={index} className={styles.nextup}>
+                    <div className={styles.summary}>
+                      <div className={styles.routeno}>
+                        <dl>
+                          <dt>노선(버스)번호</dt>
+                          <dd style={{ color: `${busColors[info.routeType]}` }}>{info.busRouteAbrv}</dd>
+                        </dl>
+                      </div>
+                      <div className={styles.info}>
+                        <div className={styles.router}>
+                          <div className={styles.route}>
+                            <dl>
+                              <dt>노션(버스)유형</dt>
+                              <dd style={{ color: `${busColors[info.routeType]}` }}>{busTypes[info.routeType]}</dd>
+                            </dl>
+                          </div>
+                          <div className={styles.term}>
+                            <div>
+                              <dl>
+                                <dt>구간</dt>
+                                <dd>{info.sectNm} 구간</dd>
+                              </dl>
+                            </div>
+                            <div>
+                              <dl>
+                                <dt>다음정류장순번</dt>
+                                <dd>{info.nxtStn}</dd>
+                              </dl>
+                            </div>
+                          </div>
                         </div>
-                        <div className={styles.term}>
+                        <div className={styles.timing}>
                           <div>
                             <dl>
-                              <dt>구간</dt>
-                              <dd>{info.sectNm} 구간</dd>
+                              <dt>첫차</dt>
+                              <dd>{formatTime(info.firstTm)}</dd>
                             </dl>
                           </div>
                           <div>
                             <dl>
-                              <dt>다음정류장순번</dt>
-                              <dd>{info.nxtStn}</dd>
+                              <dt>막차</dt>
+                              <dd>{formatTime(info.lastTm)}</dd>
                             </dl>
                           </div>
                         </div>
                       </div>
-                      <div className={styles.timing}>
-                        <div>
+                    </div>
+                    <div className={styles.schedule}>
+                      <div className={styles.item}>
+                        <div className={styles.vehicle}>
                           <dl>
-                            <dt>첫차</dt>
-                            <dd>{formatTime(info.firstTm)}</dd>
+                            <dt>차량유형(저상버스 유무)</dt>
+                            <dd>
+                              <span className={`${info.busType1 === '0' ? '' : styles.vehicletp}`}>
+                                {info.busType1 === '0' ? '일반버스' : '저상버스'}
+                              </span>
+                              {info.busType1 === '0' ? <i /> : <DisabledIcon />}
+                            </dd>
                           </dl>
                         </div>
-                        <div>
+                        <div className={styles.time}>
                           <dl>
-                            <dt>막차</dt>
-                            <dd>{formatTime(info.lastTm)}</dd>
+                            <dt>도착 예정 시간</dt>
+                            <dd>{info.arrmsg1}</dd>
+                          </dl>
+                        </div>
+                      </div>
+                      <div className={styles.item}>
+                        <div className={styles.vehicle}>
+                          <dl>
+                            <dt>차량유형(저상버스 유무)</dt>
+                            <dd>
+                              <span className={`${info.busType2 === '0' ? '' : styles.vehicletp}`}>
+                                {info.busType2 === '0' ? '일반버스' : '저상버스'}
+                              </span>
+                              {info.busType2 === '0' ? <i /> : <DisabledIcon />}
+                            </dd>
+                          </dl>
+                        </div>
+                        <div className={styles.time}>
+                          <dl>
+                            <dt>도착 예정 시간</dt>
+                            <dd>{info.arrmsg2}</dd>
                           </dl>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className={styles.schedule}>
-                    <div className={styles.item}>
-                      <div className={styles.vehicle}>
-                        <dl>
-                          <dt>차량유형(저상버스 유무)</dt>
-                          <dd>
-                            <span className={`${info.busType1 === '0' ? '' : styles.vehicletp}`}>
-                              {info.busType1 === '0' ? '일반버스' : '저상버스'}
-                            </span>
-                            {info.busType1 === '0' ? <i /> : <DisabledIcon />}
-                          </dd>
-                        </dl>
-                      </div>
-                      <div className={styles.time}>
-                        <dl>
-                          <dt>도착 예정 시간</dt>
-                          <dd>{info.arrmsg1}</dd>
-                        </dl>
-                      </div>
-                    </div>
-                    <div className={styles.item}>
-                      <div className={styles.vehicle}>
-                        <dl>
-                          <dt>차량유형(저상버스 유무)</dt>
-                          <dd>
-                            <span className={`${info.busType2 === '0' ? '' : styles.vehicletp}`}>
-                              {info.busType2 === '0' ? '일반버스' : '저상버스'}
-                            </span>
-                            {info.busType2 === '0' ? <i /> : <DisabledIcon />}
-                          </dd>
-                        </dl>
-                      </div>
-                      <div className={styles.time}>
-                        <dl>
-                          <dt>도착 예정 시간</dt>
-                          <dd>{info.arrmsg2}</dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
+            {isLoading && (
+              <p className={styles.loading}>
+                <span>정류소 목록 불러오는 중</span>
+                <i />
+              </p>
+            )}
           </>
         )}
         <Footer />

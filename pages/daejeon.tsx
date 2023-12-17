@@ -4,37 +4,13 @@ import styled from '@emotion/styled';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { images } from '@/images';
+import { BusStop, BusStopID } from '@/types';
+import { fetchArrivalInfoByStopID, fetchStationsByName } from '@/utils/daejeon';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import WeatherDaejeon from '@/components/WeatherDaejeon';
 import { hex, mq, vw } from '@/styles/designSystem';
 import styles from '@/styles/home.module.sass';
-
-interface BusStop {
-  busstopNm: string;
-  busStopId: string;
-  busNodeId: string;
-  gpsLati: string;
-  gpsLong: string;
-}
-
-interface BusStopID {
-  busNodeId: string;
-  busStopId: string;
-  carRegNo: string;
-  destination: string;
-  extimeMin: string;
-  extimeSec: string;
-  infoOfferTm: string;
-  lastCat: string;
-  lastStopId: string;
-  msgTp: string;
-  routeCd: string;
-  routeNo: string;
-  routeTp: string;
-  statusPos: string;
-  stopName: string;
-}
 
 const Select = styled.select({
   appearance: 'none',
@@ -52,18 +28,15 @@ const SearchIcon = styled.i({
   background: `url(${images.icons.search}) no-repeat 50% 50%/contain`,
 });
 
-const DisabledIcon = styled.i({
-  background: `url(${images.icons.disabled}) no-repeat 50% 50%/contain`,
-});
-
 export default function Seoul() {
   const [searchTerm, setSearchTerm] = useState('');
   const [busStops, setBusStops] = useState<BusStop[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [busPosInfo, setBusPosInfo] = useState<BusStopID[] | null>(null);
-  const [errorDaejeon, setErrorDaejeon] = useState('');
-
+  const [errorApiServer, setErrorApiServer] = useState('');
+  const [errorSearchTerm, setErrorSearchTerm] = useState('');
+  const [errorStations, setErrorStations] = useState('');
   const [selectedBusStop, setSelectedBusStop] = useState({
     busstopNm: '',
     busStopId: '',
@@ -72,8 +45,13 @@ export default function Seoul() {
     gpsLong: '',
   });
 
-  const fetchStationByName = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleStationSearch = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     setBusPosInfo(null);
+    setErrorStations('');
+    setBusStops([]);
+
     setSelectedBusStop({
       busstopNm: '',
       busStopId: '',
@@ -82,25 +60,25 @@ export default function Seoul() {
       gpsLong: '',
     });
 
-    event.preventDefault();
-
     if (searchTerm.length < 3) {
       setSearched(true);
-      setLoading(false);
-      setBusStops([]);
+      setErrorSearchTerm('정류소명은 최소 3자 이상 입력해야 합니다.');
+      setIsLoading(false);
       return;
     }
 
-    setLoading(true);
-    setSearched(true);
     try {
-      const response = await fetch(`/api/getStaionByRouteAll?searchTerm=${searchTerm}`);
-      const data = await response.json();
-      setBusStops(data);
+      const stations = await fetchStationsByName(searchTerm);
+      if (stations.length === 0) {
+        setErrorStations('검색된 버스 정류장이 없습니다.');
+        setErrorSearchTerm('');
+      } else {
+        setBusStops(stations);
+      }
     } catch (error) {
       console.error('Error:', error);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
   const handleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -110,23 +88,11 @@ export default function Seoul() {
     if (!selected) return;
 
     try {
-      const response = await fetch(`/api/getArrInfoByStopID?BusStopID=${selected.busNodeId}`);
-      const data = await response.json();
-
-      const sortedBusPosInfo = [...data.itemList].sort((a, b) => {
-        const timeA = parseInt(a.extimeSec, 10);
-        const timeB = parseInt(b.extimeSec, 10);
-        return timeA - timeB;
-      });
-
-      const updatedBusPosInfo = sortedBusPosInfo.map((busPos) => ({
-        ...busPos,
-        routeTp: busPos.routeTp.replace(/\s/g, ''),
-      }));
-      setBusPosInfo(updatedBusPosInfo);
+      const busPosInfo = await fetchArrivalInfoByStopID(selected.busNodeId);
+      setBusPosInfo(busPosInfo);
     } catch (error) {
       console.error('Error?:', error);
-      setErrorDaejeon(
+      setErrorApiServer(
         `대전광역시 데이터는 현재 쓸 수 없습니다. <em>대전광역시 정류소별 도착정보 조회 API 서버에</em> 문제가 있습니다. <em>현재 오류신고를 해둔 상태입니다.</em>`,
       );
     }
@@ -182,6 +148,8 @@ export default function Seoul() {
     return `${minutes > 0 ? `${minutes}분 ` : ''}${seconds}초`;
   }
 
+  const initialSearch = (!searched && !isLoading && searchTerm.length < 3) || busStops.length === 0;
+
   const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState('');
   const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -229,7 +197,7 @@ export default function Seoul() {
                 <option value="seoul">서울특별시</option>
                 <option value="misc">기타지역</option>
               </Select>
-              <form onSubmit={fetchStationByName}>
+              <form onSubmit={handleStationSearch}>
                 <fieldset>
                   <legend>정류소명 검색폼</legend>
                   <div>
@@ -286,36 +254,31 @@ export default function Seoul() {
             </h1>
           </div>
         )}
-        {!searched && (
+        {busStops.length === 0 && (
           <div className={styles.notice}>
             <p>정류소를 먼저 검색해주세요</p>
+            {(errorSearchTerm || errorStations) && (
+              <div className={styles.warning}>
+                {errorSearchTerm && <p>※ {errorSearchTerm}</p>}
+                {errorStations && <p>※ {errorStations}</p>}
+              </div>
+            )}
           </div>
         )}
-        {loading && (
-          <p className={styles.loading}>
+        {isLoading && (
+          <p className={styles.isLoading}>
             <span>정류소 목록 불러오는 중</span>
             <i />
           </p>
-        )}
-        {!searched && !loading && (
-          <>
-            <div className={styles.notice}>
-              <p>정류소를 검색해주세요</p>
-              <div className={styles.warning}>
-                {searchTerm.length < 3 && <p>※ 도시명은 최소 3자 이상 입력해야 합니다.</p>}
-                {busStops.length === 0 && <p>※ 찾으려는 도시가 없습니다.</p>}
-              </div>
-            </div>
-          </>
         )}
         {busStops.length > 0 && !selectedBusStop.busstopNm && (
           <div className={styles.notice}>
             <p>정류소를 선택해주세요</p>
           </div>
         )}
-        {!searched && !loading && errorDaejeon && (
+        {!searched && !isLoading && errorApiServer && (
           <div className={`${styles.warning} ${styles['daejeon-error']}`}>
-            <p dangerouslySetInnerHTML={{ __html: errorDaejeon }} />
+            <p dangerouslySetInnerHTML={{ __html: errorApiServer }} />
           </div>
         )}
         {busPosInfo && busPosInfo.length > 0 && (
