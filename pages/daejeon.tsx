@@ -225,14 +225,14 @@ export default function Seoul() {
                   <fieldset>
                     <legend>도시 선택폼</legend>
                     <div>
-                      <select onChange={handleSelectChange}>
+                      <Select onChange={handleSelectChange}>
                         <option value="">정류소 선택</option>
                         {busStops.map((busStop, index) => (
                           <option key={index} value={busStop.busStopId}>
                             {busStop.busstopNm} {busStop.busStopId && `(${busStop.busStopId})`}
                           </option>
                         ))}
-                      </select>
+                      </Select>
                     </div>
                   </fieldset>
                 </form>

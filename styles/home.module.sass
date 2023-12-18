@@ -54,11 +54,12 @@
           gap: vw(20, 430)
           +col
 
-          +mq(minMedium)
-            gap: vw(25, 1920)
-
           +mq(maxSmall)
             flex-direction: column
+            padding: vw(15, 430)
+
+          +mq(minMedium)
+            gap: vw(25, 1920)
 
         select
           background-color: transparent
@@ -85,6 +86,10 @@
           +mq(minMedium)
             border-left: vw(2, 1920) solid $hex-aqua
             border-right: vw(3, 1920) solid $hex-aqua
+
+        > form
+          +mq(maxSmall)
+            padding: vw(15, 430)
 
         form
           +col
@@ -130,7 +135,7 @@
               +col
 
             select
-              padding-right: vw(128, 430)
+              padding-right: vw(64, 430)
               width: 100%
               appearance: none
               text-overflow: ellipsis
@@ -138,7 +143,7 @@
               white-space: nowrap
 
               +mq(minMedium)
-                padding-right: vw(128, 1920)
+                padding-right: vw(64, 1920)
 
     .header
       display: flex
