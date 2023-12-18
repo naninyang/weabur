@@ -16,6 +16,8 @@
 
 ## 사용된 주요 기술
 
+### Frontend
+
 - Next.js w/ React
 - react-device-detect
 - TypeScript
@@ -23,6 +25,14 @@
 - SASS
 - Perfect Scrollbar
 - PWA
+
+### Backend
+
+- AWS EC2
+- Sentry
+- PM2
+- NginX
+- Github Actions
 
 ## Troubleshooting
 

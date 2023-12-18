@@ -7,7 +7,8 @@ export async function fetchStationByName(stationName: string): Promise<StationIn
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    return data.msgBody.itemList;
+    const itemList = Array.isArray(data.msgBody.itemList) ? data.msgBody.itemList : [data.msgBody.itemList];
+    return itemList;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
     throw error;
