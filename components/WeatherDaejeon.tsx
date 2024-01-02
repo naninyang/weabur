@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from '@emotion/styled';
-import { CityLocation } from '@/types';
 import { images } from '@/images';
 import styles from '@/styles/home.module.sass';
 

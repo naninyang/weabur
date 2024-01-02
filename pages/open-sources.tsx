@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import fs from 'fs';
 import path from 'path';
+import styled from '@emotion/styled';
 import Nav from '@/components/Nav';
 import Seo from '@/components/Seo';
 import styles from '@/styles/sources.module.sass';
-import styled from '@emotion/styled';
 import { images } from '@/images';
 import Footer from '@/components/Footer';
 
@@ -71,6 +70,7 @@ function OpenSources({ licenses }: { licenses: string[] }) {
     </Main>
   );
 }
+
 export async function getStaticProps() {
   const markdownDir = path.join(process.cwd(), 'pages/licenses');
   const filenames = fs.readdirSync(markdownDir);
